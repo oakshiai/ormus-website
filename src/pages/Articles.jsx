@@ -1,7 +1,6 @@
 import { useParams, Link, useSearchParams } from 'react-router-dom'
 import { css, cx, tokens, baseStyles } from '../styles'
 import { articles, getArticleBySlug } from '../content/articles.jsx'
-import Footer from '../components/Footer'
 
 const articlesStyles = {
   container: css({
@@ -191,7 +190,6 @@ export default function Articles() {
             </Link>
           </div>
         </div>
-        <Footer />
       </div>
     )
   }
@@ -267,7 +265,6 @@ export default function Articles() {
           ))}
         </div>
       </div>
-      <Footer />
     </div>
   )
 }

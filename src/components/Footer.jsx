@@ -37,17 +37,15 @@ export default function Footer() {
     <footer className={footerStyles.footer}>
       <div className={footerStyles.inner}>
         <div>
-          © {new Date().getFullYear()} Grok. Documentation and articles for the Grok CLI.
+          © {new Date().getFullYear()} Morgan Wilde
         </div>
         <div className={footerStyles.links}>
-          <a href="https://github.com" target="_blank" rel="noopener">
+          <a href="https://x.com/oakshiai" target="_blank" rel="noopener noreferrer">
+            @oakshiai
+          </a>
+          <a href="https://github.com/oakshiai/ormus-website" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
-          <a href="https://x.com" target="_blank" rel="noopener">
-            X
-          </a>
-          <a href="#">Changelog</a>
-          <a href="#">License</a>
         </div>
       </div>
     </footer>

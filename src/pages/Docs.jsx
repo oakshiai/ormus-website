@@ -6,7 +6,6 @@ import remarkGfm from 'remark-gfm'
 import { css, cx, tokens, baseStyles } from '../styles'
 import Sidebar from '../components/Sidebar'
 import { docs, getDocBySlug } from '../lib/docs'
-import Footer from '../components/Footer'
 
 const docsStyles = {
   layout: css({
@@ -232,7 +231,6 @@ export default function Docs() {
               ))}
             </div>
           </div>
-          <Footer />
         </div>
       </div>
     )
@@ -277,8 +275,6 @@ export default function Docs() {
             </div>
           </div>
         </div>
-
-        <Footer />
       </div>
 
       {/* Mobile navigation drawer for docs */}
