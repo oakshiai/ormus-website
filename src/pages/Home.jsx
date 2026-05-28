@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom'
 import { css, cx, tokens, baseStyles } from '../styles'
 import { articles } from '../content/articles.jsx'
+import Code from '../components/Code'
 
 const homeStyles = {
   hero: css({
     textAlign: 'center',
-    padding: '48px 20px 40px',
+    padding: '48px 20px 36px',
     background: `linear-gradient(180deg, ${tokens.colors.bg} 0%, ${tokens.colors.bgAlt} 100%)`,
     borderBottom: `1px solid ${tokens.colors.border}`,
     '@media (min-width: 768px)': {
-      padding: '80px 24px 60px',
+      padding: '72px 24px 48px',
     },
   }),
   heroTitle: css({
@@ -29,16 +30,15 @@ const homeStyles = {
     },
   }),
   heroSubtitle: css({
-    fontSize: '16px',
+    fontSize: '15.5px',
     color: tokens.colors.textMuted,
-    maxWidth: '480px',
-    margin: '0 auto 28px',
-    lineHeight: 1.45,
+    maxWidth: '520px',
+    margin: '0 auto 12px',
+    lineHeight: 1.5,
     padding: '0 8px',
     '@media (min-width: 768px)': {
-      fontSize: '18px',
-      maxWidth: '560px',
-      marginBottom: '32px',
+      fontSize: '17px',
+      maxWidth: '580px',
     },
   }),
   ctaGroup: css({
@@ -224,12 +224,18 @@ export default function Home() {
     <div>
       <div className={homeStyles.hero}>
         <h1 className={homeStyles.heroTitle}>
-          Grok Documentation<br />and Articles
+          Learn to <Code>grok build</Code><br />with me
         </h1>
         <p className={homeStyles.heroSubtitle}>
-          Everything you need to master the Grok CLI, build powerful skills,
-          and stay up to date with the latest releases.
+          A new kind of coding tool from xAI. See how to use it, how it performs, and how to master it.
         </p>
+
+        <div style={{ margin: '18px auto 22px', maxWidth: '620px', width: '100%' }}>
+          <Code isCopyable>
+            curl -fsSL https://x.ai/cli/install.sh
+          </Code>
+        </div>
+
         <div className={homeStyles.ctaGroup}>
           <Link to="/docs" className={homeStyles.primaryCta}>
             Browse Documentation

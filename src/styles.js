@@ -119,6 +119,32 @@ export const baseStyles = {
         textDecoration: 'underline',
       },
     },
+    '& table': {
+      width: '100%',
+      borderCollapse: 'collapse',
+      margin: '16px 0',
+      fontSize: '14px',
+    },
+    '& th, & td': {
+      border: `1px solid ${tokens.colors.border}`,
+      padding: '8px 10px',
+      textAlign: 'left',
+    },
+    '& th': {
+      background: tokens.colors.bgAlt,
+      fontWeight: 600,
+    },
+    '& blockquote': {
+      margin: '16px 0',
+      padding: '0 0 0 16px',
+      borderLeft: `4px solid ${tokens.colors.accent}`,
+      color: tokens.colors.textMuted,
+    },
+    '& hr': {
+      border: 'none',
+      borderTop: `1px solid ${tokens.colors.border}`,
+      margin: '24px 0',
+    },
   }),
   card: css({
     background: tokens.colors.cardBg,

@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
 import { css, cx, tokens, baseStyles } from '../styles'
 import Sidebar from '../components/Sidebar'
-import { docs, getDocBySlug, docCategories } from '../content/docs.jsx'
+import { docs, getDocBySlug } from '../lib/docs'
 import Footer from '../components/Footer'
 
 const docsStyles = {
@@ -191,56 +194,43 @@ export default function Docs() {
   const currentDoc = slug ? getDocBySlug(slug) : null
   const [mobileTocOpen, setMobileTocOpen] = useState(false)
 
-  // Build sidebar groups from categories
-  const sidebarGroups = docCategories.map((cat) => ({
-    title: cat.label,
-    items: docs
-      .filter((d) => d.category === cat.id)
-      .map((d) => ({
-        to: `/docs/${d.slug}`,
-        label: d.title,
-      })),
+  // Build flat navigation list from the real docs (in file order)
+  const navItems = docs.map((d) => ({
+    to: `/docs/${d.slug}`,
+    label: d.title,
   }))
 
-  // Index view (no slug)
+  // Index view (no slug) — show all real documentation
   if (!currentDoc) {
     return (
       <div className={docsStyles.layout}>
-        <Sidebar title="Documentation" groups={sidebarGroups} />
+        <Sidebar title="Documentation" items={navItems} />
 
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className={docsStyles.main}>
             <div className={docsStyles.header}>
               <h1 className={docsStyles.title}>Documentation</h1>
               <p style={{ fontSize: '15px', color: tokens.colors.textMuted, maxWidth: 620 }}>
-                Learn how to install, configure, and extend Grok. Everything you need
-                to become productive quickly.
+                Complete reference for the Grok Build TUI. Learn how to install, configure,
+                extend with skills, connect MCP servers, and master every mode and feature.
               </p>
             </div>
 
-            {docCategories.map((category) => {
-              const categoryDocs = docs.filter((d) => d.category === category.id)
-              return (
-                <div key={category.id} className={docsStyles.section}>
-                  <div className={docsStyles.categoryLabel}>{category.label}</div>
-                  <div className={docsStyles.indexGrid}>
-                    {categoryDocs.map((doc) => (
-                      <Link
-                        key={doc.slug}
-                        to={`/docs/${doc.slug}`}
-                        className={docsStyles.docCard}
-                      >
-                        <div className={docsStyles.docCardTitle}>{doc.title}</div>
-                        <div className={docsStyles.docCardDesc}>{doc.description}</div>
-                        <div style={{ marginTop: '14px', fontSize: '12px', color: tokens.colors.textMuted }}>
-                          Updated {doc.lastUpdated}
-                        </div>
-                      </Link>
-                    ))}
+            <div className={docsStyles.indexGrid}>
+              {docs.map((doc) => (
+                <Link
+                  key={doc.slug}
+                  to={`/docs/${doc.slug}`}
+                  className={docsStyles.docCard}
+                >
+                  <div className={docsStyles.docCardTitle}>{doc.title}</div>
+                  <div className={docsStyles.docCardDesc}>{doc.description}</div>
+                  <div style={{ marginTop: '12px', fontSize: '12px', color: tokens.colors.textMuted }}>
+                    Guide {String(doc.order).padStart(2, '0')}
                   </div>
-                </div>
-              )
-            })}
+                </Link>
+              ))}
+            </div>
           </div>
           <Footer />
         </div>
@@ -251,7 +241,7 @@ export default function Docs() {
   // Individual doc view
   return (
     <div className={docsStyles.layout}>
-      <Sidebar title="Documentation" groups={sidebarGroups} />
+      <Sidebar title="Documentation" items={navItems} />
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
         <div className={docsStyles.main}>
@@ -266,52 +256,24 @@ export default function Docs() {
             ☰ Contents
           </button>
 
-          <div className={docsStyles.contentWrapper}>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div className={docsStyles.header}>
-                <h1 className={docsStyles.title}>{currentDoc.title}</h1>
-                <div className={docsStyles.meta}>
-                  <span>Last updated: {currentDoc.lastUpdated}</span>
-                  <span>•</span>
-                  <span>{currentDoc.sections.length} sections</span>
-                </div>
-              </div>
-
-              <div className={baseStyles.prose}>
-                {currentDoc.sections.map((section, idx) => (
-                  <div key={idx} id={`section-${idx}`}>
-                    <h2>{section.heading}</h2>
-                    <div>{section.body}</div>
-                  </div>
-                ))}
-              </div>
-
-              <div style={{ marginTop: '40px', paddingTop: '20px', borderTop: `1px solid ${tokens.colors.border}` }}>
-                <div style={{ fontSize: '13px', color: tokens.colors.textMuted }}>
-                  Was this page helpful? <a href="#">Yes</a> · <a href="#">No</a>
-                </div>
+          <div style={{ maxWidth: '860px' }}>
+            <div className={docsStyles.header}>
+              <h1 className={docsStyles.title}>{currentDoc.title}</h1>
+              <div className={docsStyles.meta}>
+                <span>Guide {String(docs.findIndex(d => d.slug === currentDoc.slug) + 1).padStart(2, '0')} of {docs.length}</span>
               </div>
             </div>
 
-            {/* Desktop Table of Contents */}
-            <div className={docsStyles.toc}>
-              <div style={{ fontWeight: 600, marginBottom: '10px', color: tokens.colors.textHeading }}>
-                On this page
+            <div className={baseStyles.prose}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {currentDoc.content.replace(/^#\s+.+\n+/, '')}
+              </ReactMarkdown>
+            </div>
+
+            <div style={{ marginTop: '40px', paddingTop: '20px', borderTop: `1px solid ${tokens.colors.border}` }}>
+              <div style={{ fontSize: '13px', color: tokens.colors.textMuted }}>
+                Was this page helpful? <a href="#">Yes</a> · <a href="#">No</a>
               </div>
-              {currentDoc.sections.map((section, idx) => (
-                <a
-                  key={idx}
-                  href={`#section-${idx}`}
-                  className={docsStyles.tocLink}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    const el = document.getElementById(`section-${idx}`)
-                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                  }}
-                >
-                  {section.heading}
-                </a>
-              ))}
             </div>
           </div>
         </div>
@@ -336,33 +298,27 @@ export default function Docs() {
               </button>
             </div>
 
-            {/* Re-render the same navigation groups */}
-            {sidebarGroups.map((group, idx) => (
-              <div key={idx} style={{ marginBottom: '16px' }}>
-                {group.title && (
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: tokens.colors.textMuted, padding: '4px 8px', textTransform: 'uppercase', letterSpacing: '0.6px' }}>
-                    {group.title}
-                  </div>
-                )}
-                {group.items.map((item) => (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    onClick={() => setMobileTocOpen(false)}
-                    style={{
-                      display: 'block',
-                      padding: '9px 12px',
-                      fontSize: '14px',
-                      color: tokens.colors.text,
-                      textDecoration: 'none',
-                      borderRadius: '6px',
-                      marginBottom: '1px',
-                    }}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
+            {/* Flat list of all docs in order */}
+            <div style={{ marginBottom: '8px', fontSize: '11px', fontWeight: 700, color: tokens.colors.textMuted, padding: '4px 8px', textTransform: 'uppercase', letterSpacing: '0.6px' }}>
+              Documentation
+            </div>
+            {navItems.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={() => setMobileTocOpen(false)}
+                style={{
+                  display: 'block',
+                  padding: '9px 12px',
+                  fontSize: '14px',
+                  color: tokens.colors.text,
+                  textDecoration: 'none',
+                  borderRadius: '6px',
+                  marginBottom: '1px',
+                }}
+              >
+                {item.label}
+              </Link>
             ))}
 
             <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: `1px solid ${tokens.colors.border}`, fontSize: '12px', color: tokens.colors.textMuted }}>

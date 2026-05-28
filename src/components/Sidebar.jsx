@@ -69,7 +69,7 @@ const sidebarStyles = {
   }),
 }
 
-export default function Sidebar({ title = 'Navigation', children, groups }) {
+export default function Sidebar({ title = 'Navigation', children, groups, items }) {
   return (
     <aside className={sidebarStyles.sidebar}>
       <div className={sidebarStyles.section}>
@@ -77,6 +77,25 @@ export default function Sidebar({ title = 'Navigation', children, groups }) {
 
         {children && <div>{children}</div>}
 
+        {/* Flat list of items (new docs system) */}
+        {items && items.length > 0 && (
+          <div>
+            {items.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  cx(sidebarStyles.link, isActive && 'active')
+                }
+                end={item.end}
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </div>
+        )}
+
+        {/* Grouped navigation (legacy support) */}
         {groups &&
           groups.map((group, idx) => (
             <div key={idx} className={sidebarStyles.group}>

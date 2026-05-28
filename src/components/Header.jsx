@@ -239,8 +239,8 @@ export default function Header() {
     <header className={headerStyles.header}>
       <div className={headerStyles.inner}>
         <Link to="/" className={headerStyles.logo}>
-          <div className={headerStyles.logoMark}>G</div>
-          Grok Docs
+          <div className={headerStyles.logoMark}>O</div>
+          Ormus
         </Link>
 
         {/* Desktop nav */}
@@ -279,7 +279,7 @@ export default function Header() {
             }}
           />
           <a
-            href="https://github.com"
+            href="https://github.com/oakshiai/ormus-website"
             target="_blank"
             rel="noopener noreferrer"
             className={headerStyles.cta}
