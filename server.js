@@ -11,7 +11,7 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 const fastify = Fastify({
   logger: {
-    level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
+    level: 'info'
   },
 });
 
@@ -36,7 +36,7 @@ fastify.get('/health', async () => {
 });
 
 try {
-  await fastify.listen({ port: PORT, host: HOST });
+  await fastify.listen({port: PORT});
   fastify.log.info(`Server running on http://${HOST}:${PORT}`);
 } catch (err) {
   fastify.log.error(err);
