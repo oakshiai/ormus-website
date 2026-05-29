@@ -2,22 +2,22 @@ import { css, cx } from '@emotion/css'
 
 export { css, cx }
 
-// Design tokens
+// Design tokens (colors use CSS variables for light/dark + user toggle support)
 export const tokens = {
   colors: {
-    bg: '#ffffff',
-    bgAlt: '#f8f7fa',
-    bgSidebar: '#faf9fc',
-    text: '#3f3a47',
-    textMuted: '#6b6675',
-    textHeading: '#1f1b26',
-    border: '#e8e6ed',
-    accent: '#6b4eff',
-    accentHover: '#5a3fe6',
-    accentLight: '#f0edff',
-    codeBg: '#f4f2f9',
-    cardBg: '#ffffff',
-    shadow: '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.03)',
+    bg: 'var(--bg)',
+    bgAlt: 'var(--bg-alt)',
+    bgSidebar: 'var(--bg-sidebar)',
+    text: 'var(--text)',
+    textMuted: 'var(--text-muted)',
+    textHeading: 'var(--text-heading)',
+    border: 'var(--border)',
+    accent: 'var(--accent)',
+    accentHover: 'var(--accent-hover)',
+    accentLight: 'var(--accent-light)',
+    codeBg: 'var(--code-bg)',
+    cardBg: 'var(--card-bg)',
+    shadow: 'var(--shadow)',
   },
   fonts: {
     sans: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
@@ -111,6 +111,16 @@ export const baseStyles = {
         padding: '16px',
         fontSize: '14px',
       },
+    },
+    // Reset inline code styling inside fenced code blocks so the whole
+    // block uses only the pre container background (no per-line or nested
+    // pill backgrounds on the code content).
+    '& pre code': {
+      background: 'transparent',
+      padding: 0,
+      borderRadius: 0,
+      fontSize: 'inherit',
+      boxShadow: 'none',
     },
     '& a': {
       color: tokens.colors.accent,

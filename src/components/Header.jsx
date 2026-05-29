@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { css, cx, tokens } from '../styles'
+import ThemeToggle from './ThemeToggle'
 
 const headerStyles = {
   header: css({
@@ -43,18 +44,13 @@ const headerStyles = {
   logoMark: css({
     width: '26px',
     height: '26px',
-    background: tokens.colors.accent,
-    borderRadius: '6px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: '#fff',
-    fontSize: '13px',
-    fontWeight: 700,
+    flexShrink: 0,
     '@media (min-width: 768px)': {
       width: '28px',
       height: '28px',
-      fontSize: '14px',
     },
   }),
   // Desktop nav (hidden on mobile)
@@ -101,7 +97,7 @@ const headerStyles = {
     borderRadius: tokens.radii.md,
     background: tokens.colors.bgAlt,
     outline: 'none',
-    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b6675' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E")`,
+    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E")`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '11px center',
     '&:focus': {
@@ -198,7 +194,7 @@ const headerStyles = {
     background: tokens.colors.bgAlt,
     outline: 'none',
     marginBottom: '20px',
-    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b6675' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E")`,
+    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E")`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '13px center',
     '&:focus': {
@@ -239,7 +235,9 @@ export default function Header() {
     <header className={headerStyles.header}>
       <div className={headerStyles.inner}>
         <Link to="/" className={headerStyles.logo}>
-          <div className={headerStyles.logoMark}>O</div>
+          <div className={headerStyles.logoMark}>
+            <img src="/ormus-logo.svg" alt="" aria-hidden="true" style={{ width: '100%', height: '100%', display: 'block' }} />
+          </div>
           Ormus
         </Link>
 
@@ -278,6 +276,7 @@ export default function Header() {
               }
             }}
           />
+          <ThemeToggle />
           <a
             href="https://github.com/oakshiai/ormus-website"
             target="_blank"
@@ -310,16 +309,21 @@ export default function Header() {
           >
             <div className={headerStyles.mobileMenuHeader}>
               <Link to="/" className={headerStyles.logo} onClick={closeMobileMenu}>
-                <div className={headerStyles.logoMark}>G</div>
-                Grok Docs
+                <div className={headerStyles.logoMark}>
+                  <img src="/ormus-logo.svg" alt="" aria-hidden="true" style={{ width: '100%', height: '100%', display: 'block' }} />
+                </div>
+                Ormus
               </Link>
-              <button
-                className={headerStyles.closeButton}
-                onClick={closeMobileMenu}
-                aria-label="Close menu"
-              >
-                ×
-              </button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <ThemeToggle onToggle={closeMobileMenu} />
+                <button
+                  className={headerStyles.closeButton}
+                  onClick={closeMobileMenu}
+                  aria-label="Close menu"
+                >
+                  ×
+                </button>
+              </div>
             </div>
 
             <nav className={headerStyles.mobileNav}>

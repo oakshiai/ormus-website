@@ -1,5 +1,89 @@
 :root {
-  color-scheme: light;
+  /* Light theme (default + explicit) */
+  --bg: #ffffff;
+  --bg-alt: #f8f7fa;
+  --bg-sidebar: #faf9fc;
+  --text: #3f3a47;
+  --text-muted: #6b6675;
+  --text-heading: #1f1b26;
+  --border: #e8e6ed;
+  --accent: #6b4eff;
+  --accent-hover: #5a3fe6;
+  --accent-light: #f0edff;
+  --code-bg: #f4f2f9;
+  --card-bg: #ffffff;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --code-pill-bg: #111113;
+  --code-pill-border: #27272a;
+  --code-pill-text: #f4f4f5;
+  --code-pill-muted: #a1a1aa;
+
+  color-scheme: light dark;
+}
+
+/* System dark mode (when no data-theme override) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f0f11;
+    --bg-alt: #18181b;
+    --bg-sidebar: #121214;
+    --text: #e5e5e7;
+    --text-muted: #a1a1aa;
+    --text-heading: #f8f8f9;
+    --border: #27272a;
+    --accent: #7c5fff;
+    --accent-hover: #906eff;
+    --accent-light: #29253d;
+    --code-bg: #1f1f23;
+    --card-bg: #18181b;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.22);
+    --code-pill-bg: #111113;
+    --code-pill-border: #27272a;
+    --code-pill-text: #e5e5e7;
+    --code-pill-muted: #a1a1aa;
+  }
+}
+
+/* Explicit dark override (user selected) */
+:root[data-theme="dark"] {
+  --bg: #0f0f11;
+  --bg-alt: #18181b;
+  --bg-sidebar: #121214;
+  --text: #e5e5e7;
+  --text-muted: #a1a1aa;
+  --text-heading: #f8f8f9;
+  --border: #27272a;
+  --accent: #7c5fff;
+  --accent-hover: #906eff;
+  --accent-light: #29253d;
+  --code-bg: #1f1f23;
+  --card-bg: #18181b;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.22);
+  --code-pill-bg: #111113;
+  --code-pill-border: #27272a;
+  --code-pill-text: #e5e5e7;
+  --code-pill-muted: #a1a1aa;
+}
+
+/* Explicit light override (user selected) */
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --bg-alt: #f8f7fa;
+  --bg-sidebar: #faf9fc;
+  --text: #3f3a47;
+  --text-muted: #6b6675;
+  --text-heading: #1f1b26;
+  --border: #e8e6ed;
+  --accent: #6b4eff;
+  --accent-hover: #5a3fe6;
+  --accent-light: #f0edff;
+  --code-bg: #f4f2f9;
+  --card-bg: #ffffff;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --code-pill-bg: #111113;
+  --code-pill-border: #27272a;
+  --code-pill-text: #f4f4f5;
+  --code-pill-muted: #a1a1aa;
 }
 
 * {
@@ -11,8 +95,8 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-size: 15px;
   line-height: 1.6;
-  color: #3f3a47;
-  background: #ffffff;
+  color: var(--text);
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

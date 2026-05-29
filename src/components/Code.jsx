@@ -3,18 +3,18 @@ import { css, cx, tokens } from '../styles'
 
 const codeStyles = {
   // Compact version for use inside headings and body text.
-  // Same dark color family as the big version, but with better internal breathing room.
+  // Uses themed pill colors (dark aesthetic preserved across light/dark site themes)
   default: css({
     display: 'inline-flex',
     alignItems: 'center',
-    background: '#111113',
-    border: `1px solid #27272a`,
+    background: 'var(--code-pill-bg)',
+    border: `1px solid var(--code-pill-border)`,
     borderRadius: '999px',
-    padding: '6px 18px',           // noticeably more room inside (matches the generous feel of the large version)
+    padding: '6px 18px',
     fontFamily: tokens.fonts.mono,
     fontSize: '0.78em',
     fontWeight: 500,
-    color: '#f4f4f5',
+    color: 'var(--code-pill-text)',
     verticalAlign: 'middle',
     lineHeight: 1,
     whiteSpace: 'nowrap',
@@ -25,13 +25,13 @@ const codeStyles = {
   pill: css({
     display: 'inline-flex',
     alignItems: 'center',
-    background: '#111113',
-    border: `1px solid #27272a`,
+    background: 'var(--code-pill-bg)',
+    border: `1px solid var(--code-pill-border)`,
     borderRadius: '9999px',
     padding: '9px 5px 9px 20px',
     fontFamily: tokens.fonts.mono,
     fontSize: '14px',
-    color: '#e5e5e7',
+    color: 'var(--code-pill-text)',
     boxShadow: '0 4px 12px rgba(0,0,0,0.35)',
     maxWidth: '100%',
     overflow: 'hidden',
@@ -46,7 +46,7 @@ const codeStyles = {
     textOverflow: 'ellipsis',
     flex: 1,
     minWidth: 0,
-    color: '#d1d1d6',
+    color: 'var(--code-pill-muted)',
     paddingRight: '4px',
   }),
 
@@ -59,14 +59,14 @@ const codeStyles = {
     borderRadius: '9999px',
     background: 'transparent',
     border: 'none',
-    color: '#a1a1aa',
+    color: 'var(--code-pill-muted)',
     cursor: 'pointer',
     flexShrink: 0,
     marginLeft: '2px',
     transition: 'all 0.1s ease',
     '&:hover': {
-      color: '#f4f4f5',
-      background: '#1f1f22',
+      color: 'var(--code-pill-text)',
+      background: 'var(--bg-alt)',
     },
   }),
 }
