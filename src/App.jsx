@@ -1,9 +1,12 @@
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
-import Docs from './pages/Docs'
-import Articles from './pages/Articles'
+
+// Lazy-loaded routes (code-split to keep initial bundle small)
+const Docs = lazy(() => import('./pages/Docs'))
+const Articles = lazy(() => import('./pages/Articles'))
 
 function App() {
   return (
@@ -11,10 +14,38 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/docs" element={<Docs />} />
-        <Route path="/docs/:slug" element={<Docs />} />
-        <Route path="/articles" element={<Articles />} />
-        <Route path="/articles/:slug" element={<Articles />} />
+        <Route
+          path="/docs"
+          element={
+            <Suspense fallback={null}>
+              <Docs />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/docs/:slug"
+          element={
+            <Suspense fallback={null}>
+              <Docs />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/articles"
+          element={
+            <Suspense fallback={null}>
+              <Articles />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/articles/:slug"
+          element={
+            <Suspense fallback={null}>
+              <Articles />
+            </Suspense>
+          }
+        />
         <Route
           path="*"
           element={
