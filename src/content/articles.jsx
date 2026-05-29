@@ -1,6 +1,4 @@
-import React from 'react'
-
-export const articles = [
+const articles = [
   {
     slug: 'introducing-grok-4-3',
     title: 'Introducing Grok 4.3',
@@ -151,10 +149,12 @@ export const articles = [
   },
 ]
 
-export function getArticleBySlug(slug) {
+function getArticleBySlug(slug) {
   return articles.find((a) => a.slug === slug)
 }
 
-export function getAllArticles() {
+function getAllArticles() {
   return articles
 }
+
+export { articles, getArticleBySlug, getAllArticles }

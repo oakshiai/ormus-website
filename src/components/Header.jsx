@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { css, cx, tokens } from '../styles'
-import ThemeToggle from './ThemeToggle'
+import { ThemeToggle } from './ThemeToggle'
 
 const headerStyles = {
   header: css({
@@ -216,7 +216,7 @@ const headerStyles = {
   }),
 }
 
-export default function Header() {
+function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const closeMobileMenu = () => setMobileMenuOpen(false)
@@ -370,3 +370,5 @@ export default function Header() {
     </header>
   )
 }
+
+export { Header }

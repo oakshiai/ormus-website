@@ -60,17 +60,17 @@ const allDocsRaw = Object.entries(mdModules)
   })
   .sort((a, b) => a.order - b.order)
 
-export const docs = allDocsRaw
+const docs = allDocsRaw
 
-export function getAllDocs() {
+function getAllDocs() {
   return docs
 }
 
-export function getDocBySlug(slug) {
+function getDocBySlug(slug) {
   return docs.find((d) => d.slug === slug)
 }
 
-export function getDocIndex() {
+function getDocIndex() {
   return docs.map(({ slug, title, description, order }) => ({
     slug,
     title,
@@ -78,3 +78,5 @@ export function getDocIndex() {
     order,
   }))
 }
+
+export { docs, getAllDocs, getDocBySlug, getDocIndex }

@@ -71,7 +71,7 @@ const codeStyles = {
   }),
 }
 
-export default function Code({ 
+function Code({ 
   children, 
   isCopyable = false, 
   className 
@@ -138,3 +138,5 @@ export default function Code({
     </span>
   )
 }
+
+export { Code }

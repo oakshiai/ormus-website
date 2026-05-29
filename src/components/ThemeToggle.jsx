@@ -47,7 +47,7 @@ function applyTheme(mode) {
   }
 }
 
-export default function ThemeToggle({ onToggle }) {
+function ThemeToggle({ onToggle }) {
   const [effective, setEffective] = useState('light')
 
   // Initialize and keep in sync
@@ -115,3 +115,5 @@ export default function ThemeToggle({ onToggle }) {
     </button>
   )
 }
+
+export { ThemeToggle }

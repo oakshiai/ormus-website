@@ -69,7 +69,7 @@ const sidebarStyles = {
   }),
 }
 
-export default function Sidebar({ title = 'Navigation', children, groups, items }) {
+function Sidebar({ title = 'Navigation', children, groups, items }) {
   return (
     <aside className={sidebarStyles.sidebar}>
       <div className={sidebarStyles.section}>
@@ -124,3 +124,5 @@ export default function Sidebar({ title = 'Navigation', children, groups, items 
     </aside>
   )
 }
+
+export { Sidebar }

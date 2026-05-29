@@ -1,12 +1,12 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Home from './pages/Home'
+import { Header } from './components/Header'
+import { Footer } from './components/Footer'
+import { Home } from './pages/Home'
 
 // Lazy-loaded routes (code-split to keep initial bundle small)
-const Docs = lazy(() => import('./pages/Docs'))
-const Articles = lazy(() => import('./pages/Articles'))
+const Docs = lazy(() => import('./pages/Docs').then((m) => ({ default: m.Docs })))
+const Articles = lazy(() => import('./pages/Articles').then((m) => ({ default: m.Articles })))
 
 function App() {
   return (
@@ -63,4 +63,4 @@ function App() {
   )
 }
 
-export default App
+export { App }

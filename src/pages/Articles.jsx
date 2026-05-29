@@ -137,7 +137,7 @@ const articlesStyles = {
   }),
 }
 
-export default function Articles() {
+function Articles() {
   const { slug } = useParams()
   const [searchParams, setSearchParams] = useSearchParams()
   const searchTerm = searchParams.get('search') || ''
@@ -268,3 +268,5 @@ export default function Articles() {
     </div>
   )
 }
+
+export { Articles }

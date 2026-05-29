@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { css, cx, tokens, baseStyles } from '../styles'
 import { articles } from '../content/articles.jsx'
-import Code from '../components/Code'
+import { Code } from '../components/Code'
 
 const homeStyles = {
   hero: css({
@@ -217,7 +217,7 @@ const cardBase = css({
   },
 })
 
-export default function Home() {
+function Home() {
   const featured = articles.slice(0, 3)
 
   return (
@@ -306,3 +306,5 @@ export default function Home() {
     </div>
   )
 }
+
+export { Home }

@@ -32,7 +32,7 @@ const footerStyles = {
   }),
 }
 
-export default function Footer() {
+function Footer() {
   return (
     <footer className={footerStyles.footer}>
       <div className={footerStyles.inner}>
@@ -51,3 +51,5 @@ export default function Footer() {
     </footer>
   )
 }
+
+export { Footer }

@@ -1,9 +1,7 @@
 import { css, cx } from '@emotion/css'
 
-export { css, cx }
-
 // Design tokens (colors use CSS variables for light/dark + user toggle support)
-export const tokens = {
+const tokens = {
   colors: {
     bg: 'var(--bg)',
     bgAlt: 'var(--bg-alt)',
@@ -39,7 +37,7 @@ export const tokens = {
 }
 
 // Common reusable style blocks
-export const baseStyles = {
+const baseStyles = {
   reset: css({
     boxSizing: 'border-box',
   }),
@@ -194,3 +192,5 @@ export const baseStyles = {
     },
   }),
 }
+
+export { css, cx, tokens, baseStyles }
