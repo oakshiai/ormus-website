@@ -224,10 +224,11 @@ export default function Home() {
     <div>
       <div className={homeStyles.hero}>
         <h1 className={homeStyles.heroTitle}>
-          Learn to <Code>grok build</Code><br />with me
+          Learn<br /><Code>grok build</Code><br />with me
         </h1>
         <p className={homeStyles.heroSubtitle}>
-          A new kind of coding tool from xAI. See how to use it, how it performs, and how to master it.
+          A new kind of coding tool from <a href="https://x.ai/news/grok-build-cli" target="_blank"
+            rel="noopener noreferrer">xAI</a>. See how to use it, how it performs, and how to master it.
         </p>
 
         <div style={{ margin: '18px auto 22px', maxWidth: '620px', width: '100%' }}>
