@@ -4,8 +4,53 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
 import { css, cx, tokens, baseStyles } from '../styles'
-import Sidebar from '../components/Sidebar'
+import { Sidebar } from '../components/Sidebar'
 import { docs, getDocBySlug } from '../lib/docs'
+
+// Custom link renderer for ReactMarkdown:
+// - ormus.ai links (and subdomains) open in the same tab
+// - all other http/https links open in a new tab with rel="noopener noreferrer"
+function MarkdownLink({ href, children, ...rest }) {
+  if (!href) {
+    return <a {...rest}>{children}</a>
+  }
+
+  // Internal anchors and site-absolute paths
+  if (href.startsWith('#') || href.startsWith('/')) {
+    return <a href={href} {...rest}>{children}</a>
+  }
+
+  // Relative paths (no protocol) and protocol-relative URLs stay in same tab
+  if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(href)) {
+    return <a href={href} {...rest}>{children}</a>
+  }
+
+  // Determine if this external link should open in a new tab.
+  // All decision logic is kept outside JSX to satisfy the linter rule
+  // against constructing JSX inside try/catch.
+  let openInNewTab = false
+  try {
+    const url = new URL(href)
+    if (url.protocol === 'http:' || url.protocol === 'https:') {
+      const host = url.hostname.toLowerCase()
+      if (host !== 'ormus.ai' && !host.endsWith('.ormus.ai')) {
+        openInNewTab = true
+      }
+    }
+  } catch {
+    // Malformed or non-http(s) URL (e.g. mailto:) — keep same-tab behavior
+  }
+
+  if (openInNewTab) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" {...rest}>
+        {children}
+      </a>
+    )
+  }
+
+  return <a href={href} {...rest}>{children}</a>
+}
 
 const docsStyles = {
   layout: css({
@@ -188,7 +233,7 @@ const docsStyles = {
   }),
 }
 
-export default function Docs() {
+function Docs() {
   const { slug } = useParams()
   const currentDoc = slug ? getDocBySlug(slug) : null
   const [mobileTocOpen, setMobileTocOpen] = useState(false)
@@ -263,7 +308,7 @@ export default function Docs() {
             </div>
 
             <div className={baseStyles.prose}>
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ a: MarkdownLink }}>
                 {currentDoc.content.replace(/^#\s+.+\n+/, '')}
               </ReactMarkdown>
             </div>
@@ -326,3 +371,5 @@ export default function Docs() {
     </div>
   )
 }
+
+export { Docs }
