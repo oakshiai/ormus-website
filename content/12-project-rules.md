@@ -180,7 +180,7 @@ Beyond AGENTS.md files, the `.grok/` directory in your project root can contain 
 | `.grok/hooks/` | Project-scoped lifecycle hooks |
 | `.grok/lsp.json` | LSP server configuration |
 
-These are all optional. See the respective guides for details on each.
+These are all optional. See the [Configuration](/docs/configuration), [Skills](/docs/skills), [Plugins](/docs/plugins), [Subagents](/docs/subagents), and [Hooks](/docs/hooks) guides for details.
 
 ---
 

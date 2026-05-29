@@ -65,7 +65,7 @@ export XAI_API_KEY="xai-..."
 grok
 ```
 
-See [Authentication](02-authentication.md) for the full set of auth options including OIDC, external auth providers, and device code flow.
+See [Authentication](/docs/authentication) for the full set of auth options including OIDC, external auth providers, and device code flow.
 
 ---
 
@@ -117,6 +117,8 @@ Every conversation is a **session**. Sessions are automatically saved to `~/.gro
 - Resume a previous session: `/load` in the TUI, or `--resume <ID>` from the CLI
 - Continue the most recent session: `grok -c`
 
+See the [Sessions guide](/docs/sessions) for storage format, restore behavior, and management commands.
+
 ### Scrollback
 
 The scrollback is the main display area. It shows:
@@ -144,7 +146,7 @@ Grok has built-in tools for:
 | `task` | Spawn parallel subagent sessions |
 | `memory_search` | Search cross-session memory |
 
-Tools can be extended with [MCP servers](05-configuration.md#mcp-servers) for integrations like GitHub, databases, and more.
+Tools can be extended with [MCP servers](/docs/configuration#mcp-servers) for integrations like GitHub, databases, and more.
 
 ### Slash Commands
 
@@ -157,7 +159,7 @@ Type `/` in the prompt to access commands. These provide quick actions without w
 /new                              # Start a new session
 ```
 
-See [Slash Commands](04-slash-commands.md) for the complete reference.
+See [Slash Commands](/docs/slash-commands) for the complete reference.
 
 ---
 
@@ -213,6 +215,8 @@ Example CI/CD usage:
 grok -p "Review changes for bugs" --output-format json --yolo | jq -r '.text'
 ```
 
+See the [Headless Mode guide](/docs/headless-mode) for full details, scripting patterns, and environment variables.
+
 ---
 
 ## Project Rules (AGENTS.md)
@@ -233,10 +237,10 @@ Deeper files take precedence. Grok also reads `CLAUDE.md` files for compatibilit
 
 | Document | What You Will Learn |
 |----------|-------------------|
-| [Authentication](02-authentication.md) | Browser login, API keys, OIDC, external auth, device code flow |
-| [Keyboard Shortcuts](03-keyboard-shortcuts.md) | Complete reference for all key bindings |
-| [Slash Commands](04-slash-commands.md) | All available `/` commands |
-| [Configuration](05-configuration.md) | config.toml, pager.toml, environment variables |
+| [Authentication](/docs/authentication) | Browser login, API keys, OIDC, external auth, device code flow |
+| [Keyboard Shortcuts](/docs/keyboard-shortcuts) | Complete reference for all key bindings |
+| [Slash Commands](/docs/slash-commands) | All available `/` commands |
+| [Configuration](/docs/configuration) | config.toml, pager.toml, environment variables |
 
 ---
 

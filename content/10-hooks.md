@@ -215,7 +215,7 @@ These variables are passed through to the hook process, but they cannot override
 
 #### Using variables in `command` and `url` fields
 
-Both `command` and `url` support `${VAR}` and `$VAR` expansion. See [custom-hooks.md](../custom-hooks.md) for full details on load-time vs runtime expansion, the `env` map lookup order, and how parameter-expansion modifiers (e.g. `${VAR:-default}`) are handled.
+Both `command` and `url` support `${VAR}` and `$VAR` expansion (including load-time vs runtime, `env` map lookup order, and parameter-expansion modifiers like `${VAR:-default}`). See the [hooks guide](/docs/hooks#using-variables-in-command-and-url-fields) for more.
 
 ---
 

@@ -11,7 +11,7 @@ Grok has two input modes that control how you navigate the scrollback:
 - **Simple mode** (default): Arrow keys for navigation, `Shift+Arrow` for turn navigation, `Space` to focus the prompt, and any printable key auto-focuses the prompt.
 - **Vim mode** (opt-in): `j`/`k` for navigation, `H`/`L` for turn navigation, `h`/`l` for fold, `e`/`E` for expand/collapse, and `i`/`Tab`/`Space` to focus the prompt.
 
-Simple mode is active by default. To switch to Vim mode, set `simple_mode = false` under `[ui]` in `~/.grok/config.toml`. See [Configuration](05-configuration.md) for details.
+Simple mode is active by default. To switch to Vim mode, set `simple_mode = false` under `[ui]` in `~/.grok/config.toml`. See [Configuration](/docs/configuration) for details.
 
 The tables below document bindings for both modes. The "Key" column shows the Vim-mode binding, and the "Alt Key" column shows the equivalent in simple mode (arrow keys, etc.).
 
@@ -110,7 +110,7 @@ When the agent is generating, `Ctrl+Enter` from the prompt sends a mid-turn inte
 
 In `/multiline` mode, `Ctrl+Enter` (or `Shift+Enter`) sends while plain `Enter` just inserts a newline.
 
-> **WezTerm**: These modified Enter keys need `enable_kitty_keyboard = true` in your WezTerm config. Full steps and a one-line workaround are in the [terminal support guide](21-terminal-support.md#problem-ctrlenter-interject-or-modified-enter-keys-do-not-work-as-expected-wezterm).
+> **WezTerm**: These modified Enter keys need `enable_kitty_keyboard = true` in your WezTerm config. Full steps and a one-line workaround are in the [terminal support guide](/docs/terminal-support#problem-ctrlenter-doesnt-interject-in-wezterm).
 
 ---
 

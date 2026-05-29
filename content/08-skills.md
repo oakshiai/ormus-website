@@ -8,7 +8,7 @@ Skills are reusable prompt packages that extend Grok with specialized workflows,
 
 A skill is a directory containing a `SKILL.md` file. The markdown content tells Grok exactly how to handle a specific type of task -- step-by-step instructions, conventions, tool usage patterns, and anything else relevant to that workflow.
 
-Skills bridge the gap between one-off instructions (which you'd type every time) and project rules in AGENTS.md (which apply to everything). A skill is activated only when relevant.
+Skills bridge the gap between one-off instructions (which you'd type every time) and project rules in [AGENTS.md](/docs/project-rules) (which apply to everything). A skill is activated only when relevant.
 
 ---
 
@@ -185,7 +185,7 @@ Each skill entry shows:
 
 Skills can also come from plugins. When you install a plugin that includes skills, they appear alongside your user and project skills. Plugin-provided skills are tagged with `[plugin: name]` in `grok inspect` output.
 
-See the [Plugins guide](09-plugins.md) for more on installing plugins that provide skills.
+See the [Plugins guide](/docs/plugins) for more on installing plugins that provide skills.
 
 ---
 

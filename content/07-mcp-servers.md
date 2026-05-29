@@ -16,7 +16,7 @@ See the [MCP specification](https://modelcontextprotocol.io) for protocol detail
 
 ## Configuration
 
-MCP servers are configured in `~/.grok/config.toml` under `[mcp_servers.<name>]` sections.
+MCP servers are configured in `~/.grok/config.toml` under `[mcp_servers.<name>]` sections (see [Configuration](/docs/configuration) for the full config reference and precedence rules).
 
 ### stdio Transport (Local Process)
 

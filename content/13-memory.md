@@ -40,6 +40,8 @@ grok
 enabled = true
 ```
 
+See [Configuration](/docs/configuration) for the complete `[memory]` and `[compaction]` reference.
+
 ### Force-Disable
 
 To disable memory even when other settings enable it:

@@ -10,7 +10,7 @@ A plugin is a directory containing any combination of:
 
 - **Skills** -- `skills/` directory with SKILL.md files
 - **Agents** -- `agents/` directory with agent definitions
-- **Hooks** -- `hooks/hooks.json` file with lifecycle hooks. When hooks come from a plugin, they receive `GROK_PLUGIN_ROOT` and `GROK_PLUGIN_DATA` (see the [Hooks guide](10-hooks.md) for all environment variables available to hooks).
+- **Hooks** -- `hooks/hooks.json` file with lifecycle hooks. When hooks come from a plugin, they receive `GROK_PLUGIN_ROOT` and `GROK_PLUGIN_DATA` (see the [Hooks guide](/docs/hooks) for all environment variables available to hooks).
 - **MCP servers** -- `.mcp.json` file with server configurations
 - **LSP servers** -- `.lsp.json` file with language server configurations
 
@@ -25,7 +25,7 @@ Plugin-provided hooks receive two additional environment variables beyond the st
 | `GROK_PLUGIN_ROOT`   | Absolute path to the plugin's installed directory. |
 | `GROK_PLUGIN_DATA`   | Absolute path to the plugin's writable data directory (for storing plugin state, caches, logs, etc.). |
 
-These values are managed by the plugin system. They override any user-declared values for the same keys in the hook JSON's `env` map. See the [Hooks guide](10-hooks.md) for the complete list of environment variables passed to hooks.
+These values are managed by the plugin system. They override any user-declared values for the same keys in the hook JSON's `env` map. See the [Hooks guide](/docs/hooks) for the complete list of environment variables passed to hooks.
 
 ---
 

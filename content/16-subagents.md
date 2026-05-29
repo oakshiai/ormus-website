@@ -14,7 +14,7 @@ Agents and personas are both ways to customize behavior, but they operate at dif
 |---|---|---|
 | **What they configure** | The entire session: model, tools, prompt mode, system prompt | Behavioral instructions injected into a subagent's prompt |
 | **Scope** | Primary session or subagent | Subagents only (cannot be applied to the primary session) |
-| **How they're set** | Configured at startup or via agent definitions (`.md` files in `~/.grok/agents/` or `.grok/agents/`) | Set per-subagent via the `persona` parameter on `spawn_subagent` |
+| **How they're set** | Configured at startup or via [agent definitions](/docs/agent-mode) (`.md` files in `~/.grok/agents/` or `.grok/agents/`) | Set per-subagent via the `persona` parameter on `spawn_subagent` |
 | **What they control** | Model selection, tool availability, prompt body, skills | Tone, output format, task focus, IO contracts |
 | **User-editable** | Yes -- create, delete, toggle via `/agents` modal or by editing `.md` files | Bundled personas are read-only; custom personas defined in `config.toml` or `.grok/personas/*.toml` |
 | **Examples** | `grok-build`, `explore`, `plan`, `cursor` | `implementer`, `reviewer`, `security-auditor`, `researcher` |

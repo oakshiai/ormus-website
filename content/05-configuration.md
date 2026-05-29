@@ -70,7 +70,7 @@ simple_mode = false
 
 > **Note:** The `/simple-mode` slash command has been removed. Input mode is now configured exclusively via `config.toml`.
 
-See [Keyboard Shortcuts](03-keyboard-shortcuts.md) for the full binding reference.
+See [Keyboard Shortcuts](/docs/keyboard-shortcuts) for the full binding reference.
 
 #### Vim Mode
 
@@ -80,7 +80,7 @@ active in the **scrollback** pane.
 | Value | Behavior |
 |-------|----------|
 | `false` (default) | Bare-letter and `Shift+letter` keys (`j/k`, `h/l`, `g/G`, `y/Y`, `o/O`, `r`, `x`, `e/E`, `L/H`, plus `i` insert) are suppressed in the scrollback. Pressing one of those letters focuses the prompt and types the character. Arrows, `Tab`, `Esc`, `Space`, `PageUp/Down`, and all `Ctrl+letter` shortcuts still navigate the scrollback. |
-| `true` | All vim-style scrollback bindings active, exactly as listed in [Keyboard Shortcuts](03-keyboard-shortcuts.md). |
+| `true` | All vim-style scrollback bindings active, exactly as listed in [Keyboard Shortcuts](/docs/keyboard-shortcuts). |
 
 Toggle at runtime with `/vim-mode`. The change is written through to
 `[ui].vim_mode` in `~/.grok/config.toml` immediately and applies to every
@@ -105,7 +105,7 @@ allowed_domains = ["docs.rs", "x.ai"]           # override the built-in allowlis
 
 ### Authentication
 
-See [Authentication](02-authentication.md) for full details.
+See [Authentication](/docs/authentication) for full details.
 
 ```toml
 [auth]
@@ -150,7 +150,7 @@ api_key = "my-api-key"               # only override the fields you need
 
 ### MCP Servers
 
-Configure external tool integrations via the Model Context Protocol.
+Configure external tool integrations via the Model Context Protocol. See the [MCP Servers guide](/docs/mcp-servers) for full setup, examples, and environment variable expansion.
 
 ```toml
 [mcp_servers.github]
@@ -177,7 +177,7 @@ Priority: `.grok/config.toml` (current dir) > `<repo-root>/.grok/config.toml` > 
 
 ### Memory
 
-Cross-session knowledge persistence (requires `--experimental-memory` or `GROK_MEMORY=1`).
+Cross-session knowledge persistence (requires `--experimental-memory` or `GROK_MEMORY=1`). See the [Memory guide](/docs/memory) for usage, storage layout, and commands.
 
 ```toml
 [memory]
@@ -226,6 +226,8 @@ ignore = ["~/my-team-skills/wip"]     # paths to exclude
 ```
 
 ### Plugins
+
+See the [Plugins guide](/docs/plugins) for how to install and develop plugins (which can provide skills, hooks, and more).
 
 ```toml
 [plugins]
@@ -346,7 +348,7 @@ and releases automatically when the turn ends.
 ### Keyboard Shortcuts
 
 Keyboard shortcuts are **not configurable** via config files. All bindings are defined in
-the source code (`actions/defaults.rs`). See [Keyboard Shortcuts](03-keyboard-shortcuts.md)
+the source code (`actions/defaults.rs`). See [Keyboard Shortcuts](/docs/keyboard-shortcuts)
 for the complete reference.
 ### Telemetry
 
