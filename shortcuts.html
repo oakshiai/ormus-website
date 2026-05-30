@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grok Build TUI • Keyboard Shortcuts • A4 Print</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    :root {
+      --accent: #6b4eff;
+      --accent-dark: #5a3fe6;
+      --text: #1f1b26;
+      --text-muted: #4a4555;
+      --border: #d9d6e0;
+      --bg-soft: #f8f7fa;
+      --paper-bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #e8e6ed;
+      padding: 12mm 8mm;
+      color: var(--text);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .paper {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: var(--paper-bg);
+      box-shadow: 0 3px 18px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.08);
+      padding: 7mm 8mm 6mm;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .paper {
+        width: 100%;
+        min-height: auto;
+        margin: 0;
+        box-shadow: none;
+        padding: 6mm 7mm 5mm;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .section {
+        break-inside: avoid;
+      }
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 3.2mm;
+      padding-bottom: 2.2mm;
+      border-bottom: 1.2pt solid var(--accent);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: baseline;
+      gap: 2.5mm;
+    }
+
+    .logo {
+      font-size: 13pt;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .header-title {
+      font-size: 10.5pt;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+
+    .header-sub {
+      font-size: 7pt;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-left: 1.5mm;
+    }
+
+    .print-btn {
+      font-size: 7.5pt;
+      font-weight: 600;
+      padding: 1.2mm 3mm;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 2mm;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 1px 2px rgba(107, 78, 255, 0.3);
+    }
+
+    .print-btn:hover {
+      background: var(--accent-dark);
+    }
+
+    /* Content grid */
+    .sections {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3.4mm 4.2mm;
+    }
+
+    .section {
+      break-inside: avoid;
+    }
+
+    .section-header {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 1.1mm 0;
+      padding-bottom: 0.6mm;
+      border-bottom: 0.7pt solid var(--accent);
+      letter-spacing: -0.1px;
+    }
+
+    /* Tables */
+    .shortcuts-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 7.4pt;
+      line-height: 1.22;
+    }
+
+    .shortcuts-table td {
+      padding: 0.45mm 0;
+      vertical-align: baseline;
+    }
+
+    .shortcuts-table tr:not(:last-child) td {
+      border-bottom: 0.25pt solid #e6e3eb;
+    }
+
+    .action {
+      color: var(--text);
+      padding-right: 1.3mm;
+      font-weight: 400;
+    }
+
+    .shortcut-cell {
+      text-align: right;
+      width: 37%;
+      padding-left: 1mm;
+      white-space: nowrap;
+    }
+
+    .shortcut {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 6.7pt;
+      font-weight: 600;
+      color: #2a2535;
+      background: var(--bg-soft);
+      border: 0.4pt solid #d9d6e0;
+      padding: 0.3mm 0.7mm;
+      border-radius: 1.1mm;
+      white-space: nowrap;
+      display: inline-block;
+      line-height: 1.15;
+      letter-spacing: -0.12px;
+    }
+
+    .sep {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 5.5pt;
+      font-style: italic;
+      font-weight: 400;
+      color: #a19da9;
+      margin: 0 0.6mm;
+      vertical-align: middle;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    /* Footer */
+    .footer {
+      position: absolute;
+      bottom: 4mm;
+      left: 8mm;
+      right: 8mm;
+      font-size: 6pt;
+      color: #8a8496;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 0.3pt solid #e6e3eb;
+      padding-top: 1.4mm;
+      margin-top: 2.8mm;
+    }
+
+    .footer-left {
+      font-weight: 500;
+    }
+
+    .footer-right {
+      font-weight: 400;
+    }
+
+    .tip {
+      margin-top: 2.2mm;
+      font-size: 6.2pt;
+      color: #6b6675;
+      background: #f9f8fb;
+      padding: 1mm 2mm;
+      border-radius: 1.5mm;
+      border-left: 1.5pt solid var(--accent);
+    }
+
+    .tip strong {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Screen preview label */
+    .preview-label {
+      text-align: center;
+      font-size: 6.5pt;
+      color: #8a8496;
+      margin-top: 3mm;
+      font-weight: 500;
+    }
+
+    @media screen {
+      .preview-label {
+        display: block;
+      }
+    }
+
+    @media print {
+      .preview-label {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="paper">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <span class="logo">GROK</span>
+        <span>
+          <span class="header-title">Keyboard Shortcuts</span>
+          <span class="header-sub">Quick Reference - A4</span>
+        </span>
+      </div>
+      <button onclick="window.print()" class="print-btn no-print">Print / Save PDF</button>
+    </div>
+
+    <!-- Sections Grid -->
+    <div class="sections">
+      <!-- Essentials -->
+      <div class="section">
+        <h2 class="section-header">Essentials</h2>
+        <table class="shortcuts-table">
+          <tr><td class="action">Send</td><td class="shortcut-cell"><span class="shortcut">Enter</span></td></tr>
+          <tr><td class="action">Focus prompt</td><td class="shortcut-cell"><span class="shortcut">Tab</span><span class="sep">or</span><span class="shortcut">Space</span></td></tr>
+          <tr><td class="action">Focus scrollback</td><td class="shortcut-cell"><span class="shortcut">Esc</span><span class="sep">or</span><span class="shortcut">Tab</span></td></tr>
+          <tr><td class="action">Cancel turn</td><td class="shortcut-cell"><span class="shortcut">Ctrl + c</span></td></tr>
+          <tr><td class="action">Cycle mode (Normal / Plan / Auto-approve)</td><td class="shortcut-cell"><span class="shortcut">Shift + Tab</span></td></tr>
+          <tr><td class="action">Quit</td><td class="shortcut-cell"><span class="shortcut">Ctrl + q</span><span class="sep">or</span><span class="shortcut">Ctrl + d</span></td></tr>
+          <tr><td class="action">Command palette</td><td class="shortcut-cell"><span class="shortcut">Ctrl + p</span><span class="sep">or</span><span class="shortcut">?</span></td></tr>
+          <tr><td class="action">Keyboard shortcuts</td><td class="shortcut-cell"><span class="shortcut">Ctrl + .</span><span class="sep">or</span><span class="shortcut">Ctrl + x</span></td></tr>
+          <tr><td class="action">Open the settings modal</td><td class="shortcut-cell"><span class="shortcut">F2</span><span class="sep">or</span><span class="shortcut">Ctrl + ,</span><span class="sep">or</span><span class="shortcut">,</span></td></tr>
+        </table>
+      </div>
+
+      <!-- Input -->
+      <div class="section">
+        <h2 class="section-header">Input</h2>
+        <table class="shortcuts-table">
+          <tr><td class="action">Interject while running</td><td class="shortcut-cell"><span class="shortcut">Ctrl + Enter</span></td></tr>
+          <tr><td class="action">Search prompt history</td><td class="shortcut-cell"><span class="shortcut">Ctrl + r</span></td></tr>
+          <tr><td class="action">Toggle multiline</td><td class="shortcut-cell"><span class="shortcut">Ctrl + m</span></td></tr>
+          <tr><td class="action">Shell mode (type ! on empty prompt)</td><td class="shortcut-cell"><span class="shortcut">!</span></td></tr>
+        </table>
+      </div>
+
+      <!-- Conversation Navigation -->
+      <div class="section">
+        <h2 class="section-header">Conversation Navigation</h2>
+        <table class="shortcuts-table">
+          <tr><td class="action">Select next entry</td><td class="shortcut-cell"><span class="shortcut">↓</span></td></tr>
+          <tr><td class="action">Select previous entry</td><td class="shortcut-cell"><span class="shortcut">↑</span></td></tr>
+          <tr><td class="action">Next turn</td><td class="shortcut-cell"><span class="shortcut">Shift + →</span></td></tr>
+          <tr><td class="action">Previous turn</td><td class="shortcut-cell"><span class="shortcut">Shift + ←</span></td></tr>
+          <tr><td class="action">Scroll up one line</td><td class="shortcut-cell"><span class="shortcut">Ctrl + k</span></td></tr>
+          <tr><td class="action">Scroll down one line</td><td class="shortcut-cell"><span class="shortcut">Ctrl + j</span></td></tr>
+          <tr><td class="action">Scroll up half page</td><td class="shortcut-cell"><span class="shortcut">Ctrl + u</span></td></tr>
+          <tr><td class="action">Scroll down half page</td><td class="shortcut-cell"><span class="shortcut">Ctrl + d</span></td></tr>
+          <tr><td class="action">Scroll up one page</td><td class="shortcut-cell"><span class="shortcut">Page Up</span></td></tr>
+          <tr><td class="action">Scroll down one page</td><td class="shortcut-cell"><span class="shortcut">Page Down</span></td></tr>
+        </table>
+      </div>
+
+      <!-- Conversation Actions -->
+      <div class="section">
+        <h2 class="section-header">Conversation Actions</h2>
+        <table class="shortcuts-table">
+          <tr><td class="action">Collapse selected entry</td><td class="shortcut-cell"><span class="shortcut">←</span></td></tr>
+          <tr><td class="action">Expand selected entry</td><td class="shortcut-cell"><span class="shortcut">→</span></td></tr>
+          <tr><td class="action">Toggle all thinking blocks</td><td class="shortcut-cell"><span class="shortcut">Ctrl + Shift + e</span></td></tr>
+          <tr><td class="action">Open in viewer</td><td class="shortcut-cell"><span class="shortcut">Enter</span><span class="sep">or</span><span class="shortcut">Ctrl + f</span></td></tr>
+          <tr><td class="action">Cancel turn (from scrollback)</td><td class="shortcut-cell"><span class="shortcut">Esc</span></td></tr>
+          <tr><td class="action">Toggle plan preview</td><td class="shortcut-cell"><span class="shortcut">Ctrl + Shift + p</span></td></tr>
+        </table>
+      </div>
+
+      <!-- Panels -->
+      <div class="section">
+        <h2 class="section-header">Panels</h2>
+        <table class="shortcuts-table">
+          <tr><td class="action">Toggle todo pane</td><td class="shortcut-cell"><span class="shortcut">Ctrl + t</span></td></tr>
+          <tr><td class="action">Toggle tasks pane</td><td class="shortcut-cell"><span class="shortcut">Ctrl + b</span></td></tr>
+          <tr><td class="action">Toggle agents pane</td><td class="shortcut-cell"><span class="shortcut">Ctrl + Shift + a</span></td></tr>
+          <tr><td class="action">Toggle prompt queue</td><td class="shortcut-cell"><span class="shortcut">Ctrl + ;</span></td></tr>
+          <tr><td class="action">Open sessions</td><td class="shortcut-cell"><span class="shortcut">Ctrl + s</span></td></tr>
+          <tr><td class="action">Open extensions</td><td class="shortcut-cell"><span class="shortcut">Ctrl + l</span></td></tr>
+          <tr><td class="action">Send running task to background</td><td class="shortcut-cell"><span class="shortcut">Ctrl + g</span></td></tr>
+        </table>
+      </div>
+
+      <!-- Session -->
+      <div class="section">
+        <h2 class="section-header">Session</h2>
+        <table class="shortcuts-table">
+          <tr><td class="action">Toggle auto-approve</td><td class="shortcut-cell"><span class="shortcut">Ctrl + o</span></td></tr>
+          <tr><td class="action">New session</td><td class="shortcut-cell"><span class="shortcut">Ctrl + n</span></td></tr>
+          <tr><td class="action">New session in worktree</td><td class="shortcut-cell"><span class="shortcut">Ctrl + Shift + n</span></td></tr>
+          <tr><td class="action">Back to Home</td><td class="shortcut-cell"><span class="shortcut">Ctrl + Shift + h</span></td></tr>
+          <tr><td class="action">Pick model</td><td class="shortcut-cell"><span class="shortcut">Ctrl + m</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tip -->
+    <div class="tip">
+      <strong>Pro tip:</strong> In the TUI, press <span class="shortcut" style="font-size:6.2pt;padding:0.15mm 0.65mm;">Ctrl + p</span><span class="sep" style="font-size:5.3pt;margin:0 0.5mm;">or</span><span class="shortcut" style="font-size:6.2pt;padding:0.15mm 0.65mm;">?</span> to open the command palette - it shows every available action and shortcut.
+    </div>
+  </div>
+
+  <script>
+    // Keyboard support: Cmd/Ctrl+P triggers print from the preview page
+    document.addEventListener('keydown', function(e) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'p') {
+        // Only intercept when not already in print dialog
+        const paper = document.querySelector('.paper');
+        if (paper && getComputedStyle(paper).boxShadow !== 'none') {
+          e.preventDefault();
+          window.print();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
