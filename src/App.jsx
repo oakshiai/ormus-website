@@ -1,19 +1,24 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { Home } from './pages/Home'
+import { TuiTest } from './pages/TuiTest'
 
 // Lazy-loaded routes (code-split to keep initial bundle small)
 const Docs = lazy(() => import('./pages/Docs').then((m) => ({ default: m.Docs })))
 const Articles = lazy(() => import('./pages/Articles').then((m) => ({ default: m.Articles })))
 
-function App() {
+function AppContent() {
+  const location = useLocation()
+  const hideChrome = location.pathname === '/tui-test'
+
   return (
-    <BrowserRouter>
-      <Header />
+    <>
+      {!hideChrome && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/tui-test" element={<TuiTest />} />
         <Route
           path="/docs"
           element={
@@ -58,7 +63,15 @@ function App() {
           }
         />
       </Routes>
-      <Footer />
+      {!hideChrome && <Footer />}
+    </>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   )
 }

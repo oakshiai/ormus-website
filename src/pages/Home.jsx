@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import { css, cx, tokens, baseStyles } from '../styles'
 import { articles } from '../content/articles.jsx'
 import { Code } from '../components/Code'
+import { Key, KeyCombo } from '../components/Keyboard'
+import { TUI } from '../components/TUI'
 
 const homeStyles = {
   hero: css({
@@ -270,6 +272,56 @@ function Home() {
               Connect external tools and data sources.
             </div>
           </Link>
+        </div>
+      </div>
+
+      {/* Keyboard shortcut components demo */}
+      <div className={homeStyles.section}>
+        <div className={homeStyles.sectionHeader}>
+          <h2 className={homeStyles.sectionTitle}>Keyboard Shortcuts</h2>
+          <Link to="/docs/keyboard-shortcuts" className={homeStyles.viewAll}>Full reference →</Link>
+        </div>
+
+        <div style={{ display: 'grid', gap: '24px', maxWidth: 820 }}>
+          {/* Simple primitives still available for inline / table use */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px 16px' }}>
+            <div style={{ fontSize: '13px', color: tokens.colors.textMuted, minWidth: 110 }}>Primitives:</div>
+            <div>
+              <Key>Ctrl</Key> <span style={{ color: tokens.colors.textMuted, margin: '0 2px' }}>+</span> <Key>H</Key>
+            </div>
+            <div>
+              <KeyCombo keys={['Ctrl', 'Shift', 'P']} />
+            </div>
+            <div>
+              <KeyCombo keys={['Esc']} />
+            </div>
+            <div style={{ fontSize: '12px', color: tokens.colors.textMuted, marginLeft: 8 }}>
+              Use anywhere
+            </div>
+          </div>
+
+          {/* Lossless TUI recreation demo – replaces the previous lossy bitmap */}
+          <div>
+            <div style={{ fontSize: '12px', color: tokens.colors.textMuted, marginBottom: '10px', paddingLeft: '2px' }}>
+              Grok Build TUI (React recreation from real screenshots)
+            </div>
+
+            <div style={{ display: 'grid', gap: '18px' }}>
+              <div>
+                <div style={{ fontSize: '11px', color: tokens.colors.textMuted, marginBottom: '6px' }}>
+                  Normal prompt bar (plan mode)
+                </div>
+                <TUI preset="plan-prompt" />
+              </div>
+
+              <div>
+                <div style={{ fontSize: '11px', color: tokens.colors.textMuted, marginBottom: '6px' }}>
+                  Plan approval options dialog
+                </div>
+                <TUI preset="plan-approval" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
