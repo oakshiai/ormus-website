@@ -1,104 +1,9 @@
 import {useTerminal} from '../TerminalContext.js';
 
-const createCanvas = (width, height) => {
-  const size = width * height;
-
-  return {
-    width,
-    height,
-    cells: Array.from({length: size}, () => ({
-      contents: ' ',
-      color: undefined,
-    })),
-  };
-};
-
-const toPoint = (point) => {
-  return {
-    x: Math.floor(Number(point?.x) || 0),
-    y: Math.floor(Number(point?.y) || 0),
-  };
-};
-
-const toIndex = (canvas, x, y) => {
-  if (x < 0 || x >= canvas.width || y < 0 || y >= canvas.height) {
-    return undefined;
-  }
-
-  return (canvas.width * y) + x;
-};
-
-const drawCharacter = (canvas, x, y, character, color) => {
-  const index = toIndex(canvas, x, y);
-
-  if (index == null) {
-    return;
-  }
-
-  canvas.cells[index] = {
-    contents: String(character).charAt(0) || ' ',
-    color,
-  };
-};
-
-const drawLine = (canvas, options) => {
-  const from = toPoint(options.from);
-  const to = toPoint(options.to);
-  const deltaX = Math.abs(to.x - from.x);
-  const deltaY = -Math.abs(to.y - from.y);
-  const stepX = from.x < to.x ? 1 : -1;
-  const stepY = from.y < to.y ? 1 : -1;
-  const character = options.character ?? (from.x === to.x ? '│' : from.y === to.y ? '─' : '*');
-
-  let error = deltaX + deltaY;
-  let x = from.x;
-  let y = from.y;
-
-  while (true) {
-    drawCharacter(canvas, x, y, character, options.color);
-
-    if (x === to.x && y === to.y) {
-      break;
-    }
-
-    const doubleError = error * 2;
-
-    if (doubleError >= deltaY) {
-      error += deltaY;
-      x += stepX;
-    }
-
-    if (doubleError <= deltaX) {
-      error += deltaX;
-      y += stepY;
-    }
-  }
-};
-
-const drawText = (canvas, options) => {
-  const from = toPoint(options.from);
-  const text = String(options.text ?? '');
-  const startX = Math.min(Math.max(from.x, 0), canvas.width);
-
-  let x = from.x;
-  let y = from.y;
-
-  for (const character of text) {
-    if (character === '\n') {
-      x = startX;
-      y += 1;
-      continue;
-    }
-
-    if (x >= canvas.width) {
-      x = startX;
-      y += 1;
-    }
-
-    drawCharacter(canvas, x, y, character, options.color);
-    x += 1;
-  }
-};
+import {createCanvas} from './createCanvas.js';
+import {drawCharacter} from './drawCharacter.js';
+import {drawString} from './drawString.js';
+import {drawLine} from './drawLine.js';
 
 const getRowSegments = (canvas, y) => {
   const segments = [];
@@ -140,33 +45,12 @@ const Grok = () => {
   const terminal = useTerminal();
   const canvas = createCanvas(terminal.width, terminal.height);
 
-  drawLine(canvas, {
-    from: {x: 0, y: 2},
-    to: {x: terminal.width, y: 2},
-    color: 'red',
-  });
-  drawLine(canvas, {
-    from: {x: 0, y: 3},
-    to: {x: 0, y: 5},
-    color: 'red',
-  });
-  drawLine(canvas, {
-    from: {x: 0, y: 6},
-    to: {x: terminal.width, y: 6},
-    color: 'red',
-  });
+  drawLine(canvas, {x: 0, y: 2}, {x: terminal.width, y: 2}, 'red');
+  drawLine(canvas, {x: 0, y: 3}, {x: 0, y: 5}, 'red');
+  drawLine(canvas, {x: 0, y: 6}, {x: terminal.width, y: 6}, 'red');
   drawCharacter(canvas, 0, 2, '╭', 'red');
   drawCharacter(canvas, 0, 6, '╰', 'red');
-  // drawLine(canvas, {
-  //   from: {x: 0, y: 3},
-  //   to: {x: 0, y: terminal.height},
-  //   color: 'blue',
-  // });
-  drawText(canvas, {
-    from: {x: 10, y: 10},
-    color: 'orange',
-    text: 'Something that goes on that line and breaks if needed',
-  });
+  drawString(canvas, {x: 10, y: 10}, 'Something that goes on that line and breaks if needed', 'orange');
 
   return <Canvas canvas={canvas} />;
 };
