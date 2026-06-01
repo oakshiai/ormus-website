@@ -1,9 +1,8 @@
 import {useTerminal} from '../TerminalContext.js';
 
 import {createCanvas} from './createCanvas.js';
-import {drawCharacter} from './drawCharacter.js';
+import {drawRectangle} from './drawRectangle.js';
 import {drawString} from './drawString.js';
-import {drawLine} from './drawLine.js';
 
 const getRowSegments = (canvas, y) => {
   const segments = [];
@@ -52,11 +51,7 @@ const Grok = () => {
   }
 
   if (terminal.height > 6) {
-    drawLine(canvas, {x: 0, y: 2}, {x: terminal.width - 1, y: 2}, 'red');
-    drawLine(canvas, {x: 0, y: 3}, {x: 0, y: 5}, 'red');
-    drawLine(canvas, {x: 0, y: 6}, {x: terminal.width - 1, y: 6}, 'red');
-    drawCharacter(canvas, 0, 2, '╭', 'red');
-    drawCharacter(canvas, 0, 6, '╰', 'red');
+    drawRectangle(canvas, {x: 0, y: 2}, {width: terminal.width, height: 5}, 'red');
   }
 
   if (
