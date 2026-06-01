@@ -18,18 +18,18 @@ const renderCanvas = (canvas) => {
 };
 
 test('drawPrompt draws the prompt and footer labels', () => {
-  const canvas = createCanvas(34, 8);
+  const canvas = createCanvas(36, 8);
 
   drawPrompt(canvas, 'Build the terminal UI', 'Grok Build', 'always-approve');
 
   assert.deepEqual(renderCanvas(canvas), [
-    '                                  ',
-    '                                  ',
-    '╭────────────────────────────────╮',
-    '│ ❯ Build the terminal UI        │',
-    '╰── Grok Build · always-approve ─╯',
-    '                                  ',
-    '                                  ',
-    '                                  ',
+    '                                    ',
+    '                                    ',
+    ' ╭────────────────────────────────╮ ',
+    ' │ ❯ Build the terminal UI        │ ',
+    ' ╰── Grok Build · always-approve ─╯ ',
+    '                                    ',
+    '                                    ',
+    '                                    ',
   ]);
 });
