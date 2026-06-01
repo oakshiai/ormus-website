@@ -1,21 +1,8 @@
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
 
-import {createCanvas} from './createCanvas.js';
+import {createCanvas, renderCanvasToRows} from './canvas.js';
 import {drawRectangle} from './drawRectangle.js';
-
-const renderCanvas = (canvas) => {
-  const rows = [];
-
-  for (let y = 0; y < canvas.height; y += 1) {
-    const start = y * canvas.width;
-    const end = start + canvas.width;
-
-    rows.push(canvas.cells.slice(start, end).map((cell) => cell.contents).join(''));
-  }
-
-  return rows;
-};
 
 const getCell = (canvas, x, y) => {
   return canvas.cells[(canvas.width * y) + x];
@@ -26,7 +13,7 @@ test('drawRectangle draws a bordered rectangle with rounded corners', () => {
 
   drawRectangle(canvas, {x: 0, y: 0}, {width: canvas.width - 1, height: canvas.height - 1}, 'green');
 
-  assert.deepEqual(renderCanvas(canvas), [
+  assert.deepEqual(renderCanvasToRows(canvas), [
     '╭────╮ ',
     '│    │ ',
     '╰────╯ ',
@@ -39,7 +26,7 @@ test('drawRectangle draws a minimal sized rectangle', () => {
 
   drawRectangle(canvas, {x: 0, y: 0}, {width: 2, height: 2}, 'green');
 
-  assert.deepEqual(renderCanvas(canvas), [
+  assert.deepEqual(renderCanvasToRows(canvas), [
     '╭╮  ',
     '╰╯  ',
     '    ',
@@ -52,7 +39,7 @@ test('drawRectangle draws a minimal sized rectangle with space inside', () => {
 
   drawRectangle(canvas, {x: 0, y: 0}, {width: 3, height: 3}, 'green');
 
-  assert.deepEqual(renderCanvas(canvas), [
+  assert.deepEqual(renderCanvasToRows(canvas), [
     '╭─╮ ',
     '│ │ ',
     '╰─╯ ',
