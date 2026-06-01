@@ -170,9 +170,9 @@ const Terminal = (props) => {
           value={{
             width: size.width,
             height: size.height
-            }}
+          }}
         >
-          {props.children}
+          {size.width > 0 && size.height > 0 && props.children}
         </TerminalContext.Provider>
         <span ref={measureRef} className={cx(styles.measure)} aria-hidden="true">
           {measureText}
