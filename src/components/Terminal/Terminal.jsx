@@ -4,10 +4,21 @@ import {
   useRef,
   useState,
 } from 'react';
-import {css, cx} from '@emotion/css';
+import {css, cx, injectGlobal} from '@emotion/css';
 import {TerminalContext} from './TerminalContext.js';
 
 const measureText = '00000000000000000000';
+const terminalFontFamily = 'MesloLGS Nerd Font Mono';
+
+injectGlobal({
+  '@font-face': {
+    fontFamily: terminalFontFamily,
+    src: 'url("/fonts/MesloLGSNerdFontMono-Regular.ttf") format("truetype")',
+    fontDisplay: 'block',
+    fontStyle: 'normal',
+    fontWeight: 400,
+  },
+});
 
 const toCellCount = (value) => {
   if (value == null) {
@@ -37,7 +48,14 @@ const styles = {
     margin: 0,
     overflow: 'hidden',
     whiteSpace: 'pre',
-    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+    fontFamily: `"${terminalFontFamily}", monospace`,
+    fontSize: '12px',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontStretch: 'normal',
+    fontVariantLigatures: 'none',
+    letterSpacing: 0,
+    lineHeight: '12px',
   }),
   measure: css({
     position: 'absolute',
