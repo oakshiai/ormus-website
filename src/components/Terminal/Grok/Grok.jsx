@@ -1,16 +1,24 @@
-import {css, cx} from '@emotion/css';
+import {useTerminal} from '../TerminalContext.js';
 
-const styles = {
-  grok: css({
-    display: 'block',
-  }),
+const Line = ({from, to}) => {
+  const width = to.x - from.x;
+  const height = to.y - from.y;
+
+  console.log(width, height);
 };
 
-const Grok = (props) => {
-  console.log(props);
+const Grok = () => {
+  const terminal = useTerminal();
+  console.log(terminal);
+
   return (
     <>
-      Test<span style={{color: 'red'}}>red</span>black
+      <Line from={{x: 1, y: 2}} to={{x: 10, y:2}} />
+      {Array.from(Array(110).keys()).map((_, index) => {
+        return (
+          <div key={index}>{index}Test<span style={{color: 'red'}}>red</span>black</div>
+        );
+      })}
     </>
   );
 };

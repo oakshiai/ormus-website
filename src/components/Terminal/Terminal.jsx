@@ -1,17 +1,164 @@
+import {
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import {css, cx} from '@emotion/css';
+import {TerminalContext} from './TerminalContext.js';
+
+const measureText = '00000000000000000000';
+
+const toCellCount = (value) => {
+  if (value == null) {
+    return undefined;
+  }
+
+  const count = Number(value);
+
+  if (!Number.isFinite(count)) {
+    return undefined;
+  }
+
+  return Math.max(0, Math.floor(count));
+};
 
 const styles = {
   terminal: css({
     display: 'block',
+    width: '100%',
+    height: '100%',
+    minHeight: '1lh',
+    overflow: 'hidden',
+  }),
+  pre: css({
+    display: 'block',
+    position: 'relative',
+    margin: 0,
+    overflow: 'hidden',
+    whiteSpace: 'pre',
+    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+  }),
+  measure: css({
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    visibility: 'hidden',
+    pointerEvents: 'none',
+    whiteSpace: 'pre',
   }),
 };
 
 const Terminal = (props) => {
-  // TODO: the intended use case is that within <pre> there will always be a component that expect a props.width and props.height in terms of monospaced characters, the job of the <Terminal> is to occupy the available space horizontal and vertical space up to floor value divided by the given font width/height and then pass on those values to children components that will re-render.
+  const targetWidth = toCellCount(props.width);
+  const targetHeight = toCellCount(props.height);
+  const terminalRef = useRef(null);
+  const measureRef = useRef(null);
+  const [size, setSize] = useState({
+    width: 0,
+    height: 0,
+    pixelWidth: 0,
+    pixelHeight: 0,
+  });
+
+  const updateSize = useCallback(() => {
+    const terminal = terminalRef.current;
+    const measure = measureRef.current;
+
+    if (!terminal || !measure) {
+      return;
+    }
+
+    const measureRect = measure.getBoundingClientRect();
+    const charWidth = measureRect.width / measureText.length;
+    const charHeight = measureRect.height;
+
+    if (charWidth <= 0 || charHeight <= 0) {
+      return;
+    }
+
+    const width = targetWidth ?? Math.max(0, Math.floor(terminal.clientWidth / charWidth));
+    const height = targetHeight ?? Math.max(0, Math.floor(terminal.clientHeight / charHeight));
+    const pixelWidth = width * charWidth;
+    const pixelHeight = height * charHeight;
+
+    setSize((current) => {
+      if (
+        current.width === width
+        && current.height === height
+        && current.pixelWidth === pixelWidth
+        && current.pixelHeight === pixelHeight
+      ) {
+        return current;
+      }
+
+      return {
+        width,
+        height,
+        pixelWidth,
+        pixelHeight,
+      };
+    });
+  }, [targetWidth, targetHeight]);
+
+  const terminalStyle = {};
+
+  if (targetWidth != null) {
+    terminalStyle.width = `${size.pixelWidth}px`;
+  }
+
+  if (targetHeight != null) {
+    terminalStyle.height = `${size.pixelHeight}px`;
+  }
+
+  useLayoutEffect(() => {
+    updateSize();
+
+    const terminal = terminalRef.current;
+
+    if (!terminal) {
+      return undefined;
+    }
+
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(terminal);
+
+    let cancelled = false;
+
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        if (!cancelled) {
+          updateSize();
+        }
+      });
+    }
+
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+    };
+  }, [updateSize]);
+
   return (
-    <div className={cx(styles.terminal)}>
-      <pre>
-        {props.children}
+    <div ref={terminalRef} className={cx(styles.terminal)} style={terminalStyle}>
+      <pre
+        className={cx(styles.pre)}
+        style={{
+          width: `${size.pixelWidth}px`,
+          height: `${size.pixelHeight}px`,
+        }}
+      >
+        <TerminalContext.Provider
+          value={{
+            width: size.width,
+            height: size.height
+            }}
+        >
+          {props.children}
+        </TerminalContext.Provider>
+        <span ref={measureRef} className={cx(styles.measure)} aria-hidden="true">
+          {measureText}
+        </span>
       </pre>
     </div>
   );
