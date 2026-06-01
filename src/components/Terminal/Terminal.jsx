@@ -55,7 +55,7 @@ const styles = {
     fontStretch: 'normal',
     fontVariantLigatures: 'none',
     letterSpacing: 0,
-    lineHeight: '12px',
+    lineHeight: '14px',
   }),
   measure: css({
     position: 'absolute',
