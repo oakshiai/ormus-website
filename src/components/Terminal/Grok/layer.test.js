@@ -40,6 +40,23 @@ test('createLayer initializes string rows as cells', () => {
   });
 });
 
+test('createLayer applies a color to string row cells', () => {
+  const layer = createLayer([
+    'ab',
+  ], '#0f0');
+
+  assert.deepEqual(layer.rows[0], [
+    {
+      contents: 'a',
+      color: '#0f0',
+    },
+    {
+      contents: 'b',
+      color: '#0f0',
+    },
+  ]);
+});
+
 test('createLayer initializes cell rows', () => {
   const layer = createLayer([
     [
@@ -55,6 +72,26 @@ test('createLayer initializes cell rows', () => {
     contents: 'b',
     color: '#222',
   });
+});
+
+test('createLayer applies a fallback color to cell rows', () => {
+  const layer = createLayer([
+    [
+      {contents: 'a', color: '#111'},
+      {contents: 'b', color: undefined},
+    ],
+  ], '#0f0');
+
+  assert.deepEqual(layer.rows[0], [
+    {
+      contents: 'a',
+      color: '#111',
+    },
+    {
+      contents: 'b',
+      color: '#0f0',
+    },
+  ]);
 });
 
 test('drawString draws into layer local coordinates', () => {

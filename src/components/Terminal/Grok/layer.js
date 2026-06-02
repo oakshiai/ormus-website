@@ -7,9 +7,9 @@ const createCell = (contents, color) => {
   };
 };
 
-const createCellRow = (row) => {
+const createCellRow = (row, color) => {
   if (typeof row === 'string') {
-    return Array.from(row, (character) => createCell(character, undefined));
+    return Array.from(row, (character) => createCell(character, color));
   }
 
   return row.map((cell) => {
@@ -17,13 +17,13 @@ const createCellRow = (row) => {
       return cell;
     }
 
-    return createCell(cell.contents, cell.color);
+    return createCell(cell.contents, cell.color ?? color);
   });
 };
 
-const createLayer = (rows = []) => {
+const createLayer = (rows = [], color) => {
   return {
-    rows: rows.map(createCellRow),
+    rows: rows.map((row) => createCellRow(row, color)),
     get width() {
       return this.rows.reduce((width, row) => Math.max(width, row.length), 0);
     },
