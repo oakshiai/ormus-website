@@ -44,11 +44,12 @@ const Canvas = (props) => {
 
 const Grok = () => {
   const terminal = useTerminal();
+  const terminalInset = 2;
   const canvas = createCanvas(terminal.width, terminal.height);
 
   // Header
   const cwd = '~/Projects/grok';
-  drawString(canvas, {x: 1, y: 1}, cwd, '#3D3D3D');
+  drawString(canvas, {x: terminalInset, y: 1}, cwd, '#3D3D3D');
 
   // Body
   const logoLayer = createLayer([
@@ -73,25 +74,22 @@ const Grok = () => {
   drawString(shortcutsLayer, {x: 0, y: 4}, 'Quit', '#5C5C5C');
   drawString(shortcutsLayer, {x: menuShortcutX, y: 4}, 'ctrl-q', '#3D3D3D');
 
-  const bodyLayer = createLayer();
-  const logoX = Math.floor((shortcutsLayer.width - logoLayer.width) / 2);
-  drawLayer(bodyLayer, logoLayer, {x: logoX, y: 0});
-  drawLayer(bodyLayer, shortcutsLayer, {x: 0, y: logoLayer.height + 1});
-  drawLayer(canvas, bodyLayer, {
-    x: Math.floor((canvas.width - bodyLayer.width) / 2),
-    y: Math.floor((canvas.height - bodyLayer.height) / 2),
-  });
+  const logoY = 7;
+
+  drawLayer(canvas, logoLayer, {x: 64, y: logoY});
+  drawLayer(canvas, shortcutsLayer, {x: 52, y: logoY + logoLayer.height + 2});
 
   // Footer
-  const promptFrame = drawPrompt(canvas, 'Build the terminal UI', 'Grok Build', 'always-approve');
+  const promptFrame = drawPrompt(canvas, '', 'Grok Build', 'always-approve');
   const tipLabel = 'Tip:';
-  drawString(canvas, {x: 1, y: promptFrame.y - 2}, tipLabel, '#5C5C5C');
-  const tip = 'Press Ctrl+R to reverse-search your prompt history';
-  drawString(canvas, {x: 1 + tipLabel.length + 1, y: promptFrame.y - 2}, tip, '#3D3D3D');
-  const version = '0.2.16 [stable]';
+  drawString(canvas, {x: terminalInset, y: promptFrame.y - 2}, tipLabel, '#5C5C5C');
+  const tip = 'Press Ctrl+G to background a running terminal command.';
+  drawString(canvas, {x: terminalInset + tipLabel.length + 1, y: promptFrame.y - 2}, tip, '#3D3D3D');
+  const version = '0.2.14 [stable]';
   const release = 'Beta';
-  drawString(canvas, {x: canvas.width - version.length - 1 - release.length - 1, y: canvas.height - 1}, version, '#3D3D3D');
-  drawString(canvas, {x: canvas.width - release.length - 1, y: canvas.height - 1}, release, '#E1E1E1');
+  const terminalContentRight = canvas.width - terminalInset;
+  drawString(canvas, {x: terminalContentRight - version.length - 1 - release.length, y: canvas.height - 2}, version, '#3D3D3D');
+  drawString(canvas, {x: terminalContentRight - release.length, y: canvas.height - 2}, release, '#E1E1E1');
 
   return <Canvas canvas={canvas} />;
 };

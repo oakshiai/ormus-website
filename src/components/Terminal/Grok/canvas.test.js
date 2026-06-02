@@ -30,12 +30,12 @@ test('matches the launch terminal output', () => {
 
   // Body
   const logoLayer = createLayer([
-    '⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⣠⠀',
-    '⠀⠀⠀⣠⣾⠿⠛⠛⠛⠛⢀⣴⠃⠀',
-    '⠀⠀⣼⡟⠁⠀⠀⠀⢀⡴⠻⣿⡀⠀',
-    '⠀⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇⠀',
-    '⠀⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀⠀',
-    '⠀⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀⠀',
+    '⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⣠',
+    '⠀⠀⣠⣾⠿⠛⠛⠛⠛⢀⣴⠃',
+    '⠀⣼⡟⠁⠀⠀⠀⢀⡴⠻⣿⡀',
+    '⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇',
+    '⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀',
+    '⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀',
   ]);
 
   const menuWidth = 37;
@@ -53,7 +53,7 @@ test('matches the launch terminal output', () => {
 
   const logoY = 7;
 
-  drawLayer(canvas, logoLayer, {x: 63, y: logoY});
+  drawLayer(canvas, logoLayer, {x: 64, y: logoY});
   drawLayer(canvas, shortcutsLayer, {x: 52, y: logoY + logoLayer.height + 2});
 
   // Footer
