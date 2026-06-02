@@ -59,25 +59,31 @@ const Grok = () => {
     '⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇',
     '⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀',
     '⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀',
-  ]);
+  ], '#3D3D3D');
 
   const menuWidth = 37;
   const menuShortcutX = menuWidth - 6;
   const shortcutsLayer = createLayer();
 
-  drawString(shortcutsLayer, {x: 0, y: 0}, 'New worktree', '#5C5C5C');
+  drawString(shortcutsLayer, {x: 0, y: 0}, 'New worktree', '#E1E1E1');
   drawString(shortcutsLayer, {x: menuShortcutX, y: 0}, 'ctrl-w', '#3D3D3D');
   drawLine(shortcutsLayer, {x: 0, y: 1}, {x: menuWidth - 1, y: 1}, '#3D3D3D');
-  drawString(shortcutsLayer, {x: 0, y: 2}, 'Resume session', '#5C5C5C');
+  drawString(shortcutsLayer, {x: 0, y: 2}, 'Resume session', '#E1E1E1');
   drawString(shortcutsLayer, {x: menuShortcutX, y: 2}, 'ctrl-s', '#3D3D3D');
   drawLine(shortcutsLayer, {x: 0, y: 3}, {x: menuWidth - 1, y: 3}, '#3D3D3D');
-  drawString(shortcutsLayer, {x: 0, y: 4}, 'Quit', '#5C5C5C');
+  drawString(shortcutsLayer, {x: 0, y: 4}, 'Quit', '#E1E1E1');
   drawString(shortcutsLayer, {x: menuShortcutX, y: 4}, 'ctrl-q', '#3D3D3D');
 
-  const logoY = 7;
+  const menuTopGap = 1;
+  const menuGap = 2;
+  const menuBlockWidth = Math.max(logoLayer.width, shortcutsLayer.width);
+  const menuBlockX = Math.max(0, Math.ceil((canvas.width - menuBlockWidth) / 2));
+  const menuBlockY = logoLayer.height + menuTopGap;
+  const logoX = menuBlockX + Math.floor((menuBlockWidth - logoLayer.width) / 2);
+  const shortcutsX = menuBlockX + Math.floor((menuBlockWidth - shortcutsLayer.width) / 2);
 
-  drawLayer(canvas, logoLayer, {x: 64, y: logoY});
-  drawLayer(canvas, shortcutsLayer, {x: 52, y: logoY + logoLayer.height + 2});
+  drawLayer(canvas, logoLayer, {x: logoX, y: menuBlockY});
+  drawLayer(canvas, shortcutsLayer, {x: shortcutsX, y: menuBlockY + logoLayer.height + menuGap});
 
   // Footer
   const promptFrame = drawPrompt(canvas, '', 'Grok Build', 'always-approve');
