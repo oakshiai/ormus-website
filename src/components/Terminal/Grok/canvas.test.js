@@ -4,7 +4,7 @@ import fs from 'node:fs';
 
 import {createCanvas, renderCanvasToRows} from './canvas.js';
 import {drawLine} from './drawLine.js';
-import {drawRectangle} from './drawRectangle.js';
+import {drawPrompt} from './drawPrompt.js';
 import {drawString} from './drawString.js';
 import {createLayer, drawLayer} from './layer.js';
 
@@ -57,27 +57,7 @@ test('matches the launch terminal output', () => {
   drawLayer(canvas, shortcutsLayer, {x: 52, y: logoY + logoLayer.height + 2});
 
   // Footer
-  const promptFrame = {
-    x: terminalInset,
-    y: 34,
-    width: 136,
-    height: 3,
-  };
-
-  drawRectangle(canvas, promptFrame, promptFrame, '#323237');
-  drawString(canvas, {x: promptFrame.x + 2, y: promptFrame.y + 1}, '❯', '#414141');
-
-  const modelText = ' Grok Build ';
-  const separatorText = '·';
-  const modeText = ' always-approve ';
-  const footerLength = modelText.length + separatorText.length + modeText.length;
-  const footerX = promptFrame.x + promptFrame.width - footerLength - 2;
-  const footerY = promptFrame.y + promptFrame.height - 1;
-
-  drawString(canvas, {x: footerX, y: footerY}, modelText, '#5C5C5C');
-  drawString(canvas, {x: footerX + modelText.length, y: footerY}, separatorText, '#3D3D3D');
-  drawString(canvas, {x: footerX + modelText.length + separatorText.length, y: footerY}, modeText, '#404040');
-
+  const promptFrame = drawPrompt(canvas, '', 'Grok Build', 'always-approve');
   const tipLabel = 'Tip:';
   drawString(canvas, {x: terminalInset, y: promptFrame.y - 2}, tipLabel, '#5C5C5C');
   const tip = 'Press Ctrl+G to background a running terminal command.';
