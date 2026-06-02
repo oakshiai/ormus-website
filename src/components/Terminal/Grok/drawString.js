@@ -1,24 +1,17 @@
 import {drawCharacter} from './drawCharacter.js';
 
-const drawString = (canvas, from, string, color) => {
-  const startX = Math.min(Math.max(from.x, 0), canvas.width);
-
+const drawString = (surface, from, string, color) => {
   let x = from.x;
   let y = from.y;
 
   for (const character of string) {
     if (character === '\n') {
-      x = startX;
+      x = from.x;
       y += 1;
       continue;
     }
 
-    if (x >= canvas.width) {
-      x = startX;
-      y += 1;
-    }
-
-    drawCharacter(canvas, x, y, character, color);
+    drawCharacter(surface, x, y, character, color);
     x += 1;
   }
 };
