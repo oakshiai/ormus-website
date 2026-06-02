@@ -3,7 +3,6 @@ import { css, cx, tokens, baseStyles } from '../styles'
 import { articles } from '../content/articles.jsx'
 import { Code } from '../components/Code'
 import { Key, KeyCombo } from '../components/Keyboard'
-import { TUI } from '../components/TUI'
 
 const homeStyles = {
   hero: css({
@@ -311,14 +310,12 @@ function Home() {
                 <div style={{ fontSize: '11px', color: tokens.colors.textMuted, marginBottom: '6px' }}>
                   Normal prompt bar (plan mode)
                 </div>
-                <TUI preset="plan-prompt" />
               </div>
 
               <div>
                 <div style={{ fontSize: '11px', color: tokens.colors.textMuted, marginBottom: '6px' }}>
                   Plan approval options dialog
                 </div>
-                <TUI preset="plan-approval" />
               </div>
             </div>
           </div>
