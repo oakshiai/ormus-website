@@ -42,14 +42,25 @@ const Canvas = (props) => {
   ));
 };
 
-const Grok = () => {
+const Grok = (props) => {
   const terminal = useTerminal();
   const terminalInset = 2;
   const canvas = createCanvas(terminal.width, terminal.height);
+  const releaseVersion = `${props.release.version} [${props.release.channel}]`;
+  const terminalContentRight = canvas.width - terminalInset;
 
   // Header
-  const cwd = '~/Projects/grok';
-  drawString(canvas, {x: terminalInset, y: 1}, cwd, '#3D3D3D');
+  if (props.branch) {
+    const branchIndicator = '';
+    const branchX = terminalInset + branchIndicator.length + 1;
+    const cwdX = branchX + props.branch.length + 1;
+
+    drawString(canvas, {x: terminalInset, y: 1}, branchIndicator, '#5C5C5C');
+    drawString(canvas, {x: branchX, y: 1}, props.branch, '#E1E1E1');
+    drawString(canvas, {x: cwdX, y: 1}, props.cwd, '#3D3D3D');
+  } else {
+    drawString(canvas, {x: terminalInset, y: 1}, props.cwd, '#3D3D3D');
+  }
 
   // Body
   const logoLayer = createLayer([
@@ -86,16 +97,13 @@ const Grok = () => {
   drawLayer(canvas, shortcutsLayer, {x: shortcutsX, y: menuBlockY + logoLayer.height + menuGap});
 
   // Footer
-  const promptFrame = drawPrompt(canvas, '', 'Grok Build', 'always-approve');
+  const promptFrame = drawPrompt(canvas, '', props.model, props.mode);
   const tipLabel = 'Tip:';
   drawString(canvas, {x: terminalInset, y: promptFrame.y - 2}, tipLabel, '#5C5C5C');
   const tip = 'Press Ctrl+G to background a running terminal command.';
   drawString(canvas, {x: terminalInset + tipLabel.length + 1, y: promptFrame.y - 2}, tip, '#3D3D3D');
-  const version = '0.2.14 [stable]';
-  const release = 'Beta';
-  const terminalContentRight = canvas.width - terminalInset;
-  drawString(canvas, {x: terminalContentRight - version.length - 1 - release.length, y: canvas.height - 2}, version, '#3D3D3D');
-  drawString(canvas, {x: terminalContentRight - release.length, y: canvas.height - 2}, release, '#E1E1E1');
+  drawString(canvas, {x: terminalContentRight - releaseVersion.length - 1 - props.release.label.length, y: canvas.height - 2}, releaseVersion, '#3D3D3D');
+  drawString(canvas, {x: terminalContentRight - props.release.label.length, y: canvas.height - 2}, props.release.label, '#E1E1E1');
 
   return <Canvas canvas={canvas} />;
 };

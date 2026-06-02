@@ -73,10 +73,14 @@ function TuiTest() {
           <Terminal width={140} height={40}>
             <Grok
               branch="trunk"
-              cwd="~/Projects/grok/website"
+              cwd="~/Projects/grok/website/"
               model="Grok Build"
               mode="always-approve"
-              version="0.2.14"
+              release={{
+                version: '0.2.16',
+                channel: 'stable',
+                label: 'Beta'
+              }}
             />
           </Terminal>
         </section>
