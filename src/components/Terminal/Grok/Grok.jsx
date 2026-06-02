@@ -59,23 +59,28 @@ const Grok = () => {
     '⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀',
     '⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀',
   ]);
-  const logoFrame = drawLayer(canvas, logoLayer, {x: 0, y: 0});
 
   const menuWidth = 37;
-  const menuX = logoFrame.x;
-  const menuY = logoFrame.y + logoFrame.height + 1;
   const menuShortcutX = menuWidth - 6;
-  const menuLayer = createLayer();
+  const shortcutsLayer = createLayer();
 
-  drawString(menuLayer, {x: 0, y: 0}, 'New worktree', '#5C5C5C');
-  drawString(menuLayer, {x: menuShortcutX, y: 0}, 'ctrl-w', '#3D3D3D');
-  drawLine(menuLayer, {x: 0, y: 1}, {x: menuWidth - 1, y: 1}, '#3D3D3D');
-  drawString(menuLayer, {x: 0, y: 2}, 'Resume session', '#5C5C5C');
-  drawString(menuLayer, {x: menuShortcutX, y: 2}, 'ctrl-s', '#3D3D3D');
-  drawLine(menuLayer, {x: 0, y: 3}, {x: menuWidth - 1, y: 3}, '#3D3D3D');
-  drawString(menuLayer, {x: 0, y: 4}, 'Quit', '#5C5C5C');
-  drawString(menuLayer, {x: menuShortcutX, y: 4}, 'ctrl-q', '#3D3D3D');
-  drawLayer(canvas, menuLayer, {x: menuX, y: menuY});
+  drawString(shortcutsLayer, {x: 0, y: 0}, 'New worktree', '#5C5C5C');
+  drawString(shortcutsLayer, {x: menuShortcutX, y: 0}, 'ctrl-w', '#3D3D3D');
+  drawLine(shortcutsLayer, {x: 0, y: 1}, {x: menuWidth - 1, y: 1}, '#3D3D3D');
+  drawString(shortcutsLayer, {x: 0, y: 2}, 'Resume session', '#5C5C5C');
+  drawString(shortcutsLayer, {x: menuShortcutX, y: 2}, 'ctrl-s', '#3D3D3D');
+  drawLine(shortcutsLayer, {x: 0, y: 3}, {x: menuWidth - 1, y: 3}, '#3D3D3D');
+  drawString(shortcutsLayer, {x: 0, y: 4}, 'Quit', '#5C5C5C');
+  drawString(shortcutsLayer, {x: menuShortcutX, y: 4}, 'ctrl-q', '#3D3D3D');
+
+  const bodyLayer = createLayer();
+  const logoX = Math.floor((shortcutsLayer.width - logoLayer.width) / 2);
+  drawLayer(bodyLayer, logoLayer, {x: logoX, y: 0});
+  drawLayer(bodyLayer, shortcutsLayer, {x: 0, y: logoLayer.height + 1});
+  drawLayer(canvas, bodyLayer, {
+    x: Math.floor((canvas.width - bodyLayer.width) / 2),
+    y: Math.floor((canvas.height - bodyLayer.height) / 2),
+  });
 
   // Footer
   const promptFrame = drawPrompt(canvas, 'Build the terminal UI', 'Grok Build', 'always-approve');
