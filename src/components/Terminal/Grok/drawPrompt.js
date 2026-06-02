@@ -1,7 +1,7 @@
 import {drawRectangle} from './drawRectangle.js';
 import {drawString} from './drawString.js';
 
-const HORIZONTAL_PADDING = 1;
+const HORIZONTAL_PADDING = 2;
 
 const drawPrompt = (canvas, prompt, model, mode) => {
   const promptText = String(prompt);

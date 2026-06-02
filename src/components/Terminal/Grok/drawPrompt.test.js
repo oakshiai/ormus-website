@@ -12,9 +12,9 @@ test('drawPrompt draws the prompt and footer labels', () => {
   assert.deepEqual(renderCanvasToRows(canvas), [
     '                                    ',
     '                                    ',
-    ' ╭────────────────────────────────╮ ',
-    ' │ ❯ Build the terminal UI        │ ',
-    ' ╰── Grok Build · always-approve ─╯ ',
+    '  ╭──────────────────────────────╮  ',
+    '  │ ❯ Build the terminal UI      │  ',
+    '  ╰ Grok Build · always-approve ─╯  ',
     '                                    ',
     '                                    ',
     '                                    ',
