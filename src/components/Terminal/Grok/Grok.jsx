@@ -1,6 +1,7 @@
 import {useTerminal} from '../TerminalContext.js';
 
 import {createCanvas} from './canvas.js';
+import {createLayer, drawLayer} from './layer.js';
 import {drawString} from './drawString.js';
 import {drawPrompt} from './drawPrompt.js';
 import {drawLine} from './drawLine.js';
@@ -50,26 +51,31 @@ const Grok = () => {
   drawString(canvas, {x: 1, y: 1}, cwd, '#3D3D3D');
 
   // Body
-  drawString(canvas, {x: canvas.width / 2 - 6, y: canvas.height / 2 - 3}, '⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⣠', '#5C5C5C');
-  drawString(canvas, {x: canvas.width / 2 - 6, y: canvas.height / 2 - 2}, '⠀⠀⣠⣾⠿⠛⠛⠛⠛⢀⣴⠃', '#5C5C5C');
-  drawString(canvas, {x: canvas.width / 2 - 6, y: canvas.height / 2 - 1}, '⠀⣼⡟⠁⠀⠀⠀⢀⡴⠻⣿⡀', '#5C5C5C');
-  drawString(canvas, {x: canvas.width / 2 - 6, y: canvas.height / 2 - 0}, '⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇', '#5C5C5C');
-  drawString(canvas, {x: canvas.width / 2 - 6, y: canvas.height / 2 + 1}, '⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀', '#5C5C5C');
-  drawString(canvas, {x: canvas.width / 2 - 6, y: canvas.height / 2 + 2}, '⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀', '#5C5C5C');
+  const logoLayer = createLayer([
+    '⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⣠',
+    '⠀⠀⣠⣾⠿⠛⠛⠛⠛⢀⣴⠃',
+    '⠀⣼⡟⠁⠀⠀⠀⢀⡴⠻⣿⡀',
+    '⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇',
+    '⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀',
+    '⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀',
+  ]);
+  const logoFrame = drawLayer(canvas, logoLayer, {x: 0, y: 0});
 
   const menuWidth = 37;
-  const menuX = canvas.width / 2 - 6;
-  const menuY = canvas.height / 2 + 4;
-  const menuShortcutX = menuX + menuWidth - 6;
+  const menuX = logoFrame.x;
+  const menuY = logoFrame.y + logoFrame.height + 1;
+  const menuShortcutX = menuWidth - 6;
+  const menuLayer = createLayer();
 
-  drawString(canvas, {x: menuX, y: menuY}, 'New worktree', '#5C5C5C');
-  drawString(canvas, {x: menuShortcutX, y: menuY}, 'ctrl-w', '#3D3D3D');
-  drawLine(canvas, {x: menuX, y: menuY + 1}, {x: menuX + menuWidth - 1, y: menuY + 1}, '#3D3D3D');
-  drawString(canvas, {x: menuX, y: menuY + 2}, 'Resume session', '#5C5C5C');
-  drawString(canvas, {x: menuShortcutX, y: menuY + 2}, 'ctrl-s', '#3D3D3D');
-  drawLine(canvas, {x: menuX, y: menuY + 3}, {x: menuX + menuWidth - 1, y: menuY + 3}, '#3D3D3D');
-  drawString(canvas, {x: menuX, y: menuY + 4}, 'Quit', '#5C5C5C');
-  drawString(canvas, {x: menuShortcutX, y: menuY + 4}, 'ctrl-q', '#3D3D3D');
+  drawString(menuLayer, {x: 0, y: 0}, 'New worktree', '#5C5C5C');
+  drawString(menuLayer, {x: menuShortcutX, y: 0}, 'ctrl-w', '#3D3D3D');
+  drawLine(menuLayer, {x: 0, y: 1}, {x: menuWidth - 1, y: 1}, '#3D3D3D');
+  drawString(menuLayer, {x: 0, y: 2}, 'Resume session', '#5C5C5C');
+  drawString(menuLayer, {x: menuShortcutX, y: 2}, 'ctrl-s', '#3D3D3D');
+  drawLine(menuLayer, {x: 0, y: 3}, {x: menuWidth - 1, y: 3}, '#3D3D3D');
+  drawString(menuLayer, {x: 0, y: 4}, 'Quit', '#5C5C5C');
+  drawString(menuLayer, {x: menuShortcutX, y: 4}, 'ctrl-q', '#3D3D3D');
+  drawLayer(canvas, menuLayer, {x: menuX, y: menuY});
 
   // Footer
   const promptFrame = drawPrompt(canvas, 'Build the terminal UI', 'Grok Build', 'always-approve');
