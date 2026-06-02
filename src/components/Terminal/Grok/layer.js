@@ -33,13 +33,6 @@ const createLayer = (rows = []) => {
   };
 };
 
-const getCenteredOrigin = (canvas, layer) => {
-  return {
-    x: Math.floor((canvas.width - layer.width) / 2),
-    y: Math.floor((canvas.height - layer.height) / 2),
-  };
-};
-
 const drawLayer = (canvas, layer, origin) => {
   layer.rows.forEach((row, layerY) => {
     row.forEach((cell, layerX) => {
@@ -62,5 +55,4 @@ const drawLayer = (canvas, layer, origin) => {
 export {
   createLayer,
   drawLayer,
-  getCenteredOrigin,
 };
