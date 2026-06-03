@@ -116,7 +116,7 @@ const drawInterface = ({
 
   const bodyLayer = createLayer();
   drawLayer(bodyLayer, logoLayer, {x: Math.floor(shortcutsLayer.width / 2 - logoLayer.width / 2), y: 0});
-  drawLayer(bodyLayer, shortcutsLayer, {x: 0, y: logoLayer.height + 1});
+  drawLayer(bodyLayer, shortcutsLayer, {x: 1, y: logoLayer.height + 1});
 
   const footerTop = canvas.height - footerLayer.height;
   const bodyAreaBottom = footerTop - 3;
