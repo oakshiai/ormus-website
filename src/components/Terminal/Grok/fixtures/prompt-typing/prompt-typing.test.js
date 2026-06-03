@@ -7,7 +7,7 @@ import {TERMINAL_COLUMNS, TERMINAL_ROWS} from '../constants.js';
 import {renderCanvasToRows} from '../../canvas.js';
 import {drawInterface} from '../../drawInterface.js';
 
-test('matches the launch fixture', () => {
+test('matches the prompt-typing fixture', () => {
   const canvas = drawInterface({
     width: TERMINAL_COLUMNS,
     height: TERMINAL_ROWS,
