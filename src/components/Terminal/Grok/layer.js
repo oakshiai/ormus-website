@@ -21,7 +21,7 @@ const createCellRow = (row, color) => {
   });
 };
 
-const createLayer = (rows = [], color) => {
+const createLayer = ({rows = [], width, height, color} = {}) => {
   return {
     rows: rows.map((row) => createCellRow(row, color)),
     cursor: {
@@ -30,9 +30,15 @@ const createLayer = (rows = [], color) => {
     },
     color: undefined,
     get width() {
+      if (width) {
+        return width;
+      }
       return this.rows.reduce((width, row) => Math.max(width, row.length), 0);
     },
     get height() {
+      if (height) {
+        return height;
+      }
       return this.rows.length;
     },
   };

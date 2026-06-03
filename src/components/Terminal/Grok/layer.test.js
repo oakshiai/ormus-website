@@ -5,6 +5,7 @@ import {createCanvas, renderCanvasToRows} from './canvas.js';
 import {drawLine} from './drawLine.js';
 import {drawString} from './drawString.js';
 import {createLayer, drawLayer} from './layer.js';
+import {moveTo} from './moveTo.js';
 
 const renderLayerToRows = (layer) => {
   return Array.from({length: layer.height}, (_, y) => {
@@ -15,20 +16,20 @@ const renderLayerToRows = (layer) => {
 };
 
 test('measures the widest row and row count', () => {
-  const layer = createLayer([
+  const layer = createLayer({rows: [
     'ab',
     'cde',
     ''
-  ]);
+  ]});
   assert.equal(layer.width, 3);
   assert.equal(layer.height, 3);
 });
 
 test('createLayer initializes string rows as cells', () => {
-  const layer = createLayer([
+  const layer = createLayer({rows: [
     'ab',
     'c d'
-  ]);
+  ]});
 
   assert.deepEqual(renderLayerToRows(layer), [
     'ab ',
@@ -41,9 +42,10 @@ test('createLayer initializes string rows as cells', () => {
 });
 
 test('createLayer applies a color to string row cells', () => {
-  const layer = createLayer([
-    'ab',
-  ], '#0f0');
+  const layer = createLayer({
+    rows: ['ab'],
+    color: '#0f0'
+  });
 
   assert.deepEqual(layer.rows[0], [
     {
@@ -58,12 +60,12 @@ test('createLayer applies a color to string row cells', () => {
 });
 
 test('createLayer initializes cell rows', () => {
-  const layer = createLayer([
+  const layer = createLayer({rows: [
     [
       {contents: 'a', color: '#111'},
       {contents: 'b', color: '#222'},
     ],
-  ]);
+  ]});
 
   assert.equal(layer.width, 2);
   assert.equal(layer.height, 1);
@@ -75,12 +77,15 @@ test('createLayer initializes cell rows', () => {
 });
 
 test('createLayer applies a fallback color to cell rows', () => {
-  const layer = createLayer([
-    [
-      {contents: 'a', color: '#111'},
-      {contents: 'b', color: undefined},
+  const layer = createLayer({
+    rows: [
+      [
+        {contents: 'a', color: '#111'},
+        {contents: 'b', color: undefined},
+      ],
     ],
-  ], '#0f0');
+    color: '#0f0'
+  });
 
   assert.deepEqual(layer.rows[0], [
     {
@@ -97,8 +102,9 @@ test('createLayer applies a fallback color to cell rows', () => {
 test('drawString draws into layer local coordinates', () => {
   const layer = createLayer();
 
-  drawString(layer, {x: 0, y: 0}, 'ab', '#fff');
-  drawString(layer, {x: 0, y: 1}, 'cd', '#fff');
+  drawString(layer, 'ab', {color: '#fff'});
+  moveTo(layer, {x: 0, y: 1});
+  drawString(layer, 'cd', {color: '#fff'});
 
   assert.equal(layer.width, 2);
   assert.equal(layer.height, 2);
@@ -137,9 +143,11 @@ test('drawLayer composites a layer relative to the provided origin', () => {
   const canvas = createCanvas(8, 5);
   const layer = createLayer();
 
-  drawString(layer, {x: 0, y: 0}, 'ab', '#fff');
-  drawLine(layer, {x: 0, y: 1}, {x: 3, y: 1}, '#fff');
-  drawString(layer, {x: 2, y: 2}, 'cd', '#fff');
+  drawString(layer, 'ab', {color: '#fff'});
+  moveTo(layer, {x: 0, y: 1});
+  drawLine(layer, {x: 3, y: 1}, {color: '#fff'});
+  moveTo(layer, {x: 2, y: 2});
+  drawString(layer, 'cd', {color: '#fff'});
 
   const frame = drawLayer(canvas, layer, {x: 2, y: 1});
 
@@ -162,7 +170,7 @@ test('drawLayer leaves regular spaces transparent', () => {
   const canvas = createCanvas(5, 3);
   const layer = createLayer();
 
-  drawString(layer, {x: 0, y: 0}, 'a b', '#fff');
+  drawString(layer, 'a b', {color: '#fff'});
 
   drawLayer(canvas, layer, {x: 1, y: 1});
 
