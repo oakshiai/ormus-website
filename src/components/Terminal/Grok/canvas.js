@@ -1,29 +1,3 @@
-/**
- * @typedef {Object} Cursor
- * @property {number} x
- * @property {number} y
- */
-
-/**
- * @typedef {Object} Cell
- * @property {string} contents
- * @property {string} [color]
- */
-
-/**
- * @typedef {Object} Canvas
- * @property {number} width
- * @property {number} height
- * @property {Cursor} cursor
- * @property {Cell[]} cells
- */
-
-/**
- * 
- * @param {number} width 
- * @param {number} height 
- * @returns {Canvas}
- */
 const createCanvas = (width, height) => {
   const size = width * height;
 
