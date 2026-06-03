@@ -20,6 +20,10 @@ const drawString = (surface, string, {anchor = 'left', color} = {}) => {
     drawCharacter(surface, x, y, character, color ?? surface.color);
     x += 1;
   }
+
+  surface.cursor.x = x;
+  surface.cursor.y = y;
+  surface.color = color;
 };
 
 export {drawString};
