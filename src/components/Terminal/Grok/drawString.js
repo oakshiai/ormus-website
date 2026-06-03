@@ -21,7 +21,7 @@ const drawString = (surface, string, {anchor = 'left', color} = {}) => {
     x += 1;
   }
 
-  surface.cursor.x = x;
+  surface.cursor.x = anchor === 'right' ? surface.cursor.x - string.length : x;
   surface.cursor.y = y;
   surface.color = color;
 };
