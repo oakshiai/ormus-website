@@ -71,10 +71,12 @@ const drawInterface = ({
   move(footerLayer, {deltaX: -1});
   drawString(footerLayer, release.version, {anchor: 'right', color: '#3D3D3D'});
 
-  drawLayer(canvas, footerLayer, {x: PADDING.left, y: canvas.height - footerLayer.height});
+  const footerTop = canvas.height - footerLayer.height - PADDING.bottom;
+
+  drawLayer(canvas, footerLayer, {x: PADDING.left, y: footerTop});
 
   // Tip
-  move(canvas, {x: PADDING.left, y: canvas.height - footerLayer.height - 2});
+  move(canvas, {x: PADDING.left, y: footerTop - 2});
   drawString(canvas, 'Tip:', {color: '#5C5C5C'});
   move(canvas, {deltaX: 1});
   drawString(canvas, tip, {color: '#3D3D3D'});
@@ -118,8 +120,7 @@ const drawInterface = ({
   drawLayer(bodyLayer, logoLayer, {x: Math.floor(shortcutsLayer.width / 2 - logoLayer.width / 2), y: 0});
   drawLayer(bodyLayer, shortcutsLayer, {x: 1, y: logoLayer.height + 1});
 
-  const footerTop = canvas.height - footerLayer.height;
-  const bodyAreaBottom = footerTop - 3;
+  const bodyAreaBottom = footerTop - 2;
 
   drawLayer(canvas, bodyLayer, {
     x: Math.floor(canvas.width / 2 - bodyLayer.width / 2),
