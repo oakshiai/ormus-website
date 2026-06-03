@@ -7,20 +7,20 @@
  */
 
 /**
- * @param {{cursor: {x: number, y: number}}} canvas
+ * @param {{cursor: {x: number, y: number}}} surface
  * @param {Position} position
  */
-const moveTo = (canvas, position) => {
+const moveTo = (surface, position) => {
   if (position.x !== undefined) {
-    canvas.cursor.x = position.x;
+    surface.cursor.x = position.x;
   } else if (position.deltaX !== undefined) {
-    canvas.cursor.x += position.deltaX;
+    surface.cursor.x += position.deltaX;
   }
 
   if (position.y !== undefined) {
-    canvas.cursor.y = position.y;
+    surface.cursor.y = position.y;
   } else if (position.deltaY !== undefined) {
-    canvas.cursor.y += position.deltaY;
+    surface.cursor.y += position.deltaY;
   }
 };
 
