@@ -1,34 +1,24 @@
 import {drawCharacter} from './drawCharacter.js';
 
-const drawLine = (canvas, from, to, color) => {
-  const deltaX = Math.abs(to.x - from.x);
-  const deltaY = -Math.abs(to.y - from.y);
-  const stepX = from.x < to.x ? 1 : -1;
-  const stepY = from.y < to.y ? 1 : -1;
-  const character = from.x === to.x ? '│' : '─';
+const drawLine = (surface, end, {color} = {}) => {
+  const deltaX = end.x ? Math.abs(end.x - surface.cursor.x) : 0;
+  const deltaY = end.y ? Math.abs(end.y - surface.cursor.y) : 0;
+  const character = deltaX > 0 ? '─' : '│';
+  const start = deltaX > 0 ? surface.cursor.x : surface.cursor.y;
+  const length = deltaX > 0 ? deltaX : deltaY;
 
-  let error = deltaX + deltaY;
-  let x = from.x;
-  let y = from.y;
-
-  while (true) {
-    drawCharacter(canvas, x, y, character, color);
-
-    if (x === to.x && y === to.y) {
-      break;
+  for (let i = start; i <= (start + length); i += 1) {
+    if (deltaX > 0) {
+      drawCharacter(surface, i, surface.cursor.y, character, color);
+    } else {
+      drawCharacter(surface, surface.cursor.x, i, character, color);
     }
+  }
 
-    const doubleError = error * 2;
-
-    if (doubleError >= deltaY) {
-      error += deltaY;
-      x += stepX;
-    }
-
-    if (doubleError <= deltaX) {
-      error += deltaX;
-      y += stepY;
-    }
+  if (deltaX > 0) {
+    surface.cursor.x = start + length + 1;
+  } else {
+    surface.cursor.y = start + length + 1;
   }
 };
 
