@@ -10,7 +10,7 @@
  * @param {{cursor: {x: number, y: number}}} surface
  * @param {Position} position
  */
-const moveTo = (surface, position) => {
+const move = (surface, position) => {
   if (position.x !== undefined) {
     surface.cursor.x = position.x;
   } else if (position.deltaX !== undefined) {
@@ -24,4 +24,4 @@ const moveTo = (surface, position) => {
   }
 };
 
-export {moveTo};
+export {move};

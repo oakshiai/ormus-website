@@ -1,14 +1,14 @@
 import {drawRectangle} from './drawRectangle.js';
 import {drawString} from './drawString.js';
-import {moveTo} from './moveTo.js';
+import {move} from './move.js';
 
 const drawPrompt = (surface, prompt, model, mode) => {
   drawRectangle(surface, {x: 0, y: 0}, {width: surface.width, height: 3}, '#323237');
-  moveTo(surface, {x: 1, y: 1});
+  move(surface, {x: 1, y: 1});
   drawString(surface, '❯', {color: '#414141'});
-  moveTo(surface, {deltaX: 1});
+  move(surface, {deltaX: 1});
   drawString(surface, prompt, {color: '#4E4E4E'});
-  moveTo(surface, {x: surface.width - 2, y: 2});
+  move(surface, {x: surface.width - 2, y: 2});
   drawString(surface, ` ${mode} `, {anchor: 'right', color: '#404040'});
   drawString(surface, '·', {anchor: 'right', color: '#3D3D3D'});
   drawString(surface, ` ${model} `, {anchor: 'right', color: '#5C5C5C'});

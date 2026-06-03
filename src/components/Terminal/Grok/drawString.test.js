@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 
 import {createCanvas, renderCanvasToRows} from './canvas.js';
-import {moveTo} from './moveTo.js';
+import {move} from './moveTo.js';
 import {drawString} from './drawString.js';
 
 test('drawString at cursor', () => {
@@ -20,7 +20,7 @@ test('drawString at cursor', () => {
 test('drawString at position x', () => {
   const canvas = createCanvas(10, 4);
 
-  moveTo(canvas, {x: 2});
+  move(canvas, {x: 2});
   drawString(canvas, 'testing');
 
   assert.deepEqual(renderCanvasToRows(canvas), [
@@ -33,7 +33,7 @@ test('drawString at position x', () => {
 test('drawString at position y', () => {
   const canvas = createCanvas(10, 4);
 
-  moveTo(canvas, {y: 2});
+  move(canvas, {y: 2});
   drawString(canvas, 'testing');
 
   assert.deepEqual(renderCanvasToRows(canvas), [
@@ -46,7 +46,7 @@ test('drawString at position y', () => {
 test('drawString at position x with anchor = right', () => {
   const canvas = createCanvas(10, 4);
 
-  moveTo(canvas, {x: canvas.width - 1});
+  move(canvas, {x: canvas.width - 1});
   drawString(canvas, 'testing', {anchor: 'right'});
 
   assert.deepEqual(renderCanvasToRows(canvas), [

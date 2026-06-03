@@ -5,7 +5,7 @@ import {createCanvas, renderCanvasToRows} from './canvas.js';
 import {drawLine} from './drawLine.js';
 import {drawString} from './drawString.js';
 import {createLayer, drawLayer} from './layer.js';
-import {moveTo} from './moveTo.js';
+import {move} from './move.js';
 
 const renderLayerToRows = (layer) => {
   return Array.from({length: layer.height}, (_, y) => {
@@ -103,7 +103,7 @@ test('drawString draws into layer local coordinates', () => {
   const layer = createLayer();
 
   drawString(layer, 'ab', {color: '#fff'});
-  moveTo(layer, {x: 0, y: 1});
+  move(layer, {x: 0, y: 1});
   drawString(layer, 'cd', {color: '#fff'});
 
   assert.equal(layer.width, 2);
@@ -144,9 +144,9 @@ test('drawLayer composites a layer relative to the provided origin', () => {
   const layer = createLayer();
 
   drawString(layer, 'ab', {color: '#fff'});
-  moveTo(layer, {x: 0, y: 1});
+  move(layer, {x: 0, y: 1});
   drawLine(layer, {x: 3, y: 1}, {color: '#fff'});
-  moveTo(layer, {x: 2, y: 2});
+  move(layer, {x: 2, y: 2});
   drawString(layer, 'cd', {color: '#fff'});
 
   const frame = drawLayer(canvas, layer, {x: 2, y: 1});
