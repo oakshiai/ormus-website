@@ -26,10 +26,11 @@ const BODY_VERTICAL_BIAS = 3 / 8;
  * @property {number} height
  * @property {string} [branch]
  * @property {string} cwd
+ * @property {object} thread
+ * @property {string} tip
  * @property {string} model
  * @property {string} mode
  * @property {ModelRelease} release
- * @property {string} tip
  */
 
 /**
@@ -40,10 +41,11 @@ const drawInterface = ({
   height,
   branch,
   cwd,
+  thread,
+  tip,
   model,
   mode,
-  release,
-  tip
+  release
 }) => {
   const canvas = createCanvas(width, height);
   
@@ -75,57 +77,59 @@ const drawInterface = ({
 
   drawLayer(canvas, footerLayer, {x: PADDING.left, y: footerTop});
 
-  // Tip
-  move(canvas, {x: PADDING.left, y: footerTop - 2});
-  drawString(canvas, 'Tip:', {color: '#5C5C5C'});
-  move(canvas, {deltaX: 1});
-  drawString(canvas, tip, {color: '#3D3D3D'});
-
   // Body
-  const logoLayer = createLayer({
-    rows: [
-      ' ⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⣠⠀',
-      ' ⠀⠀⠀⣠⣾⠿⠛⠛⠛⠛⢀⣴⠃⠀',
-      ' ⠀⠀⣼⡟⠁⠀⠀⠀⢀⡴⠻⣿⡀⠀',
-      ' ⠀⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇⠀',
-      ' ⠀⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀⠀',
-      ' ⠀⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀⠀',
-      ' ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀'
-    ],
-    color: '#3D3D3D'
-  });
+  if (thread.length === 0) {
+    // Tip
+    move(canvas, {x: PADDING.left, y: footerTop - 2});
+    drawString(canvas, 'Tip:', {color: '#5C5C5C'});
+    move(canvas, {deltaX: 1});
+    drawString(canvas, tip, {color: '#3D3D3D'});
 
-  const shortcutsLayer = createLayer();
-  const menuWidth = 37;
-
-  const shortcuts = [
-    {title: 'New worktree', shortcut: 'ctrl-w'},
-    {title: 'Resume session', shortcut: 'ctrl-s'},
-    {title: 'Quit', shortcut: 'ctrl-q'},
-  ];
-  for (let i = 0; i < shortcuts.length; i += 1) {
-    const {title, shortcut} = shortcuts[i];
-
-    drawString(shortcutsLayer, title, {color: '#E1E1E1'});
-    move(shortcutsLayer, {x: menuWidth - 1});
-    drawString(shortcutsLayer, shortcut, {anchor: 'right', color: '#3D3D3D'});
-    move(shortcutsLayer, {x: 0, deltaY: 1});
-    if (i < shortcuts.length - 1) {
-      drawLine(shortcutsLayer, {x: menuWidth - 1}, {color: '#3D3D3D'});
+    const logoLayer = createLayer({
+      rows: [
+        ' ⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⣠⠀',
+        ' ⠀⠀⠀⣠⣾⠿⠛⠛⠛⠛⢀⣴⠃⠀',
+        ' ⠀⠀⣼⡟⠁⠀⠀⠀⢀⡴⠻⣿⡀⠀',
+        ' ⠀⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇⠀',
+        ' ⠀⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀⠀',
+        ' ⠀⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀⠀',
+        ' ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀'
+      ],
+      color: '#3D3D3D'
+    });
+  
+    const shortcutsLayer = createLayer();
+    const menuWidth = 37;
+  
+    const shortcuts = [
+      {title: 'New worktree', shortcut: 'ctrl-w'},
+      {title: 'Resume session', shortcut: 'ctrl-s'},
+      {title: 'Quit', shortcut: 'ctrl-q'},
+    ];
+    for (let i = 0; i < shortcuts.length; i += 1) {
+      const {title, shortcut} = shortcuts[i];
+  
+      drawString(shortcutsLayer, title, {color: '#E1E1E1'});
+      move(shortcutsLayer, {x: menuWidth - 1});
+      drawString(shortcutsLayer, shortcut, {anchor: 'right', color: '#3D3D3D'});
       move(shortcutsLayer, {x: 0, deltaY: 1});
+      if (i < shortcuts.length - 1) {
+        drawLine(shortcutsLayer, {x: menuWidth - 1}, {color: '#3D3D3D'});
+        move(shortcutsLayer, {x: 0, deltaY: 1});
+      }
     }
+  
+    const bodyLayer = createLayer();
+    drawLayer(bodyLayer, logoLayer, {x: Math.floor(shortcutsLayer.width / 2 - logoLayer.width / 2), y: 0});
+    drawLayer(bodyLayer, shortcutsLayer, {x: 1, y: logoLayer.height + 1});
+  
+    const bodyAreaBottom = footerTop - 2;
+  
+    drawLayer(canvas, bodyLayer, {
+      x: Math.floor(canvas.width / 2 - bodyLayer.width / 2),
+      y: Math.round((bodyAreaBottom - bodyLayer.height) * BODY_VERTICAL_BIAS)
+    });
   }
-
-  const bodyLayer = createLayer();
-  drawLayer(bodyLayer, logoLayer, {x: Math.floor(shortcutsLayer.width / 2 - logoLayer.width / 2), y: 0});
-  drawLayer(bodyLayer, shortcutsLayer, {x: 1, y: logoLayer.height + 1});
-
-  const bodyAreaBottom = footerTop - 2;
-
-  drawLayer(canvas, bodyLayer, {
-    x: Math.floor(canvas.width / 2 - bodyLayer.width / 2),
-    y: Math.round((bodyAreaBottom - bodyLayer.height) * BODY_VERTICAL_BIAS)
-  });
 
   return canvas;
 };

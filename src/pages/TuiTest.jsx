@@ -74,6 +74,8 @@ function TuiTest() {
             <Grok
               branch="trunk"
               cwd="~/Projects/grok/website/"
+              thread={[]}
+              tip="Press Ctrl+G to background a running terminal command."
               model="Grok Build"
               mode="always-approve"
               release={{
