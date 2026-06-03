@@ -26,9 +26,6 @@ const drawCharacter = (surface, x, y, character, color) => {
   } else {
     drawInCanvas(surface, x, y, character, color);
   }
-
-  surface.cursor = {x: x + 1, y};
-  surface.color = color;
 };
 
 export {drawCharacter};
