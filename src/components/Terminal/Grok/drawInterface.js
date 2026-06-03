@@ -57,15 +57,37 @@ const drawInterface = ({
 
   drawString(canvas, cwd, {color: '#3D3D3D'});
 
+  // Footer
+  const footerLayer = createLayer({width: width - PADDING.left - PADDING.right});
+
+  drawPrompt(footerLayer, '', model, mode);
+
+  // Version
+  move(footerLayer, {x: footerLayer.width - 1, y: footerLayer.height + 1});
+  drawString(footerLayer, release.label, {anchor: 'right', color: '#E1E1E1'});
+  move(footerLayer, {deltaX: -1});
+  drawString(footerLayer, `[${release.channel}]`, {anchor: 'right', color: '#3D3D3D'});
+  move(footerLayer, {deltaX: -1});
+  drawString(footerLayer, release.version, {anchor: 'right', color: '#3D3D3D'});
+
+  drawLayer(canvas, footerLayer, {x: PADDING.left, y: canvas.height - footerLayer.height});
+
+  // Tip
+  move(canvas, {x: PADDING.left, y: canvas.height - footerLayer.height - 2});
+  drawString(canvas, 'Tip:', {color: '#5C5C5C'});
+  move(canvas, {deltaX: 1});
+  drawString(canvas, tip, {color: '#3D3D3D'});
+
   // Body
   const logoLayer = createLayer({
     rows: [
-      '⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⣠',
-      '⠀⠀⣠⣾⠿⠛⠛⠛⠛⢀⣴⠃',
-      '⠀⣼⡟⠁⠀⠀⠀⢀⡴⠻⣿⡀',
-      '⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇',
-      '⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀',
-      '⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀',
+      ' ⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⣠⠀',
+      ' ⠀⠀⠀⣠⣾⠿⠛⠛⠛⠛⢀⣴⠃⠀',
+      ' ⠀⠀⣼⡟⠁⠀⠀⠀⢀⡴⠻⣿⡀⠀',
+      ' ⠀⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇⠀',
+      ' ⠀⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀⠀',
+      ' ⠀⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀⠀',
+      ' ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀'
     ],
     color: '#3D3D3D'
   });
@@ -98,27 +120,6 @@ const drawInterface = ({
     x: Math.floor(canvas.width / 2 - bodyLayer.width / 2),
     y: Math.floor(canvas.height / 2 - bodyLayer.height / 2)
   });
-
-  // Footer
-  const footerLayer = createLayer({width: width - PADDING.left - PADDING.right});
-
-  drawPrompt(footerLayer, '', model, mode);
-
-  // Version
-  move(footerLayer, {x: footerLayer.width - 1, y: footerLayer.height + 1});
-  drawString(footerLayer, release.label, {anchor: 'right', color: '#E1E1E1'});
-  move(footerLayer, {deltaX: -1});
-  drawString(footerLayer, `[${release.channel}]`, {anchor: 'right', color: '#3D3D3D'});
-  move(footerLayer, {deltaX: -1});
-  drawString(footerLayer, release.version, {anchor: 'right', color: '#3D3D3D'});
-
-  drawLayer(canvas, footerLayer, {x: PADDING.left, y: canvas.height - footerLayer.height});
-
-  // Tip
-  move(canvas, {x: PADDING.left, y: canvas.height - footerLayer.height - 2});
-  drawString(canvas, 'Tip:', {color: '#5C5C5C'});
-  move(canvas, {deltaX: 1});
-  drawString(canvas, tip, {color: '#3D3D3D'});
 
   return canvas;
 };
