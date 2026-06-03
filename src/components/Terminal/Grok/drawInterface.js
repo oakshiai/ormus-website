@@ -11,6 +11,7 @@ const PADDING = {
   bottom: 1,
   left: 2
 };
+const BODY_VERTICAL_BIAS = 3 / 8;
 
 /**
  * @typedef {Object} ModelRelease
@@ -116,9 +117,13 @@ const drawInterface = ({
   const bodyLayer = createLayer();
   drawLayer(bodyLayer, logoLayer, {x: Math.floor(shortcutsLayer.width / 2 - logoLayer.width / 2), y: 0});
   drawLayer(bodyLayer, shortcutsLayer, {x: 0, y: logoLayer.height + 1});
+
+  const footerTop = canvas.height - footerLayer.height;
+  const bodyAreaBottom = footerTop - 3;
+
   drawLayer(canvas, bodyLayer, {
     x: Math.floor(canvas.width / 2 - bodyLayer.width / 2),
-    y: Math.floor(canvas.height / 2 - bodyLayer.height / 2)
+    y: Math.round((bodyAreaBottom - bodyLayer.height) * BODY_VERTICAL_BIAS)
   });
 
   return canvas;
