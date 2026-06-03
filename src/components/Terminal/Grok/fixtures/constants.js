@@ -1,0 +1,7 @@
+const TERMINAL_COLUMNS = 140;
+const TERMINAL_ROWS = 40;
+
+export {
+  TERMINAL_COLUMNS,
+  TERMINAL_ROWS
+};
