@@ -20,9 +20,9 @@ const drawLine = (surface, end, {color} = {}) => {
   }
 
   if (deltaX > 0) {
-    surface.cursor.x = start + length + 1;
-  } else {
-    surface.cursor.y = start + length + 1;
+    surface.cursor.x = end.x > surface.cursor.x ? end.x + 1 : end.x - 1;
+  } else if (deltaY > 0) {
+    surface.cursor.y = end.y > surface.cursor.y ? end.y + 1 : end.y - 1;
   }
 };
 

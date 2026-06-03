@@ -30,7 +30,7 @@ test('drawLine draws a horizontal line from the cursor to the left', () => {
     ' ──── ',
     '      ',
   ]);
-  assert.deepEqual(canvas.cursor, {x: 5, y: 1});
+  assert.deepEqual(canvas.cursor, {x: 0, y: 1});
 });
 
 test('drawLine draws a vertical line from the cursor down', () => {
@@ -62,5 +62,5 @@ test('drawLine draws a vertical line from the cursor up', () => {
     '  │ ',
     '    ',
   ]);
-  assert.deepEqual(canvas.cursor, {x: 2, y: 4});
+  assert.deepEqual(canvas.cursor, {x: 2, y: 0});
 });
