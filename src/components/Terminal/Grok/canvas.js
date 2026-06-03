@@ -8,6 +8,7 @@ const createCanvas = (width, height) => {
       x: 0,
       y: 0,
     },
+    color: undefined,
     cells: Array.from({length: size}, () => ({
       contents: ' ',
       color: undefined,

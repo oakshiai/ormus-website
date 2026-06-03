@@ -24,6 +24,11 @@ const createCellRow = (row, color) => {
 const createLayer = (rows = [], color) => {
   return {
     rows: rows.map((row) => createCellRow(row, color)),
+    cursor: {
+      x: 0,
+      y: 0,
+    },
+    color: undefined,
     get width() {
       return this.rows.reduce((width, row) => Math.max(width, row.length), 0);
     },
