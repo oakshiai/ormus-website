@@ -3,7 +3,7 @@ import {test} from 'node:test';
 
 import {createCanvas, renderCanvasToRows} from './canvas.js';
 import {drawLine} from './drawLine.js';
-import {move} from './moveTo.js';
+import {move} from './move.js';
 
 test('drawLine draws a horizontal line from the cursor to the right', () => {
   const canvas = createCanvas(6, 3);

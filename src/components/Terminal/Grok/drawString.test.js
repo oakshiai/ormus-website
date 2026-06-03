@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 
 import {createCanvas, renderCanvasToRows} from './canvas.js';
-import {move} from './moveTo.js';
+import {move} from './move.js';
 import {drawString} from './drawString.js';
 
 test('drawString at cursor', () => {
