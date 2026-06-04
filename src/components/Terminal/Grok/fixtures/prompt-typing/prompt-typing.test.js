@@ -28,7 +28,7 @@ test('matches the prompt-typing fixture', () => {
     ]
   });
 
-  const expected = fs.readFileSync(new URL('./launch.txt', import.meta.url), 'utf8');
+  const expected = fs.readFileSync(new URL('./prompt-typing.txt', import.meta.url), 'utf8');
   const expectedLines = expected.split('\n');
   const renderedLines = renderCanvasToRows(canvas);
 
