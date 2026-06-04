@@ -3,6 +3,7 @@ import {move} from './move.js';
 import {drawString} from './drawString.js';
 import {drawLine} from './drawLine.js';
 import {drawRectangle} from './drawRectangle.js';
+import {drawCharacter} from './drawCharacter.js';
 import {createLayer, drawLayer} from './layer.js';
 import {drawPrompt} from './drawPrompt.js';
 import {COLORS} from './colors.js';
@@ -41,6 +42,10 @@ const DESKTOP_MENU_MARGIN = 3;
  * @property {ModelRelease} [release]
  * @property {{keys: string, effect: string}[]} [suggestedShortcuts]
  * @property {{title: string, action: {label: string, keys: string}, items: string[]}} [changelog]
+ * @property {{count: number, descriptionColumn?: number, items: {command: string, description: string, selected?: boolean, scrollbar?: boolean, highlightIndexes?: number[]}[]}} [suggestions]
+ * @property {string[]} [body]
+ * @property {number} [promptHighlightLength]
+ * @property {number} [mobileTipOffset]
  */
 
 const drawLogo = (surface, origin) => {
@@ -252,6 +257,91 @@ const drawContext = (surface, width, context) => {
   drawString(surface, '│', {color: COLORS.muted});
 };
 
+const drawBody = (surface, body) => {
+  body.forEach((line, index) => {
+    if (line.length === 0) {
+      return;
+    }
+
+    move(surface, {x: PADDING.left + 3, y: PADDING.top + 2 + index});
+    drawString(surface, line, {color: COLORS.subtle});
+  });
+};
+
+const drawSuggestionSeparator = (surface, y, count) => {
+  move(surface, {x: PADDING.left, y});
+  drawLine(surface, {x: surface.width - PADDING.right - 1}, {color: COLORS.commandDivider});
+
+  const label = String(count);
+  move(surface, {x: surface.width - PADDING.right - label.length - 1, y});
+  drawString(surface, label, {color: COLORS.subtle});
+};
+
+const getSuggestionDescriptionWidth = (surface, descriptionColumn) => {
+  if (surface.width < DESKTOP_MENU_MIN_WIDTH) {
+    return surface.width - descriptionColumn - PADDING.right - 6;
+  }
+
+  return surface.width - descriptionColumn - PADDING.right;
+};
+
+const getSuggestionDescriptionLines = (surface, suggestion, descriptionColumn) => {
+  return wrapWords(suggestion.description, getSuggestionDescriptionWidth(surface, descriptionColumn));
+};
+
+const drawSuggestionItem = (surface, suggestion, y, descriptionColumn) => {
+  const commandX = PADDING.left + 5;
+  const highlightedIndexes = new Set(suggestion.highlightIndexes ?? []);
+  const descriptionLines = getSuggestionDescriptionLines(surface, suggestion, descriptionColumn);
+
+  if (suggestion.selected) {
+    move(surface, {x: PADDING.left + 3, y});
+    drawString(surface, '❯', {color: COLORS.text});
+  }
+
+  move(surface, {x: commandX, y});
+  Array.from(suggestion.command).forEach((character, index) => {
+    drawString(surface, character, {color: highlightedIndexes.has(index) ? COLORS.primary : COLORS.text});
+  });
+  move(surface, {x: descriptionColumn, y});
+  drawString(surface, descriptionLines[0], {color: COLORS.subtle});
+
+  for (let i = 1; i < descriptionLines.length; i += 1) {
+    move(surface, {x: surface.width < DESKTOP_MENU_MIN_WIDTH ? descriptionColumn + 1 : descriptionColumn, y: y + i});
+    drawString(surface, descriptionLines[i], {color: COLORS.subtle});
+  }
+
+  if (suggestion.scrollbar) {
+    drawCharacter(surface, surface.width - PADDING.right - 1, y, '█', COLORS.muted);
+
+    if (suggestion.selected) {
+      for (let i = 1; i < descriptionLines.length; i += 1) {
+        drawCharacter(surface, surface.width - PADDING.right - 1, y + i, '█', COLORS.muted);
+      }
+    }
+  }
+
+  return descriptionLines.length;
+};
+
+const drawSuggestions = (surface, footerTop, suggestions) => {
+  const descriptionColumn = suggestions.descriptionColumn ?? 23;
+  const rowCount = suggestions.items.reduce((count, suggestion) => {
+    return count + getSuggestionDescriptionLines(surface, suggestion, descriptionColumn).length;
+  }, 0);
+  const top = footerTop - rowCount - 2;
+  let y = top + 1;
+
+  drawSuggestionSeparator(surface, top, suggestions.count);
+
+  suggestions.items.forEach((suggestion) => {
+    y += drawSuggestionItem(surface, suggestion, y, descriptionColumn);
+  });
+
+  move(surface, {x: PADDING.left, y});
+  drawLine(surface, {x: surface.width - PADDING.right - 1}, {color: COLORS.commandDivider});
+};
+
 /**
  * @param {InterfaceOptions} options
  */
@@ -269,7 +359,11 @@ const drawInterface = ({
   mode,
   release,
   suggestedShortcuts = [],
-  changelog
+  changelog,
+  suggestions,
+  body,
+  promptHighlightLength,
+  mobileTipOffset = 3
 }) => {
   const canvas = createCanvas(width, height);
   
@@ -290,7 +384,7 @@ const drawInterface = ({
   // Footer
   const footerLayer = createLayer({width: width - PADDING.left - PADDING.right});
 
-  drawPrompt(footerLayer, prompt, model, mode);
+  drawPrompt(footerLayer, prompt, model, mode, {highlightLength: promptHighlightLength});
 
   if (release) {
     // Version
@@ -310,7 +404,7 @@ const drawInterface = ({
   // Body
   if (thread.length === 0 && !prompt) {
     if (tip) {
-      drawTip(canvas, width < DESKTOP_MENU_MIN_WIDTH ? footerTop - 3 : footerTop - 2, tip);
+      drawTip(canvas, width < DESKTOP_MENU_MIN_WIDTH ? footerTop - mobileTipOffset : footerTop - 2, tip);
     }
 
     if (release) {
@@ -320,6 +414,14 @@ const drawInterface = ({
     if (changelog) {
       drawChangelog(canvas, changelog);
     }
+  }
+
+  if (body) {
+    drawBody(canvas, body);
+  }
+
+  if (suggestions) {
+    drawSuggestions(canvas, footerTop, suggestions);
   }
 
   if (indicator) {
