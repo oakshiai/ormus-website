@@ -45,11 +45,14 @@ const Grok = (props) => {
     height: terminal.height,
     branch: props.branch,
     cwd: props.cwd,
+    context: props.context,
     thread: props.thread,
+    prompt: props.prompt,
     tip: props.tip,
     model: props.model,
     mode: props.mode,
     release: props.release,
+    suggestedShortcuts: props.suggestedShortcuts,
   });
 
   return <Canvas canvas={canvas} />;
