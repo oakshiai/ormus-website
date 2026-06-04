@@ -61,6 +61,93 @@ const styles = {
   }),
 }
 
+const release = {
+  version: '0.2.22',
+  channel: 'stable',
+  label: 'Beta',
+}
+
+const sendShortcuts = [
+  {keys: 'Enter', effect: 'send'},
+  {keys: 'Shift+Tab', effect: 'mode'},
+  {keys: 'Ctrl+.', effect: 'shortcuts'},
+]
+
+const baseProps = {
+  branch: 'trunk',
+  cwd: '~/Projects/grok/recorder/',
+  model: 'Grok Build',
+  mode: 'always-approve',
+  thread: [],
+}
+
+const chapters = [
+  {
+    title: 'Main Menu',
+    file: '0001-main-menu.txt',
+    props: {
+      release,
+      tip: 'Press Ctrl+O to toggle auto-approve mode.',
+    },
+  },
+  {
+    title: 'Changelog',
+    file: '0002-changelog.txt',
+    props: {
+      release,
+      tip: 'Press Ctrl+O to toggle auto-approve mode.',
+      changelog: {
+        title: 'Changelog',
+        action: {
+          label: 'See all',
+          keys: 'ctrl-l',
+        },
+        items: [
+          'Authentication errors with static API keys now surface a clear error instead of hanging the turn.',
+          'allowed_models in config.toml now restricts which models appear in the picker and /model command.',
+          'Code navigation now returns correct results for secondary project windows with different working directories.',
+        ],
+      },
+    },
+  },
+  {
+    title: 'Starting Session',
+    file: '0003-starting-session.txt',
+    props: {
+      cwd: '~/Projects/grok/recorder',
+      prompt: 't',
+      suggestedShortcuts: sendShortcuts,
+      indicator: {
+        text: 'Starting session…',
+        elapsed: '0.0s',
+      },
+    },
+  },
+  {
+    title: 'Message Input',
+    file: '0004-message-input.txt',
+    props: {
+      cwd: '~/Projects/grok/recorder',
+      prompt: 'test',
+      suggestedShortcuts: sendShortcuts,
+    },
+  },
+  {
+    title: 'Message Input with Quit Hint',
+    file: '0005-message-input-with-quit-hint.txt',
+    props: {
+      context: {
+        used: '4.6K',
+        remaining: '512K',
+      },
+      prompt: 'test',
+      suggestedShortcuts: [
+        {keys: 'Ctrl+d', effect: 'press again to quit'},
+      ],
+    },
+  },
+]
+
 function TuiTest() {
   return (
     <div className={styles.root}>
@@ -69,27 +156,18 @@ function TuiTest() {
           <div className={styles.title}>TUI Visual Tests</div>
         </div>
 
-        <section className={styles.section}>
-          <Terminal width={140} height={40}>
-            <Grok
-              branch="trunk"
-              cwd="~/Projects/grok/website/"
-              context={{
-                used: '4.6K',
-                remaining: '512K'
-              }}
-              thread={[]}
-              prompt={'Test'}
-              model="Grok Build"
-              mode="always-approve"
-              suggestedShortcuts={[
-                {keys: 'Enter', effect: 'send'},
-                {keys: 'Shift+Tab', effect: 'mode'},
-                {keys: 'Ctrl+.', effect: 'shortcuts'},
-              ]}
-            />
-          </Terminal>
-        </section>
+        {chapters.map((chapter) => (
+          <section key={chapter.file} className={styles.section}>
+            <div className={styles.label}>{chapter.title}</div>
+            <Terminal width={140} height={40}>
+              <Grok
+                {...baseProps}
+                {...chapter.props}
+                chapter={chapter}
+              />
+            </Terminal>
+          </section>
+        ))}
       </div>
     </div>
   )
