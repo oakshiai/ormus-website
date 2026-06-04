@@ -7,7 +7,9 @@ const drawPrompt = (surface, prompt, model, mode) => {
   move(surface, {x: 2, y: 1});
   drawString(surface, '❯', {color: '#414141'});
   move(surface, {deltaX: 1});
-  drawString(surface, prompt, {color: '#4E4E4E'});
+  if (prompt) {
+    drawString(surface, prompt, {color: '#4E4E4E'});
+  }
   move(surface, {x: surface.width - 3, y: 2});
   drawString(surface, ` ${mode} `, {anchor: 'right', color: '#404040'});
   drawString(surface, '·', {anchor: 'right', color: '#3D3D3D'});

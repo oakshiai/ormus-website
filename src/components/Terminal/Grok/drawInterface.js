@@ -26,11 +26,14 @@ const BODY_VERTICAL_BIAS = 3 / 8;
  * @property {number} height
  * @property {string} [branch]
  * @property {string} cwd
- * @property {object} thread
- * @property {string} tip
+ * @property {{used: string, remaining: string}} [context]
+ * @property {object[]} thread
+ * @property {string} [prompt]
+ * @property {string} [tip]
  * @property {string} model
  * @property {string} mode
- * @property {ModelRelease} release
+ * @property {ModelRelease} [release]
+ * @property {{keys: string, effect: string}[]} [suggestedShortcuts]
  */
 
 /**
@@ -41,11 +44,14 @@ const drawInterface = ({
   height,
   branch,
   cwd,
+  context,
   thread,
+  prompt,
   tip,
   model,
   mode,
-  release
+  release,
+  suggestedShortcuts = []
 }) => {
   const canvas = createCanvas(width, height);
   
@@ -58,32 +64,47 @@ const drawInterface = ({
     move(canvas, {deltaX: 1});
   }
 
-  drawString(canvas, cwd, {color: '#3D3D3D'});
+  drawString(canvas, context ? cwd.replace(/\/$/, '') : cwd, {color: '#3D3D3D'});
+  if (context) {
+    move(canvas, {x: width - PADDING.right - 1, y: PADDING.top});
+    drawString(canvas, `│ ${context.used} / ${context.remaining} │`, {anchor: 'right', color: '#3D3D3D'});
+  }
 
   // Footer
   const footerLayer = createLayer({width: width - PADDING.left - PADDING.right});
 
-  drawPrompt(footerLayer, '', model, mode);
+  drawPrompt(footerLayer, prompt, model, mode);
 
-  // Version
-  move(footerLayer, {x: footerLayer.width - 1, y: footerLayer.height + 1});
-  drawString(footerLayer, release.label, {anchor: 'right', color: '#E1E1E1'});
-  move(footerLayer, {deltaX: -1});
-  drawString(footerLayer, `[${release.channel}]`, {anchor: 'right', color: '#3D3D3D'});
-  move(footerLayer, {deltaX: -1});
-  drawString(footerLayer, release.version, {anchor: 'right', color: '#3D3D3D'});
+  if (release) {
+    // Version
+    move(footerLayer, {x: footerLayer.width - 1, y: footerLayer.height + 1});
+    drawString(footerLayer, release.label, {anchor: 'right', color: '#E1E1E1'});
+    move(footerLayer, {deltaX: -1});
+    drawString(footerLayer, `[${release.channel}]`, {anchor: 'right', color: '#3D3D3D'});
+    move(footerLayer, {deltaX: -1});
+    drawString(footerLayer, release.version, {anchor: 'right', color: '#3D3D3D'});
+  }
+
+  if (suggestedShortcuts.length > 0) {
+    const shortcuts = suggestedShortcuts.map(({keys, effect}) => `${keys}:${effect}`).join('  │  ');
+
+    move(footerLayer, {x: 0, y: footerLayer.height + 1});
+    drawString(footerLayer, shortcuts, {color: '#3D3D3D'});
+  }
 
   const footerTop = canvas.height - footerLayer.height - PADDING.bottom;
 
   drawLayer(canvas, footerLayer, {x: PADDING.left, y: footerTop});
 
   // Body
-  if (thread.length === 0) {
+  if (thread.length === 0 && !prompt) {
     // Tip
-    move(canvas, {x: PADDING.left, y: footerTop - 2});
-    drawString(canvas, 'Tip:', {color: '#5C5C5C'});
-    move(canvas, {deltaX: 1});
-    drawString(canvas, tip, {color: '#3D3D3D'});
+    if (tip) {
+      move(canvas, {x: PADDING.left, y: footerTop - 2});
+      drawString(canvas, 'Tip:', {color: '#5C5C5C'});
+      move(canvas, {deltaX: 1});
+      drawString(canvas, tip, {color: '#3D3D3D'});
+    }
 
     const logoLayer = createLayer({
       rows: [
