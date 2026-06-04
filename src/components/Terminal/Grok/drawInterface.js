@@ -2,6 +2,7 @@ import {createCanvas} from './canvas.js';
 import {move} from './move.js';
 import {drawString} from './drawString.js';
 import {drawLine} from './drawLine.js';
+import {drawRectangle} from './drawRectangle.js';
 import {createLayer, drawLayer} from './layer.js';
 import {drawPrompt} from './drawPrompt.js';
 
@@ -11,7 +12,6 @@ const PADDING = {
   bottom: 1,
   left: 2
 };
-const BODY_VERTICAL_BIAS = 3 / 8;
 
 /**
  * @typedef {Object} ModelRelease
@@ -30,11 +30,81 @@ const BODY_VERTICAL_BIAS = 3 / 8;
  * @property {object[]} thread
  * @property {string} [prompt]
  * @property {string} [tip]
+ * @property {{text: string, elapsed: string}} [indicator]
  * @property {string} model
  * @property {string} mode
  * @property {ModelRelease} [release]
  * @property {{keys: string, effect: string}[]} [suggestedShortcuts]
+ * @property {{title: string, action: {label: string, keys: string}, items: string[]}} [changelog]
  */
+
+const drawLogo = (surface, origin) => {
+  const logoLayer = createLayer({
+    rows: [
+      '⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⣠⠀',
+      '⠀⠀⠀⣠⣾⠿⠛⠛⠛⠛⢀⣴⠃⠀',
+      '⠀⠀⣼⡟⠁⠀⠀⠀⢀⡴⠻⣿⡀⠀',
+      '⠀⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇⠀',
+      '⠀⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀⠀',
+      '⠀⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀⠀',
+      '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀'
+    ],
+    color: '#3D3D3D'
+  });
+
+  drawLayer(surface, logoLayer, origin);
+};
+
+const drawMenuAction = (surface, y, title, shortcut) => {
+  move(surface, {x: 29, y});
+  drawString(surface, '[', {color: '#3D3D3D'});
+  move(surface, {x: 31});
+  drawString(surface, title, {color: '#E1E1E1'});
+  move(surface, {x: 123});
+  drawString(surface, shortcut, {anchor: 'right', color: '#3D3D3D'});
+  move(surface, {x: 126});
+  drawString(surface, ']', {color: '#3D3D3D'});
+};
+
+const drawMainMenu = (surface, {release}, origin) => {
+  drawRectangle(surface, origin, {width: 120, height: 11}, '#3D3D3D');
+  drawLogo(surface, {x: origin.x + 2, y: origin.y + 2});
+
+  move(surface, {x: 29, y: origin.y + 2});
+  drawString(surface, `Grok Build ${release.label}  ${release.version}`, {color: '#E1E1E1'});
+  move(surface, {x: 29, y: origin.y + 3});
+  drawString(surface, 'Try out Grok Build and give us /feedback!', {color: '#3D3D3D'});
+  move(surface, {x: 29, y: origin.y + 5});
+  drawLine(surface, {x: 126}, {color: '#3D3D3D'});
+
+  drawMenuAction(surface, origin.y + 6, 'New worktree', 'ctrl-w');
+  drawMenuAction(surface, origin.y + 7, 'Resume session', 'ctrl-s');
+  drawMenuAction(surface, origin.y + 8, 'Quit', 'ctrl-q');
+};
+
+const drawChangelog = (surface, changelog) => {
+  move(surface, {x: 11, y: 18});
+  drawString(surface, changelog.title, {color: '#E1E1E1'});
+  move(surface, {x: 113});
+  drawString(surface, `[${changelog.action.label} ${changelog.action.keys}]`, {color: '#3D3D3D'});
+
+  for (let i = 0; i < changelog.items.length; i += 1) {
+    move(surface, {x: 12, y: 20 + i});
+    drawString(surface, `• ${changelog.items[i]}`, {color: '#3D3D3D'});
+  }
+};
+
+const drawTip = (surface, y, tip) => {
+  move(surface, {x: PADDING.left, y});
+  drawString(surface, 'Tip:', {color: '#5C5C5C'});
+  move(surface, {deltaX: 1});
+  drawString(surface, tip, {color: '#3D3D3D'});
+};
+
+const drawIndicator = (surface, y, indicator) => {
+  move(surface, {x: PADDING.left + 2, y});
+  drawString(surface, `⠋ ${indicator.text} ${indicator.elapsed}`, {color: '#3D3D3D'});
+};
 
 /**
  * @param {InterfaceOptions} options
@@ -48,10 +118,12 @@ const drawInterface = ({
   thread,
   prompt,
   tip,
+  indicator,
   model,
   mode,
   release,
-  suggestedShortcuts = []
+  suggestedShortcuts = [],
+  changelog
 }) => {
   const canvas = createCanvas(width, height);
   
@@ -78,11 +150,7 @@ const drawInterface = ({
   if (release) {
     // Version
     move(footerLayer, {x: footerLayer.width - 1, y: footerLayer.height + 1});
-    drawString(footerLayer, release.label, {anchor: 'right', color: '#E1E1E1'});
-    move(footerLayer, {deltaX: -1});
-    drawString(footerLayer, `[${release.channel}]`, {anchor: 'right', color: '#3D3D3D'});
-    move(footerLayer, {deltaX: -1});
-    drawString(footerLayer, release.version, {anchor: 'right', color: '#3D3D3D'});
+    drawString(footerLayer, `${model} ${release.label} [${release.channel}]`, {anchor: 'right', color: '#3D3D3D'});
   }
 
   if (suggestedShortcuts.length > 0) {
@@ -98,58 +166,21 @@ const drawInterface = ({
 
   // Body
   if (thread.length === 0 && !prompt) {
-    // Tip
     if (tip) {
-      move(canvas, {x: PADDING.left, y: footerTop - 2});
-      drawString(canvas, 'Tip:', {color: '#5C5C5C'});
-      move(canvas, {deltaX: 1});
-      drawString(canvas, tip, {color: '#3D3D3D'});
+      drawTip(canvas, footerTop - 2, tip);
     }
 
-    const logoLayer = createLayer({
-      rows: [
-        ' ⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⣠⠀',
-        ' ⠀⠀⠀⣠⣾⠿⠛⠛⠛⠛⢀⣴⠃⠀',
-        ' ⠀⠀⣼⡟⠁⠀⠀⠀⢀⡴⠻⣿⡀⠀',
-        ' ⠀⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇⠀',
-        ' ⠀⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀⠀',
-        ' ⠀⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀⠀',
-        ' ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀'
-      ],
-      color: '#3D3D3D'
-    });
-  
-    const shortcutsLayer = createLayer();
-    const menuWidth = 37;
-  
-    const shortcuts = [
-      {title: 'New worktree', shortcut: 'ctrl-w'},
-      {title: 'Resume session', shortcut: 'ctrl-s'},
-      {title: 'Quit', shortcut: 'ctrl-q'},
-    ];
-    for (let i = 0; i < shortcuts.length; i += 1) {
-      const {title, shortcut} = shortcuts[i];
-  
-      drawString(shortcutsLayer, title, {color: '#E1E1E1'});
-      move(shortcutsLayer, {x: menuWidth - 1});
-      drawString(shortcutsLayer, shortcut, {anchor: 'right', color: '#3D3D3D'});
-      move(shortcutsLayer, {x: 0, deltaY: 1});
-      if (i < shortcuts.length - 1) {
-        drawLine(shortcutsLayer, {x: menuWidth - 1}, {color: '#3D3D3D'});
-        move(shortcutsLayer, {x: 0, deltaY: 1});
-      }
+    if (release) {
+      drawMainMenu(canvas, {release}, {x: 10, y: changelog ? 6 : 8});
     }
-  
-    const bodyLayer = createLayer();
-    drawLayer(bodyLayer, logoLayer, {x: Math.floor(shortcutsLayer.width / 2 - logoLayer.width / 2), y: 0});
-    drawLayer(bodyLayer, shortcutsLayer, {x: 1, y: logoLayer.height + 1});
-  
-    const bodyAreaBottom = footerTop - 2;
-  
-    drawLayer(canvas, bodyLayer, {
-      x: Math.floor(canvas.width / 2 - bodyLayer.width / 2),
-      y: Math.round((bodyAreaBottom - bodyLayer.height) * BODY_VERTICAL_BIAS)
-    });
+
+    if (changelog) {
+      drawChangelog(canvas, changelog);
+    }
+  }
+
+  if (indicator) {
+    drawIndicator(canvas, footerTop - 2, indicator);
   }
 
   return canvas;
