@@ -84,7 +84,7 @@ const assertMatchesFixture = (canvas, fixtureFile) => {
   const renderedLines = renderCanvasToRows(canvas);
 
   for (let i = 0; i < expectedLines.length; i += 1) {
-    assert.equal(renderedLines[i].trimEnd(), expectedLines[i], `${i}`);
+    assert.equal(renderedLines[i], expectedLines[i], `${i}`);
   }
 };
 
