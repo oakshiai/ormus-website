@@ -74,15 +74,19 @@ function TuiTest() {
             <Grok
               branch="trunk"
               cwd="~/Projects/grok/website/"
+              context={{
+                used: '4.6K',
+                remaining: '512K'
+              }}
               thread={[]}
-              tip="Press Ctrl+G to background a running terminal command."
+              prompt={'Test'}
               model="Grok Build"
               mode="always-approve"
-              release={{
-                version: '0.2.16',
-                channel: 'stable',
-                label: 'Beta'
-              }}
+              suggestedShortcuts={[
+                {keys: 'Enter', effect: 'send'},
+                {keys: 'Shift+Tab', effect: 'mode'},
+                {keys: 'Ctrl+.', effect: 'shortcuts'},
+              ]}
             />
           </Terminal>
         </section>
