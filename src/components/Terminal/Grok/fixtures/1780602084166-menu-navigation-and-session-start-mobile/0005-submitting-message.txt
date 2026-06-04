@@ -1,0 +1,50 @@
+                                                           
+   trunk ~/Projects/grok/recorder        │ 4.6K / 512K │  
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+  ╭─────────────────────────────────────────────────────╮  
+  │ ❯ test                                              │  
+  ╰─────────────────────── Grok Build · always-approve ─╯  
+                                                           
+  Ctrl+d:press again to quit                               
+                                                           

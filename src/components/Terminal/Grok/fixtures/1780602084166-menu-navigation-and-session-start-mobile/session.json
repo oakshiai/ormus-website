@@ -1,0 +1,37 @@
+{
+  "chapters": [
+    {
+      "file": "0001-main-menu.txt",
+      "index": 1,
+      "metadataFile": "0001-main-menu.json",
+      "title": "Main Menu"
+    },
+    {
+      "file": "0002-changelog.txt",
+      "index": 2,
+      "metadataFile": "0002-changelog.json",
+      "title": "Changelog"
+    },
+    {
+      "file": "0003-starting-session.txt",
+      "index": 3,
+      "metadataFile": "0003-starting-session.json",
+      "title": "Starting Session"
+    },
+    {
+      "file": "0004-entering-message.txt",
+      "index": 4,
+      "metadataFile": "0004-entering-message.json",
+      "title": "Entering Message"
+    },
+    {
+      "file": "0005-submitting-message.txt",
+      "index": 5,
+      "metadataFile": "0005-submitting-message.json",
+      "title": "Submitting Message"
+    }
+  ],
+  "sessionTitle": "Menu Navigation and Session Start Mobile",
+  "sessionSlug": "menu-navigation-and-session-start-mobile",
+  "timestamp": 1780602084166
+}
