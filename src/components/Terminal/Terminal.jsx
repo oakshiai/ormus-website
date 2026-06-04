@@ -9,6 +9,9 @@ import {TerminalContext} from './TerminalContext.js';
 
 const measureText = '00000000000000000000';
 const terminalFontFamily = 'MesloLGS Nerd Font Mono';
+const terminalFontSize = 12;
+const fallbackColor = '#E1E1E1';
+const defaultRenderer = 'html';
 
 injectGlobal({
   '@font-face': {
@@ -34,6 +37,87 @@ const toCellCount = (value) => {
   return Math.max(0, Math.floor(count));
 };
 
+const getRowCells = (surface, y) => {
+  const cells = [];
+  const rowStart = surface.width * y;
+  const rowEnd = rowStart + surface.width;
+
+  for (let index = rowStart; index < rowEnd; index += 1) {
+    cells.push(surface.cells[index]);
+  }
+
+  return cells;
+};
+
+const drawCanvas = (element, surface, terminal) => {
+  const context = element.getContext('2d');
+  const ratio = window.devicePixelRatio || 1;
+
+  element.width = Math.ceil(terminal.pixelWidth * ratio);
+  element.height = Math.ceil(terminal.pixelHeight * ratio);
+
+  context.setTransform(ratio, 0, 0, ratio, 0, 0);
+  context.clearRect(0, 0, terminal.pixelWidth, terminal.pixelHeight);
+  context.font = `400 ${terminal.fontSize}px "${terminal.fontFamily}", monospace`;
+  context.textAlign = 'left';
+  context.textBaseline = 'top';
+
+  const verticalOffset = Math.max(0, (terminal.cellHeight - terminal.fontSize) / 2);
+
+  for (let y = 0; y < surface.height; y += 1) {
+    for (let x = 0; x < surface.width; x += 1) {
+      const cell = surface.cells[(surface.width * y) + x];
+
+      if (cell.contents === ' ') {
+        continue;
+      }
+
+      context.fillStyle = cell.color ?? fallbackColor;
+      context.fillText(
+        cell.contents,
+        x * terminal.cellWidth,
+        (y * terminal.cellHeight) + verticalOffset
+      );
+    }
+  }
+};
+
+const HtmlRenderer = (props) => {
+  return Array.from({length: props.surface.height}, (_, y) => (
+    <span key={y} className="terminal-row">
+      {getRowCells(props.surface, y).map((cell, index) => (
+        <span key={index} className="terminal-cell" style={{color: cell.color}}>
+          {cell.contents}
+        </span>
+      ))}
+    </span>
+  ));
+};
+
+const CanvasRenderer = (props) => {
+  const canvasRef = useRef(null);
+
+  useLayoutEffect(() => {
+    if (!canvasRef.current) {
+      return;
+    }
+
+    drawCanvas(canvasRef.current, props.surface, props.terminal);
+  }, [props.surface, props.terminal]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      style={{
+        display: 'block',
+        width: `${props.terminal.pixelWidth}px`,
+        height: `${props.terminal.pixelHeight}px`,
+      }}
+    />
+  );
+};
+
 const styles = {
   terminal: css({
     display: 'block',
@@ -49,7 +133,7 @@ const styles = {
     overflow: 'hidden',
     whiteSpace: 'pre',
     fontFamily: `"${terminalFontFamily}", monospace`,
-    fontSize: '12px',
+    fontSize: `${terminalFontSize}px`,
     fontStyle: 'normal',
     fontWeight: 400,
     fontStretch: 'normal',
@@ -83,8 +167,10 @@ const styles = {
 const Terminal = (props) => {
   const targetWidth = toCellCount(props.width);
   const targetHeight = toCellCount(props.height);
+  const renderer = props.renderer ?? defaultRenderer;
   const terminalRef = useRef(null);
   const measureRef = useRef(null);
+  const [fontRevision, setFontRevision] = useState(0);
   const [size, setSize] = useState({
     width: 0,
     height: 0,
@@ -144,6 +230,26 @@ const Terminal = (props) => {
     terminalStyle.height = `${size.pixelHeight}px`;
   }
 
+  const terminal = {
+    width: size.width,
+    height: size.height,
+    pixelWidth: size.pixelWidth,
+    pixelHeight: size.pixelHeight,
+    cellWidth,
+    cellHeight,
+    fontFamily: terminalFontFamily,
+    fontSize: terminalFontSize,
+    fontRevision,
+  };
+
+  const renderSurface = (surface) => {
+    if (renderer === 'canvas') {
+      return <CanvasRenderer surface={surface} terminal={terminal} />;
+    }
+
+    return <HtmlRenderer surface={surface} />;
+  };
+
   useLayoutEffect(() => {
     updateSize();
 
@@ -162,6 +268,7 @@ const Terminal = (props) => {
       document.fonts.ready.then(() => {
         if (!cancelled) {
           updateSize();
+          setFontRevision((current) => current + 1);
         }
       });
     }
@@ -186,7 +293,8 @@ const Terminal = (props) => {
         <TerminalContext.Provider
           value={{
             width: size.width,
-            height: size.height
+            height: size.height,
+            renderSurface,
           }}
         >
           {size.width > 0 && size.height > 0 && props.children}
