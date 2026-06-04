@@ -167,9 +167,11 @@ const styles = {
 const Terminal = (props) => {
   const targetWidth = toCellCount(props.width);
   const targetHeight = toCellCount(props.height);
+  const onSizeChange = props.onSizeChange;
   const renderer = props.renderer ?? defaultRenderer;
   const terminalRef = useRef(null);
   const measureRef = useRef(null);
+  const reportedSizeRef = useRef(null);
   const [fontRevision, setFontRevision] = useState(0);
   const [size, setSize] = useState({
     width: 0,
@@ -198,25 +200,38 @@ const Terminal = (props) => {
     const height = targetHeight ?? Math.max(0, Math.floor(terminal.clientHeight / charHeight));
     const pixelWidth = width * charWidth;
     const pixelHeight = height * charHeight;
+    const nextSize = {
+      width,
+      height,
+      pixelWidth,
+      pixelHeight,
+    };
+    const reportedSize = reportedSizeRef.current;
+
+    if (
+      !reportedSize
+      || reportedSize.width !== nextSize.width
+      || reportedSize.height !== nextSize.height
+      || reportedSize.pixelWidth !== nextSize.pixelWidth
+      || reportedSize.pixelHeight !== nextSize.pixelHeight
+    ) {
+      reportedSizeRef.current = nextSize;
+      onSizeChange?.(nextSize);
+    }
 
     setSize((current) => {
       if (
-        current.width === width
-        && current.height === height
-        && current.pixelWidth === pixelWidth
-        && current.pixelHeight === pixelHeight
+        current.width === nextSize.width
+        && current.height === nextSize.height
+        && current.pixelWidth === nextSize.pixelWidth
+        && current.pixelHeight === nextSize.pixelHeight
       ) {
         return current;
       }
 
-      return {
-        width,
-        height,
-        pixelWidth,
-        pixelHeight,
-      };
+      return nextSize;
     });
-  }, [targetWidth, targetHeight]);
+  }, [onSizeChange, targetWidth, targetHeight]);
 
   const terminalStyle = {};
   const cellWidth = size.width > 0 ? size.pixelWidth / size.width : 0;
