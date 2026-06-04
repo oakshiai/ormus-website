@@ -1,0 +1,50 @@
+                                                           
+   trunk ~/Projects/grok/recorder                         
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+  ─────────────────────────────────────────────────────2─  
+     ❯ /usage   View credit usage or manage billing        
+       /plugins View plugins                               
+  ───────────────────────────────────────────────────────  
+  ╭─────────────────────────────────────────────────────╮  
+  │ ❯ /usage                                            │  
+  ╰─────────────────────── Grok Build · always-approve ─╯  
+                                                           
+  Enter:send  │  Shift+Tab:mode  │  Ctrl+.:shortcuts       
+                                                           

@@ -1,0 +1,50 @@
+                                                           
+   trunk ~/Projects/grok/recorder                         
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+  ─────────────────────────────────────────────────────8─  
+     ❯ /usage          View credit usage or manage      █  
+                        billing                         █  
+       /import-claude  Open the Claude settings         █  
+                        import modal                       
+       /logout         Log out and return to the           
+                        login screen                       
+  ───────────────────────────────────────────────────────  
+  ╭─────────────────────────────────────────────────────╮  
+  │ ❯ /usage                                            │  
+  ╰─────────────────────── Grok Build · always-approve ─╯  
+                                                           
+  Enter:send  │  Shift+Tab:mode  │  Ctrl+.:shortcuts       
+                                                           

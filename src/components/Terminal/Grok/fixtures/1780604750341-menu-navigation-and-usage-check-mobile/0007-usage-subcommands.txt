@@ -1,0 +1,50 @@
+                                                           
+   trunk ~/Projects/grok/recorder        │ 4.6K / 512K │  
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+  ─────────────────────────────────────────────────────2─  
+     ❯ show   View credit usage                            
+       manage Open billing management page                 
+  ───────────────────────────────────────────────────────  
+  ╭─────────────────────────────────────────────────────╮  
+  │ ❯ /usage show | manage                              │  
+  ╰─────────────────────── Grok Build · always-approve ─╯  
+                                                           
+  Enter:send  │  Shift+Tab:mode  │  Ctrl+.:shortcuts       
+                                                           

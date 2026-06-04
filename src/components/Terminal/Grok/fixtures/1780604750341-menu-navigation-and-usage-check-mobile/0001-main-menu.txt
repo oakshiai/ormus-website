@@ -1,0 +1,50 @@
+                                                           
+   trunk ~/Projects/grok/recorder/                        
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                      ⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⣠⠀                       
+                      ⠀⠀⠀⣠⣾⠿⠛⠛⠛⠛⢀⣴⠃⠀                       
+                      ⠀⠀⣼⡟⠁⠀⠀⠀⢀⡴⠻⣿⡀⠀                       
+                      ⠀⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇⠀                       
+                      ⠀⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀⠀                       
+                      ⠀⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀⠀                       
+                      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                       
+                                                           
+    [ New worktree                            ctrl-w  ]    
+    [ Resume session                          ctrl-s  ]    
+    [ Quit                                    ctrl-q  ]    
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+  Tip: Try Composer 2.5 from the /model menu               
+                                                           
+  ╭─────────────────────────────────────────────────────╮  
+  │ ❯                                                   │  
+  ╰─────────────────────── Grok Build · always-approve ─╯  
+                                                           
+                         Grok Build  0.2.22 [stable] Beta  
+                                                           
