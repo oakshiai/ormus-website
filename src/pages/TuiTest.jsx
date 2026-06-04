@@ -225,6 +225,34 @@ function TuiTest() {
           />
         </TerminalPreview>
 
+        <TerminalPreview label="Slash Commands List">
+          <Grok
+            branch="trunk"
+            cwd="~/Projects/grok/recorder"
+            model="Grok Build"
+            mode="always-approve"
+            thread={[]}
+            prompt="/"
+            promptHighlightLength={1}
+            suggestedShortcuts={[
+              {keys: 'Enter', effect: 'send'},
+              {keys: 'Shift+Tab', effect: 'mode'},
+              {keys: 'Ctrl+.', effect: 'shortcuts'},
+            ]}
+            suggestions={{
+              count: 40,
+              items: [
+                {command: '/quit', description: 'Quit the application', selected: true, scrollbar: true},
+                {command: '/home', description: 'Return to the welcome screen'},
+                {command: '/new', description: 'Start a new session'},
+                {command: '/fork', description: 'Branch the current session into a peer agent'},
+                {command: '/compact', description: 'Compact conversation history'},
+                {command: '/copy', description: 'Copy last response to clipboard (/copy N for Nth-latest)'},
+              ],
+            }}
+          />
+        </TerminalPreview>
+
         <TerminalPreview label="Changelog">
           <Grok
             branch="trunk"
