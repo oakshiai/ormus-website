@@ -88,6 +88,31 @@ const assertMatchesFixture = (canvas, fixtureFile) => {
   }
 };
 
+const getExpectedColor = (colors, x, y) => {
+  const run = colors.runs.find(({column, length, row}) => {
+    return row === y && x >= column && x < column + length;
+  });
+
+  return run?.foreground;
+};
+
+const assertColorsMatchFixture = (canvas, fixtureFile) => {
+  const expected = JSON.parse(fs.readFileSync(new URL(`./${fixtureFile.replace('.txt', '.json')}`, import.meta.url), 'utf8'));
+
+  canvas.cells.forEach((cell, index) => {
+    if (cell.contents === ' ') {
+      return;
+    }
+
+    const x = index % canvas.width;
+    const y = Math.floor(index / canvas.width);
+    const actualColor = cell.color?.toLowerCase();
+    const expectedColor = getExpectedColor(expected.colors, x, y);
+
+    assert.equal(actualColor, expectedColor, `${fixtureFile}:${y}:${x}`);
+  });
+};
+
 suite('menu-navigation-and-session-start', () => {
   for (const chapter of session.chapters) {
     test(chapter.title, () => {
@@ -98,6 +123,7 @@ suite('menu-navigation-and-session-start', () => {
       });
 
       assertMatchesFixture(canvas, chapter.file);
+      assertColorsMatchFixture(canvas, chapter.file);
     });
   }
 });

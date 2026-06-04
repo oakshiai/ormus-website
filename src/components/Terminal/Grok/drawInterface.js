@@ -5,6 +5,7 @@ import {drawLine} from './drawLine.js';
 import {drawRectangle} from './drawRectangle.js';
 import {createLayer, drawLayer} from './layer.js';
 import {drawPrompt} from './drawPrompt.js';
+import {COLORS} from './colors.js';
 
 const PADDING = {
   top: 1,
@@ -49,7 +50,7 @@ const drawLogo = (surface, origin) => {
       '⠀⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀⠀',
       '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀'
     ],
-    color: '#3D3D3D'
+    color: COLORS.subtle
   });
 
   drawLayer(surface, logoLayer, origin);
@@ -57,25 +58,26 @@ const drawLogo = (surface, origin) => {
 
 const drawMenuAction = (surface, y, title, shortcut) => {
   move(surface, {x: 29, y});
-  drawString(surface, '[', {color: '#3D3D3D'});
+  drawString(surface, '[', {color: COLORS.muted});
   move(surface, {x: 31});
-  drawString(surface, title, {color: '#E1E1E1'});
+  drawString(surface, title, {color: COLORS.text});
   move(surface, {x: 123});
-  drawString(surface, shortcut, {anchor: 'right', color: '#3D3D3D'});
+  drawString(surface, shortcut, {anchor: 'right', color: COLORS.panelText});
   move(surface, {x: 126});
-  drawString(surface, ']', {color: '#3D3D3D'});
+  drawString(surface, ']', {color: COLORS.muted});
 };
 
 const drawMainMenu = (surface, {release}, origin) => {
-  drawRectangle(surface, origin, {width: 120, height: 11}, '#3D3D3D');
+  drawRectangle(surface, origin, {width: 120, height: 11}, COLORS.muted);
   drawLogo(surface, {x: origin.x + 2, y: origin.y + 2});
 
   move(surface, {x: 29, y: origin.y + 2});
-  drawString(surface, `Grok Build ${release.label}  ${release.version}`, {color: '#E1E1E1'});
+  drawString(surface, `Grok Build ${release.label}`, {color: COLORS.text});
+  drawString(surface, `  ${release.version}`, {color: COLORS.subtle});
   move(surface, {x: 29, y: origin.y + 3});
-  drawString(surface, 'Try out Grok Build and give us /feedback!', {color: '#3D3D3D'});
+  drawString(surface, 'Try out Grok Build and give us /feedback!', {color: COLORS.subtle});
   move(surface, {x: 29, y: origin.y + 5});
-  drawLine(surface, {x: 126}, {color: '#3D3D3D'});
+  drawLine(surface, {x: 126}, {color: COLORS.divider});
 
   drawMenuAction(surface, origin.y + 6, 'New worktree', 'ctrl-w');
   drawMenuAction(surface, origin.y + 7, 'Resume session', 'ctrl-s');
@@ -84,26 +86,46 @@ const drawMainMenu = (surface, {release}, origin) => {
 
 const drawChangelog = (surface, changelog) => {
   move(surface, {x: 11, y: 18});
-  drawString(surface, changelog.title, {color: '#E1E1E1'});
+  drawString(surface, changelog.title, {color: COLORS.panelText});
   move(surface, {x: 113});
-  drawString(surface, `[${changelog.action.label} ${changelog.action.keys}]`, {color: '#3D3D3D'});
+  drawString(surface, `[${changelog.action.label} ${changelog.action.keys}]`, {color: COLORS.subtle});
 
   for (let i = 0; i < changelog.items.length; i += 1) {
     move(surface, {x: 12, y: 20 + i});
-    drawString(surface, `• ${changelog.items[i]}`, {color: '#3D3D3D'});
+    drawString(surface, `• ${changelog.items[i]}`, {color: COLORS.panelText});
   }
 };
 
 const drawTip = (surface, y, tip) => {
   move(surface, {x: PADDING.left, y});
-  drawString(surface, 'Tip:', {color: '#5C5C5C'});
+  drawString(surface, 'Tip:', {color: COLORS.subtle});
   move(surface, {deltaX: 1});
-  drawString(surface, tip, {color: '#3D3D3D'});
+  drawString(surface, tip, {color: COLORS.subtle});
 };
 
 const drawIndicator = (surface, y, indicator) => {
   move(surface, {x: PADDING.left + 2, y});
-  drawString(surface, `⠋ ${indicator.text} ${indicator.elapsed}`, {color: '#3D3D3D'});
+  drawString(surface, `⠋ ${indicator.text} ${indicator.elapsed}`, {color: COLORS.muted});
+};
+
+const drawShortcuts = (surface, shortcuts) => {
+  shortcuts.forEach(({keys, effect}, index) => {
+    if (index > 0) {
+      drawString(surface, '  │  ', {color: COLORS.subtle});
+    }
+
+    drawString(surface, keys, {color: COLORS.primaryMuted});
+    drawString(surface, `:${effect}`, {color: COLORS.subtle});
+  });
+};
+
+const drawContext = (surface, width, context) => {
+  const label = `│ ${context.used} / ${context.remaining} │`;
+
+  move(surface, {x: width - PADDING.right - label.length, y: PADDING.top});
+  drawString(surface, '│', {color: COLORS.muted});
+  drawString(surface, ` ${context.used} / ${context.remaining} `, {color: COLORS.text});
+  drawString(surface, '│', {color: COLORS.muted});
 };
 
 /**
@@ -130,16 +152,15 @@ const drawInterface = ({
   // Header
   move(canvas, {x: PADDING.left, y: PADDING.top});
   if (branch) {
-    drawString(canvas, '', {color: '#5C5C5C'});
+    drawString(canvas, '', {color: COLORS.text});
     move(canvas, {deltaX: 1});
-    drawString(canvas, branch, {color: '#E1E1E1'});
+    drawString(canvas, branch, {color: COLORS.text});
     move(canvas, {deltaX: 1});
   }
 
-  drawString(canvas, context ? cwd.replace(/\/$/, '') : cwd, {color: '#3D3D3D'});
+  drawString(canvas, context ? cwd.replace(/\/$/, '') : cwd, {color: COLORS.muted});
   if (context) {
-    move(canvas, {x: width - PADDING.right - 1, y: PADDING.top});
-    drawString(canvas, `│ ${context.used} / ${context.remaining} │`, {anchor: 'right', color: '#3D3D3D'});
+    drawContext(canvas, width, context);
   }
 
   // Footer
@@ -150,14 +171,12 @@ const drawInterface = ({
   if (release) {
     // Version
     move(footerLayer, {x: footerLayer.width - 1, y: footerLayer.height + 1});
-    drawString(footerLayer, `${model} ${release.label} [${release.channel}]`, {anchor: 'right', color: '#3D3D3D'});
+    drawString(footerLayer, `${model} ${release.label} [${release.channel}]`, {anchor: 'right', color: COLORS.subtle});
   }
 
   if (suggestedShortcuts.length > 0) {
-    const shortcuts = suggestedShortcuts.map(({keys, effect}) => `${keys}:${effect}`).join('  │  ');
-
     move(footerLayer, {x: 0, y: footerLayer.height + 1});
-    drawString(footerLayer, shortcuts, {color: '#3D3D3D'});
+    drawShortcuts(footerLayer, suggestedShortcuts);
   }
 
   const footerTop = canvas.height - footerLayer.height - PADDING.bottom;
