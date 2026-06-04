@@ -43,16 +43,7 @@ const Grok = (props) => {
   const canvas = drawInterface({
     width: terminal.width,
     height: terminal.height,
-    branch: props.branch,
-    cwd: props.cwd,
-    context: props.context,
-    thread: props.thread,
-    prompt: props.prompt,
-    tip: props.tip,
-    model: props.model,
-    mode: props.mode,
-    release: props.release,
-    suggestedShortcuts: props.suggestedShortcuts,
+    ...props
   });
 
   return <Canvas canvas={canvas} />;
