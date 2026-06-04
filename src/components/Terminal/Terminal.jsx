@@ -56,6 +56,19 @@ const styles = {
     fontVariantLigatures: 'none',
     letterSpacing: 0,
     lineHeight: '14px',
+    '.terminal-row': {
+      display: 'block',
+      width: '100%',
+      height: 'var(--terminal-cell-height)',
+      lineHeight: 'var(--terminal-cell-height)',
+    },
+    '.terminal-cell': {
+      display: 'inline-block',
+      width: 'var(--terminal-cell-width)',
+      height: 'var(--terminal-cell-height)',
+      overflow: 'visible',
+      verticalAlign: 'top',
+    },
   }),
   measure: css({
     position: 'absolute',
@@ -120,6 +133,8 @@ const Terminal = (props) => {
   }, [targetWidth, targetHeight]);
 
   const terminalStyle = {};
+  const cellWidth = size.width > 0 ? size.pixelWidth / size.width : 0;
+  const cellHeight = size.height > 0 ? size.pixelHeight / size.height : 0;
 
   if (targetWidth != null) {
     terminalStyle.width = `${size.pixelWidth}px`;
@@ -164,6 +179,8 @@ const Terminal = (props) => {
         style={{
           width: `${size.pixelWidth}px`,
           height: `${size.pixelHeight}px`,
+          '--terminal-cell-width': `${cellWidth}px`,
+          '--terminal-cell-height': `${cellHeight}px`,
         }}
       >
         <TerminalContext.Provider

@@ -1,38 +1,26 @@
 import {useTerminal} from '../TerminalContext.js';
 import {drawInterface} from './drawInterface.js';
 
-const getRowSegments = (canvas, y) => {
-  const segments = [];
+const getRowCells = (canvas, y) => {
+  const cells = [];
   const rowStart = canvas.width * y;
   const rowEnd = rowStart + canvas.width;
 
   for (let index = rowStart; index < rowEnd; index += 1) {
-    const cell = canvas.cells[index];
-    const previous = segments[segments.length - 1];
-
-    if (previous && previous.color === cell.color) {
-      previous.value += cell.contents;
-      continue;
-    }
-
-    segments.push({
-      color: cell.color,
-      value: cell.contents,
-    });
+    cells.push(canvas.cells[index]);
   }
 
-  return segments;
+  return cells;
 };
 
 const Canvas = (props) => {
   return Array.from({length: props.canvas.height}, (_, y) => (
-    <span key={y}>
-      {getRowSegments(props.canvas, y).map((segment, index) => (
-        <span key={index} style={{color: segment.color}}>
-          {segment.value}
+    <span key={y} className="terminal-row">
+      {getRowCells(props.canvas, y).map((cell, index) => (
+        <span key={index} className="terminal-cell" style={{color: cell.color}}>
+          {cell.contents}
         </span>
       ))}
-      {y < props.canvas.height - 1 ? '\n' : null}
     </span>
   ));
 };
