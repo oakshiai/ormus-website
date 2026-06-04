@@ -32,6 +32,10 @@
     }
   ],
   "sessionTitle": "Menu Navigation and Session Start",
+  "size": {
+    "columns": 140,
+    "rows": 40
+  },
   "sessionSlug": "menu-navigation-and-session-start",
   "timestamp": 1780588458777
 }
