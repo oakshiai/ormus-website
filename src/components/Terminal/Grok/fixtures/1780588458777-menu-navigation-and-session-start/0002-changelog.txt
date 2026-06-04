@@ -1,0 +1,40 @@
+                                                                                                                                            
+   trunk ~/Projects/grok/recorder/                                                                                                         
+                                                                                                                                            
+                                                                                                                                            
+                                                                                                                                            
+                                                                                                                                            
+          ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮          
+          │                                                                                                                      │          
+          │ ⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⣠⠀   Grok Build Beta  0.2.22                                                                             │          
+          │ ⠀⠀⠀⣠⣾⠿⠛⠛⠛⠛⢀⣴⠃⠀   Try out Grok Build and give us /feedback!                                                           │          
+          │ ⠀⠀⣼⡟⠁⠀⠀⠀⢀⡴⠻⣿⡀⠀                                                                                                       │          
+          │ ⠀⠀⣿⡇⠀⠀⠀⠔⠁⠀⠀⣿⡇⠀   ──────────────────────────────────────────────────────────────────────────────────────────────────  │          
+          │ ⠀⠀⢹⣷⠀⠀⠀⠀⠀⢀⣴⡿⠀⠀   [ New worktree                                                                           ctrl-w  ]  │          
+          │ ⠀⢀⠞⠁⠠⢶⣶⣶⣶⠿⠋⠀⠀⠀   [ Resume session                                                                         ctrl-s  ]  │          
+          │ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀   [ Quit                                                                                   ctrl-q  ]  │          
+          │                                                                                                                      │          
+          ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯          
+                                                                                                                                            
+           Changelog                                                                                             [See all ctrl-l]           
+                                                                                                                                            
+            • Authentication errors with static API keys now surface a clear error instead of hanging the turn.                             
+            • allowed_models in config.toml now restricts which models appear in the picker and /model command.                             
+            • Code navigation now returns correct results for secondary project windows with different working directories.                 
+                                                                                                                                            
+                                                                                                                                            
+                                                                                                                                            
+                                                                                                                                            
+                                                                                                                                            
+                                                                                                                                            
+                                                                                                                                            
+                                                                                                                                            
+                                                                                                                                            
+  Tip: Press Ctrl+O to toggle auto-approve mode.                                                                                            
+                                                                                                                                            
+  ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮  
+  │ ❯                                                                                                                                    │  
+  ╰──────────────────────────────────────────────────────────────────────────────────────────────────────── Grok Build · always-approve ─╯  
+                                                                                                                                            
+                                                                                                                  Grok Build Beta [stable]  
+                                                                                                                                            
