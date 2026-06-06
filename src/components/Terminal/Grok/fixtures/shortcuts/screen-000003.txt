@@ -1,0 +1,40 @@
+                                                                                                                                            
+   trunk ~/Projects/grok/playground/webgpu                                                                                │ 4.6K / 512K │  
+                                                                                                                                            
+                                                                                                                                            
+                              ┌─ Keyboard Shortcuts ─────────────────────────────────────────────────── [✗] ─┐                              
+                              │                                                                              │                              
+                              │   / to search                                                                │                              
+                              │──────────────────────────────────────────────────────────────────────────────│                              
+                              │  ◆ Essentials                                                                │                              
+                              │    ◆ Send                                                            Enter   │                              
+                              │    ◆ Focus prompt                                          Tab / i / Space   │                              
+                              │    ◆ Focus scrollback                                            Esc / Tab   │                              
+                              │    ◆ Cancel turn                                                    Ctrl+c   │                              
+                              │    ◆ Cycle mode (Normal / Plan / Auto-approve)                   Shift+Tab   │                              
+                              │    ◆ Quit                                                  Ctrl+q / Ctrl+d   │                              
+                              │    ◆ Command palette                                            Ctrl+p / ?   │                              
+                              │    ◆ Keyboard shortcuts                                    Ctrl+. / Ctrl+x   │                              
+                              │    ◆ Open the settings modal                               F2 / Ctrl+, / ,   │                              
+                              │  › Input (4)                                                                 │                              
+                              │  › Conversation Navigation (14)                                              │                              
+                              │  › Conversation Actions (11)                                                 │                              
+                              │  › Panels (6)                                                                │                              
+                              │  › Session (3)                                                               │                              
+                              │                                                                              │                              
+                              │                                                                              │                              
+                              │                                                                              │                              
+  ────────────────────────────│                                                                              │─────────────────────────53─  
+     ❯ /quit           Quit th│                                                                              │                           █  
+       /home           Return │                                                                              │                              
+       /new            Start a│                                                                              │                              
+       /fork           Branch │                                                                              │                              
+       /compact        Compact│                                                                              │                              
+       /copy           Copy la│                                                                              │                              
+  ────────────────────────────│                                                                              │────────────────────────────  
+  ╭───────────────────────────│   ↑/↓ nav  |  f filter  |  e/Enter/Space expand  |  / search  |  Esc close   │───────────────────────────╮  
+  │ ❯ /                       └──────────────────────────────────────────────────────────────────────────────┘                           │  
+  ╰──────────────────────────────────────────────────────────────────────────────────────────────────────── Grok Build · always-approve ─╯  
+                                                                                                                                            
+                                                                                                                                            
+                                                                                                                                            
