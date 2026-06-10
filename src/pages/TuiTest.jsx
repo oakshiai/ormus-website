@@ -95,7 +95,7 @@ const styles = {
   previewSurface: css({
     width: '100%',
     '@media (max-width: 640px)': {
-      height: 'calc(100dvh - 72px - env(safe-area-inset-bottom, 0px))',
+      height: 'calc(var(--stable-mobile-viewport-height, 100svh) - 72px)',
       minHeight: '240px',
     },
   }),
@@ -137,11 +137,33 @@ const styles = {
   }),
 }
 
+const mobileQuery = '(max-width: 640px)'
+
+function isMobileSafari() {
+  const userAgent = window.navigator.userAgent
+  const vendor = window.navigator.vendor
+  const isAppleWebKit = /Apple/.test(vendor) && /Safari/.test(userAgent)
+  const isExcludedIosBrowser = /CriOS|FxiOS|EdgiOS|OPiOS/.test(userAgent)
+  const isIosDevice = /iPad|iPhone|iPod/.test(userAgent)
+    || (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1)
+
+  return isIosDevice && isAppleWebKit && !isExcludedIosBrowser
+}
+
+function getStableMobileViewportHeight() {
+  const viewportHeight = window.visualViewport?.height
+  const innerHeight = window.innerHeight
+  const documentHeight = document.documentElement.clientHeight
+  const heights = [viewportHeight, innerHeight, documentHeight].filter((height) => height > 0)
+
+  return Math.floor(Math.min(...heights))
+}
+
 function useMobileTerminalSizing() {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const query = window.matchMedia('(max-width: 640px)')
+    const query = window.matchMedia(mobileQuery)
     const update = () => {
       setIsMobile(query.matches)
     }
@@ -155,6 +177,34 @@ function useMobileTerminalSizing() {
   }, [])
 
   return isMobile
+}
+
+function useStableMobileSafariViewport() {
+  useEffect(() => {
+    const query = window.matchMedia(mobileQuery)
+
+    if (!query.matches || !isMobileSafari()) {
+      return undefined
+    }
+
+    const root = document.documentElement
+    const setViewportHeight = () => {
+      root.style.setProperty('--stable-mobile-viewport-height', `${getStableMobileViewportHeight()}px`)
+    }
+    const handleOrientationChange = () => {
+      window.setTimeout(setViewportHeight, 250)
+    }
+
+    setViewportHeight()
+    screen.orientation?.addEventListener('change', setViewportHeight)
+    window.addEventListener('orientationchange', handleOrientationChange)
+
+    return () => {
+      screen.orientation?.removeEventListener('change', setViewportHeight)
+      window.removeEventListener('orientationchange', handleOrientationChange)
+      root.style.removeProperty('--stable-mobile-viewport-height')
+    }
+  }, [])
 }
 
 class TerminalErrorBoundary extends Component {
@@ -223,6 +273,8 @@ function TerminalPreview(props) {
 }
 
 function TuiTest() {
+  useStableMobileSafariViewport()
+
   return (
     <div className={styles.root}>
       <div className={styles.container}>
