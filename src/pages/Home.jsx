@@ -245,6 +245,9 @@ function Home() {
           <Link to="/articles" className={homeStyles.secondaryCta}>
             Read Articles
           </Link>
+          <Link to="/tui-test" className={homeStyles.secondaryCta}>
+            View TUI Tests
+          </Link>
         </div>
       </div>
 

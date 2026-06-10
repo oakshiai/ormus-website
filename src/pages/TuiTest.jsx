@@ -100,13 +100,32 @@ const styles = {
     },
   }),
   tuiFrame: css({
-    background: '#000000',
-    borderRadius: '6px',
-    border: '1px solid #1f1f23',
+    background: '#18181b',
+    borderRadius: '10px',
+    padding: '10px',
+    boxShadow: '0 18px 46px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
     overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
+    height: '100%',
+    boxSizing: 'border-box',
+    '@media (prefers-color-scheme: light)': {
+      background: '#e4e4e7',
+      boxShadow: '0 18px 44px rgba(24, 24, 27, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.82)',
+    },
+    ':root[data-theme="light"] &': {
+      background: '#e4e4e7',
+      boxShadow: '0 18px 44px rgba(24, 24, 27, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.82)',
+    },
+    ':root[data-theme="dark"] &': {
+      background: '#18181b',
+      boxShadow: '0 18px 46px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+    },
+    '@media (max-width: 640px)': {
+      borderRadius: 0,
+      padding: '8px 0',
+    },
   }),
   screenshot: css({
     width: '100%',
@@ -191,11 +210,13 @@ function TerminalPreview(props) {
         <div className={styles.size}>{sizeText}</div>
       </div>
       <div className={styles.previewSurface}>
-        <TerminalErrorBoundary resetKey={`${sizeText}:${isMobile ? 'mobile' : 'desktop'}`}>
-          <Terminal height={isMobile ? undefined : 40} renderer="html" onSizeChange={handleSizeChange}>
-            {props.children}
-          </Terminal>
-        </TerminalErrorBoundary>
+        <div className={styles.tuiFrame}>
+          <TerminalErrorBoundary resetKey={`${sizeText}:${isMobile ? 'mobile' : 'desktop'}`}>
+            <Terminal height={isMobile ? undefined : 40} renderer="html" onSizeChange={handleSizeChange}>
+              {props.children}
+            </Terminal>
+          </TerminalErrorBoundary>
+        </div>
       </div>
     </section>
   )
