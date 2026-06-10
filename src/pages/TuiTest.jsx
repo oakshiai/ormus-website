@@ -253,6 +253,127 @@ function TuiTest() {
           />
         </TerminalPreview>
 
+        <TerminalPreview label="Keyboard Shortcuts (Essentials)">
+          <Grok
+            branch="trunk"
+            cwd="~/Projects/grok/playground/webgpu"
+            model="Grok Build"
+            mode="always-approve"
+            thread={[]}
+            context={{
+              used: '4.6K',
+              remaining: '512K',
+            }}
+            prompt="/"
+            promptHighlightLength={1}
+            suggestedShortcuts={[
+              {keys: 'Enter', effect: 'send'},
+              {keys: 'Shift+Tab', effect: 'mode'},
+              {keys: 'Ctrl+.', effect: 'shortcuts'},
+            ]}
+            suggestions={{
+              count: 53,
+              items: [
+                {command: '/quit', description: 'Quit the application', selected: true, scrollbar: true},
+                {command: '/home', description: 'Return to the welcome screen'},
+                {command: '/new', description: 'Start a new session'},
+                {command: '/fork', description: 'Branch the current session into a peer agent'},
+                {command: '/compact', description: 'Compact conversation history'},
+                {command: '/copy', description: 'Copy last response to clipboard (/copy N for Nth-latest)'},
+              ],
+            }}
+            shortcuts={{
+              sections: [
+                {
+                  title: 'Essentials',
+                  expanded: true,
+                  items: [
+                    {label: 'Send', keys: 'Enter'},
+                    {label: 'Focus prompt', keys: 'Tab / i / Space'},
+                    {label: 'Focus scrollback', keys: 'Esc / Tab'},
+                    {label: 'Cancel turn', keys: 'Ctrl+c'},
+                    {label: 'Cycle mode (Normal / Plan / Auto-approve)', keys: 'Shift+Tab'},
+                    {label: 'Quit', keys: 'Ctrl+q / Ctrl+d'},
+                    {label: 'Command palette', keys: 'Ctrl+p / ?'},
+                    {label: 'Keyboard shortcuts', keys: 'Ctrl+. / Ctrl+x'},
+                    {label: 'Open the settings modal', keys: 'F2 / Ctrl+, / ,'},
+                  ],
+                },
+                {title: 'Input', expanded: false, count: 4},
+                {title: 'Conversation Navigation', expanded: false, count: 14},
+                {title: 'Conversation Actions', expanded: false, count: 11},
+                {title: 'Panels', expanded: false, count: 6},
+                {title: 'Session', expanded: false, count: 3},
+              ],
+            }}
+          />
+        </TerminalPreview>
+
+        <TerminalPreview label="Keyboard Shortcuts (Essentials + Input)">
+          <Grok
+            branch="trunk"
+            cwd="~/Projects/grok/playground/webgpu"
+            model="Grok Build"
+            mode="always-approve"
+            thread={[]}
+            context={{
+              used: '4.6K',
+              remaining: '512K',
+            }}
+            prompt="/"
+            promptHighlightLength={1}
+            suggestedShortcuts={[
+              {keys: 'Enter', effect: 'send'},
+              {keys: 'Shift+Tab', effect: 'mode'},
+              {keys: 'Ctrl+.', effect: 'shortcuts'},
+            ]}
+            suggestions={{
+              count: 53,
+              items: [
+                {command: '/quit', description: 'Quit the application', selected: true, scrollbar: true},
+                {command: '/home', description: 'Return to the welcome screen'},
+                {command: '/new', description: 'Start a new session'},
+                {command: '/fork', description: 'Branch the current session into a peer agent'},
+                {command: '/compact', description: 'Compact conversation history'},
+                {command: '/copy', description: 'Copy last response to clipboard (/copy N for Nth-latest)'},
+              ],
+            }}
+            shortcuts={{
+              sections: [
+                {
+                  title: 'Essentials',
+                  expanded: true,
+                  items: [
+                    {label: 'Send', keys: 'Enter'},
+                    {label: 'Focus prompt', keys: 'Tab / i / Space'},
+                    {label: 'Focus scrollback', keys: 'Esc / Tab'},
+                    {label: 'Cancel turn', keys: 'Ctrl+c'},
+                    {label: 'Cycle mode (Normal / Plan / Auto-approve)', keys: 'Shift+Tab'},
+                    {label: 'Quit', keys: 'Ctrl+q / Ctrl+d'},
+                    {label: 'Command palette', keys: 'Ctrl+p / ?'},
+                    {label: 'Keyboard shortcuts', keys: 'Ctrl+. / Ctrl+x'},
+                    {label: 'Open the settings modal', keys: 'F2 / Ctrl+, / ,'},
+                  ],
+                },
+                {
+                  title: 'Input',
+                  expanded: true,
+                  items: [
+                    {label: 'Interject while running', keys: 'Ctrl+Enter / Ctrl+i'},
+                    {label: 'Search prompt history', keys: 'Ctrl+r'},
+                    {label: 'Toggle multiline', keys: 'Ctrl+m'},
+                    {label: 'Shell mode (type ! on empty prompt)', keys: '!'},
+                  ],
+                },
+                {title: 'Conversation Navigation', expanded: false, count: 14},
+                {title: 'Conversation Actions', expanded: false, count: 11},
+                {title: 'Panels', expanded: false, count: 6},
+                {title: 'Session', expanded: false, count: 3},
+              ],
+            }}
+          />
+        </TerminalPreview>
+
         <TerminalPreview label="Changelog">
           <Grok
             branch="trunk"

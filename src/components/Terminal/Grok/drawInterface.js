@@ -7,6 +7,8 @@ import {drawCharacter} from './drawCharacter.js';
 import {createLayer, drawLayer} from './layer.js';
 import {drawPrompt} from './drawPrompt.js';
 import {COLORS} from './colors.js';
+import {drawModal} from './drawModal.js';
+import {drawShortcuts} from './drawShortcuts.js';
 
 const PADDING = {
   top: 1,
@@ -46,6 +48,7 @@ const DESKTOP_MENU_MARGIN = 3;
  * @property {string[]} [body]
  * @property {number} [promptHighlightLength]
  * @property {number} [mobileTipOffset]
+ * @property {{sections: Array<{title: string, expanded?: boolean, count?: number, items?: Array<{label: string, keys: string}>}>}} [shortcuts]
  */
 
 const drawLogo = (surface, origin) => {
@@ -237,7 +240,7 @@ const drawIndicator = (surface, y, indicator) => {
   drawString(surface, `⠋ ${indicator.text} ${indicator.elapsed}`, {color: COLORS.muted});
 };
 
-const drawShortcuts = (surface, shortcuts) => {
+const drawSuggestedShortcuts = (surface, shortcuts) => {
   shortcuts.forEach(({keys, effect}, index) => {
     if (index > 0) {
       drawString(surface, '  │  ', {color: COLORS.subtle});
@@ -363,7 +366,8 @@ const drawInterface = ({
   suggestions,
   body,
   promptHighlightLength,
-  mobileTipOffset = 3
+  mobileTipOffset = 3,
+  shortcuts
 }) => {
   const canvas = createCanvas(width, height);
   
@@ -394,7 +398,17 @@ const drawInterface = ({
 
   if (suggestedShortcuts.length > 0) {
     move(footerLayer, {x: 0, y: footerLayer.height + 1});
-    drawShortcuts(footerLayer, suggestedShortcuts);
+    drawSuggestedShortcuts(footerLayer, suggestedShortcuts);
+  }
+
+  if (shortcuts && suggestedShortcuts.length > 0) {
+    // The suggested line was drawn to ensure footerLayer height produces the same
+    // suggestions positioning as the recorded shortcuts fixtures. Hide the visual
+    // bar (shortcuts modal is open) while preserving the row for correct height.
+    const sugY = footerLayer.height - 1;
+    for (let x = 0; x < footerLayer.width; x += 1) {
+      drawCharacter(footerLayer, x, sugY, ' ', undefined);
+    }
   }
 
   const footerTop = canvas.height - footerLayer.height - PADDING.bottom;
@@ -426,6 +440,29 @@ const drawInterface = ({
 
   if (indicator) {
     drawIndicator(canvas, footerTop - 2, indicator);
+  }
+
+  if (shortcuts) {
+    // Position the modal so its bottom border sits on the prompt frame for the
+    // integrated look in the fixtures (hints on prompt top row, └┘ on prompt mid row).
+    const modalWidth = Math.min(80, Math.max(50, width - 6));
+    const modalLeft = Math.max(2, getCenteredX(canvas, modalWidth));
+    const modalBottom = footerTop + 1;
+    const modalHeight = modalBottom - 4 + 1;
+    drawModal(canvas, {
+      left: modalLeft,
+      top: 4,
+      width: modalWidth,
+      height: modalHeight,
+      title: 'Keyboard Shortcuts'
+    });
+    drawShortcuts(canvas, {
+      left: modalLeft,
+      top: 4,
+      width: modalWidth,
+      height: modalHeight,
+      sections: shortcuts.sections ?? []
+    });
   }
 
   return canvas;
