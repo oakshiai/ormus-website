@@ -1,0 +1,50 @@
+                                                           
+   trunk ~/Projects/grok/recorder        │ 4.6K / 512K │  
+                                                           
+     Credits used: 0%                                      
+     Resets: Jun 30, 16:00 PT                              
+                                                           
+     Pay as you go: disabled                               
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+  ╭─────────────────────────────────────────────────────╮  
+  │ ❯                                                   │  
+  ╰─────────────────────── Grok Build · always-approve ─╯  
+                                                           
+  Shift+Tab:mode  │  Ctrl+.:shortcuts                      
+                                                           

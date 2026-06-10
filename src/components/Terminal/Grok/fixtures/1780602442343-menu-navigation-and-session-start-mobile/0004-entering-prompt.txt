@@ -1,0 +1,50 @@
+                                                           
+   trunk ~/Projects/grok/recorder                         
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+  ╭─────────────────────────────────────────────────────╮  
+  │ ❯ tes                                               │  
+  ╰─────────────────────── Grok Build · always-approve ─╯  
+                                                           
+  Enter:send  │  Shift+Tab:mode  │  Ctrl+.:shortcuts       
+                                                           

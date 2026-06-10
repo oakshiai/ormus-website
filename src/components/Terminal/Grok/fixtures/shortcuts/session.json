@@ -1,0 +1,23 @@
+{
+  "chapters": [
+    {
+      "file": "screen-000003.txt",
+      "index": 1,
+      "metadataFile": "screen-000003.json",
+      "title": "Shortcuts"
+    },
+    {
+      "file": "screen-000004.txt",
+      "index": 1,
+      "metadataFile": "screen-000004.json",
+      "title": "Shortcuts"
+    }
+  ],
+  "sessionTitle": "Shortcuts",
+  "size": {
+    "columns": 140,
+    "rows": 40
+  },
+  "sessionSlug": "shortcuts",
+  "timestamp": 1780780329066
+}

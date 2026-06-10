@@ -1,0 +1,71 @@
+{
+  "chapters": [
+    {
+      "file": "0001-main-menu.txt",
+      "index": 1,
+      "metadataFile": "0001-main-menu.json",
+      "title": "Main Menu"
+    },
+    {
+      "file": "0002-changelog.txt",
+      "index": 2,
+      "metadataFile": "0002-changelog.json",
+      "title": "Changelog"
+    },
+    {
+      "file": "0003-slash-commands.txt",
+      "index": 3,
+      "metadataFile": "0003-slash-commands.json",
+      "title": "Slash Commands"
+    },
+    {
+      "file": "0004-usage-command.txt",
+      "index": 4,
+      "metadataFile": "0004-usage-command.json",
+      "title": "Usage Command"
+    },
+    {
+      "file": "0005-filtered-commands.txt",
+      "index": 5,
+      "metadataFile": "0005-filtered-commands.json",
+      "title": "Filtered Commands"
+    },
+    {
+      "file": "0006-token-status-bar.txt",
+      "index": 6,
+      "metadataFile": "0006-token-status-bar.json",
+      "title": "Token Status Bar"
+    },
+    {
+      "file": "0007-usage-subcommands.txt",
+      "index": 7,
+      "metadataFile": "0007-usage-subcommands.json",
+      "title": "Usage Subcommands"
+    },
+    {
+      "file": "0008-empty-prompt.txt",
+      "index": 8,
+      "metadataFile": "0008-empty-prompt.json",
+      "title": "Empty Prompt"
+    },
+    {
+      "file": "0009-credit-usage.txt",
+      "index": 9,
+      "metadataFile": "0009-credit-usage.json",
+      "title": "Credit Usage"
+    },
+    {
+      "file": "0010-exit-prompt.txt",
+      "index": 10,
+      "metadataFile": "0010-exit-prompt.json",
+      "title": "Exit Prompt"
+    }
+  ],
+  "sessionTitle": "Main Menu to Usage Report Mobile",
+  "size": {
+    "columns": 59,
+    "rows": 50
+  },
+  "sessionSlug": "menu-navigation-and-usage-check-mobile",
+  "timestamp": 1780604750341
+}

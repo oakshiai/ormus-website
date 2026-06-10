@@ -1,0 +1,71 @@
+{
+  "chapters": [
+    {
+      "file": "0001-main-menu.txt",
+      "index": 1,
+      "metadataFile": "0001-main-menu.json",
+      "title": "Main Menu"
+    },
+    {
+      "file": "0002-changelog.txt",
+      "index": 2,
+      "metadataFile": "0002-changelog.json",
+      "title": "Changelog"
+    },
+    {
+      "file": "0003-slash-commands-list.txt",
+      "index": 3,
+      "metadataFile": "0003-slash-commands-list.json",
+      "title": "Slash Commands List"
+    },
+    {
+      "file": "0004-usage-command-selection.txt",
+      "index": 4,
+      "metadataFile": "0004-usage-command-selection.json",
+      "title": "Usage Command Selection"
+    },
+    {
+      "file": "0005-usage-subcommands.txt",
+      "index": 5,
+      "metadataFile": "0005-usage-subcommands.json",
+      "title": "Usage Subcommands"
+    },
+    {
+      "file": "0006-usage-report.txt",
+      "index": 6,
+      "metadataFile": "0006-usage-report.json",
+      "title": "Usage Report"
+    },
+    {
+      "file": "0007-quit-confirmation.txt",
+      "index": 7,
+      "metadataFile": "0007-quit-confirmation.json",
+      "title": "Quit Confirmation"
+    },
+    {
+      "file": "0008-chapter-8.txt",
+      "index": 8,
+      "metadataFile": "0008-chapter-8.json",
+      "title": "Chapter 8"
+    },
+    {
+      "file": "0009-chapter-9.txt",
+      "index": 9,
+      "metadataFile": "0009-chapter-9.json",
+      "title": "Chapter 9"
+    },
+    {
+      "file": "0010-chapter-10.txt",
+      "index": 10,
+      "metadataFile": "0010-chapter-10.json",
+      "title": "Chapter 10"
+    }
+  ],
+  "sessionTitle": "Menu Navigation and Usage Check",
+  "size": {
+    "columns": 140,
+    "rows": 40
+  },
+  "sessionSlug": "menu-navigation-and-usage-check",
+  "timestamp": 1780603998899
+}

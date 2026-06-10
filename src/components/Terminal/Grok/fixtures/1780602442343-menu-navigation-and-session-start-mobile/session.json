@@ -19,23 +19,23 @@
       "title": "Starting Session"
     },
     {
-      "file": "0004-message-input.txt",
+      "file": "0004-entering-prompt.txt",
       "index": 4,
-      "metadataFile": "0004-message-input.json",
-      "title": "Message Input"
+      "metadataFile": "0004-entering-prompt.json",
+      "title": "Entering Prompt"
     },
     {
-      "file": "0005-message-input-with-quit-hint.txt",
+      "file": "0005-entering-prompt.txt",
       "index": 5,
-      "metadataFile": "0005-message-input-with-quit-hint.json",
-      "title": "Message Input with Quit Hint"
+      "metadataFile": "0005-entering-prompt.json",
+      "title": "Entering Prompt"
     }
   ],
-  "sessionTitle": "Menu Navigation and Session Start",
+  "sessionTitle": "Menu Navigation and Session Start Mobile",
   "size": {
-    "columns": 140,
-    "rows": 40
+    "columns": 59,
+    "rows": 50
   },
-  "sessionSlug": "menu-navigation-and-session-start",
-  "timestamp": 1780588458777
+  "sessionSlug": "menu-navigation-and-session-start-mobile",
+  "timestamp": 1780602442343
 }

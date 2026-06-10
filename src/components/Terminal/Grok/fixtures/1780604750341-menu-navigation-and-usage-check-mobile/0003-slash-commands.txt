@@ -1,0 +1,50 @@
+                                                           
+   trunk ~/Projects/grok/recorder                         
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+                                                           
+  ────────────────────────────────────────────────────40─  
+     ❯ /quit           Quit the application             █  
+       /home           Return to the welcome screen        
+       /new            Start a new session                 
+       /fork           Branch the current session          
+                        into a peer agent                  
+       /compact        Compact conversation history        
+  ───────────────────────────────────────────────────────  
+  ╭─────────────────────────────────────────────────────╮  
+  │ ❯ /                                                 │  
+  ╰─────────────────────── Grok Build · always-approve ─╯  
+                                                           
+  Enter:send  │  Shift+Tab:mode  │  Ctrl+.:shortcuts       
+                                                           
